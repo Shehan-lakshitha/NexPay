@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "module": "^1.2.5",
+    "react-native-safe-area-context": "^4.7.1"
+  }
+}
