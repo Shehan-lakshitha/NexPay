@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, Text, TextInput, View} from 'react-native';
 import COLORS from '../constants/colors';
+import Button from '../components/Button';
 
 const Register = () => {
   return (
@@ -190,6 +191,11 @@ const Register = () => {
             </View>
           </View>
         </View>
+        <Button title = 'Register' filled 
+        style ={{
+          marginTop: 72,
+
+        }}/>
       </View>
     </SafeAreaView>
   );
