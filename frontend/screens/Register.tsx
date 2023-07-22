@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, Text, TextInput, View} from 'react-native';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Register = () => {
   return (
@@ -11,15 +12,21 @@ const Register = () => {
           marginHorizontal: 22,
           marginTop: 22,
         }}>
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: '500',
-            color: COLORS.black,
-            alignSelf: 'center',
-          }}>
-          Register
-        </Text>
+        <View>
+        <Icon name="chevron-left" size={24} color={COLORS.black} />
+          <Text
+            style={{
+              marginTop: -26,
+              fontSize: 24,
+              fontWeight: '500',
+              color: COLORS.black,
+              alignSelf: 'center',
+            }}>
+            Register
+          </Text>
+        </View>
+
+        {/* Name section */}
         <View
           style={{
             marginTop: 22,
@@ -49,9 +56,10 @@ const Register = () => {
                 }}>
                 <TextInput
                   keyboardType="default"
+                  placeholder="Enter your first name"
                   style={{
                     fontSize: 16,
-                    fontWeight: '500',
+                    fontWeight: '400',
                     width: '100%',
                   }}
                 />
@@ -76,6 +84,7 @@ const Register = () => {
                 }}>
                 <TextInput
                   keyboardType="default"
+                  placeholder="Enter your last name"
                   style={{
                     fontSize: 16,
                     fontWeight: '400',
@@ -85,6 +94,8 @@ const Register = () => {
               </View>
             </View>
           </View>
+
+          {/* Email section */}
           <View
             style={{
               marginBottom: 32,
@@ -107,14 +118,18 @@ const Register = () => {
               }}>
               <TextInput
                 keyboardType="email-address"
+                placeholder="Enter your email address"
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
                   width: '100%',
+                  paddingLeft: 10,
                 }}
               />
             </View>
           </View>
+
+          {/* NIC section */}
           <View
             style={{
               marginBottom: 32,
@@ -137,14 +152,18 @@ const Register = () => {
               }}>
               <TextInput
                 keyboardType="numeric"
+                placeholder="Enter your NIC number"
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
                   width: '100%',
+                  paddingLeft: 10,
                 }}
               />
             </View>
           </View>
+
+          {/* Phone Number section */}
           <View
             style={{
               marginBottom: 32,
@@ -189,13 +208,30 @@ const Register = () => {
                 }}
               />
             </View>
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 16,
+                color: COLORS.black,
+              }}>
+              If you have an accout Login{' '}
+            </Text>
           </View>
         </View>
-        <Button title = 'Register' filled 
-        style ={{
-          marginTop: 72,
-
-        }}/>
+        <View
+          style={{
+            marginVertical: 96,
+          }}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: COLORS.black,
+              marginBottom: 8,
+            }}>
+            by register, you accept our Terms and conditions
+          </Text>
+          <Button title="Register" filled />
+        </View>
       </View>
     </SafeAreaView>
   );
