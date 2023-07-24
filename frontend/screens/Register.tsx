@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, TextInput, View} from 'react-native';
+import {SafeAreaView, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -13,11 +13,13 @@ const Register = () => {
           marginTop: 22,
         }}>
         <View>
-        <Icon name="chevron-left" size={24} color={COLORS.black} />
+        <TouchableOpacity>
+          <Icon name="chevron-left" size={24} color={COLORS.black} />
+        </TouchableOpacity>
           <Text
             style={{
-              marginTop: -26,
-              fontSize: 24,
+              marginTop: -28,
+              fontSize: 22,
               fontWeight: '500',
               color: COLORS.black,
               alignSelf: 'center',
