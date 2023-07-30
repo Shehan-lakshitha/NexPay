@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 
 import {
@@ -19,7 +12,8 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Register from './screens/Register';
+import 'react-native-gesture-handler';
+import Navigation from './src/navigation/Navigation';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,8 +22,7 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-
-  return <Register />;
+  return <Navigation />;
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
