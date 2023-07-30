@@ -49,7 +49,8 @@ export default function Login() {
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
             onPress={(isChecked: boolean) => {}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget Password</Text>
           </TouchableOpacity>
         </View>
