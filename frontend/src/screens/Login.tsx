@@ -8,13 +8,24 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Login() {
-  const navigation = useNavigation();
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+};
+
+type LoginProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'LogIn'>;
+};
+
+export default function Login({navigation}: LoginProps) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   return (
     <SafeAreaView style={styles.container}>
@@ -75,7 +86,12 @@ export default function Login() {
         </View>
       </View>
 
-      <Button style={styles.loginBtn} title="Login" filled onpress={() => {}} />
+      <Button
+        style={styles.loginBtn}
+        title="Login"
+        filled
+        onpress={() => navigation.navigate('Home')}
+      />
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Don't have an account?</Text>

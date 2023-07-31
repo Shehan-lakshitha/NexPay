@@ -9,11 +9,22 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 
-const ResetPassword = () => {
-  const navigation = useNavigation();
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+};
+
+type ResetPasswordProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'ResetPassword'>;
+};
+
+const ResetPassword = ({navigation}: ResetPasswordProps) => {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [ispasswordShownConfirm, setIsPasswordShownConfirm] = useState(true);
   return (
@@ -126,6 +137,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 12,
     marginVertical: 5,
+    color: COLORS.black,
   },
   btnContainer: {
     marginVertical: 300,

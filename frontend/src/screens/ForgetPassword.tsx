@@ -10,13 +10,25 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
-export default function ForgetPassword() {
-  const navigation = useNavigation();
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+};
+
+type ForgetPasswordProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'ForgetPassword'>;
+};
+
+export default function ForgetPassword({navigation}: ForgetPasswordProps) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Forget password</Text>
