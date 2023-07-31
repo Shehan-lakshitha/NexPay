@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import ForgetPassword from '../screens/ForgetPassword';
+import ResetPassword from '../screens/ResetPassword';
 
 export default function Navigation() {
   const Stack = createStackNavigator();
@@ -13,6 +14,7 @@ export default function Navigation() {
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

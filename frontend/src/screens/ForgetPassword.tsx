@@ -36,7 +36,7 @@ export default function ForgetPassword() {
           style={styles.continueBtn}
           title="Continue"
           filled
-          onpress={() => {}}
+          onpress={() => navigation.navigate('ResetPassword')}
         />
       </View>
     </SafeAreaView>
