@@ -6,15 +6,27 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Login() {
-  const navigation = useNavigation();
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+};
 
+type LoginProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'LogIn'>;
+};
+
+export default function Login({navigation}: LoginProps) {
+  const [ispasswordShown, setIsPasswordShown] = useState(true);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -35,7 +47,25 @@ export default function Login() {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
-          <TextInput style={styles.input} secureTextEntry={true} />
+          <View style={styles.input}>
+            <TextInput
+              secureTextEntry={ispasswordShown}
+              style={{width: '100%'}}
+            />
+            <TouchableOpacity
+              onPress={() => setIsPasswordShown(!ispasswordShown)}
+              style={{
+                position: 'absolute',
+                right: 12,
+                top: 10,
+              }}>
+              {ispasswordShown == true ? (
+                <Icon name="eye-slash" size={24} color={COLORS.primary} />
+              ) : (
+                <Icon name="eye" size={24} color={COLORS.primary} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.formFooter}>
@@ -49,13 +79,19 @@ export default function Login() {
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
             onPress={(isChecked: boolean) => {}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget Password</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <Button style={styles.loginBtn} title="Login" filled onpress={() => {}} />
+      <Button
+        style={styles.loginBtn}
+        title="Login"
+        filled
+        onpress={() => navigation.navigate('Home')}
+      />
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Don't have an account?</Text>
