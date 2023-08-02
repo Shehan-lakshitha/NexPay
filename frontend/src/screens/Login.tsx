@@ -19,6 +19,7 @@ type RootStackParamList = {
   ForgetPassword: undefined;
   Register: undefined;
   LogIn: undefined;
+  CreatePassword: undefined;
 };
 
 type LoginProps = {
@@ -94,7 +95,7 @@ export default function Login({navigation}: LoginProps) {
       />
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Don't have an account?</Text>
+        <Text style={styles.footerText}>Don't have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.footerSpan}>Sign up</Text>
         </TouchableOpacity>
