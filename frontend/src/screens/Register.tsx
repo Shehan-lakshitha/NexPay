@@ -9,8 +9,22 @@ import {
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const Register = () => {
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+  CreatePassword: undefined;
+};
+
+type RegisterProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
+};
+
+const Register = ({navigation}: RegisterProps) => {
   return (
     <SafeAreaView>
       <View
@@ -19,7 +33,7 @@ const Register = () => {
           marginTop: 22,
         }}>
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
             <Icon name="chevron-left" size={24} color={COLORS.black} />
           </TouchableOpacity>
           <Text
@@ -222,7 +236,14 @@ const Register = () => {
                 fontSize: 16,
                 color: COLORS.black,
               }}>
-              If you have an accout Login{' '}
+              If you have an accout{' '}
+              <Text
+                style={{
+                  color: COLORS.primary,
+                }}
+                onPress={() => navigation.navigate('LogIn')}>
+                Login
+              </Text>
             </Text>
           </View>
         </View>
@@ -238,7 +259,11 @@ const Register = () => {
             }}>
             by register, you accept our Terms and conditions
           </Text>
-          <Button title="Register" filled />
+          <Button
+            onpress={() => navigation.navigate('CreatePassword')}
+            title="Register"
+            filled
+          />
         </View>
       </View>
     </SafeAreaView>

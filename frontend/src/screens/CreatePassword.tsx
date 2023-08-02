@@ -1,10 +1,24 @@
 import React, {useState} from 'react';
-import {TextInput, Text, View, Touchable, TouchableOpacity} from 'react-native';
+import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const CreatePassword = () => {
+type RootStackParamList = {
+  Home: undefined;
+  ResetPassword: undefined;
+  ForgetPassword: undefined;
+  Register: undefined;
+  LogIn: undefined;
+  CreatePassword: undefined;
+};
+
+type CreatePasswordProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'CreatePassword'>;
+};
+
+const CreatePassword = ({navigation}:CreatePasswordProps) => {
   const [ispasswordShown, setIsPasswordShown] = useState(false);
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
   return (
@@ -14,7 +28,8 @@ const CreatePassword = () => {
         marginTop: 22,
       }}>
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=> navigation.navigate('Register')}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text
@@ -69,9 +84,9 @@ const CreatePassword = () => {
               top: 10,
             }}>
             {ispasswordShown == true ? (
-              <Icon name="eye-slash" size={24} color={COLORS.primary} />
-            ) : (
               <Icon name="eye" size={24} color={COLORS.primary} />
+            ) : (
+              <Icon name="eye-slash" size={24} color={COLORS.primary} />
             )}
           </TouchableOpacity>
           <Text
@@ -122,9 +137,9 @@ const CreatePassword = () => {
               top: 10,
             }}>
             {ispasswordShownC == true ? (
-              <Icon name="eye-slash" size={24} color={COLORS.primary} />
-            ) : (
               <Icon name="eye" size={24} color={COLORS.primary} />
+            ) : (
+              <Icon name="eye-slash" size={24} color={COLORS.primary} />
             )}
           </TouchableOpacity>
         </View>
