@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
+import Toast from '../components/Toast';
 
 type RootStackParamList = {
   Home: undefined;
@@ -18,9 +19,10 @@ type CreatePasswordProps = {
   navigation: StackNavigationProp<RootStackParamList, 'CreatePassword'>;
 };
 
-const CreatePassword = ({navigation}:CreatePasswordProps) => {
+const CreatePassword = ({navigation}: CreatePasswordProps) => {
   const [ispasswordShown, setIsPasswordShown] = useState(false);
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
   return (
     <View
       style={{
@@ -28,8 +30,7 @@ const CreatePassword = ({navigation}:CreatePasswordProps) => {
         marginTop: 22,
       }}>
       <View>
-        <TouchableOpacity
-        onPress={()=> navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text
@@ -69,6 +70,7 @@ const CreatePassword = ({navigation}:CreatePasswordProps) => {
           <TextInput
             secureTextEntry={ispasswordShown}
             placeholder="Enter your password"
+            id="password"
             style={{
               fontSize: 16,
               fontWeight: '400',
@@ -122,6 +124,7 @@ const CreatePassword = ({navigation}:CreatePasswordProps) => {
           <TextInput
             secureTextEntry={ispasswordShownC}
             placeholder="Confirm your password"
+            id="confirmPassword"
             style={{
               fontSize: 16,
               fontWeight: '400',
