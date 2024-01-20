@@ -26,9 +26,9 @@ export default function Login({navigation}) {
       </View>
       <View style={styles.form}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Phone number</Text>
+          <Text style={styles.label}>Email</Text>
           <View style={styles.input}>
-            <Text style={styles.prefix}>+94</Text>
+            
             <TextInput
               keyboardType="number-pad"
               onChangeText={() => {}}
@@ -133,11 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  prefix: {
-    color: COLORS.black,
-    fontSize: 16,
-    opacity: 0.5,
-  },
+ 
   formFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
