@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   headerTitle: {
     color: COLORS.black,
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     marginHorizontal: '20%',
   },
   form: {
-    margin: 25,
-    marginTop: 50,
+    margin: 15,
+    marginTop: 100,
   },
   inputContainer: {
     marginBottom: 25,
@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
     color: COLORS.black,
   },
   btnContainer: {
-    marginVertical: 300,
+    marginVertical: 250,
   },
   ConfirmBtn: {
-    margin: 24,
+    margin: 15,
   },
 });

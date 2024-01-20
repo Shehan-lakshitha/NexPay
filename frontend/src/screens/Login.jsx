@@ -20,7 +20,10 @@ export default function Login() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Login</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} color={COLORS.black} />
+        </TouchableOpacity>
+        <Text style={styles.headertitle}>Login</Text>
       </View>
       <View style={styles.form}>
         <View style={styles.inputContainer}>
@@ -96,21 +99,23 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 16,
+    marginHorizontal: 22,
+    marginTop: 22,
   },
   header: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    marginVertical: 28,
   },
-  title: {
+  headertitle: {
     color: COLORS.black,
-    fontSize: 22,
-    fontWeight: '500',
-    marginBottom: 40,
+    fontSize: 24,
+    fontWeight: '600',
+    marginHorizontal: '35%',
   },
   form: {
-    margin: 25,
+    marginTop: 100,
+    marginHorizontal: 15,
   },
   inputContainer: {
     marginBottom: 25,
@@ -145,7 +150,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   loginBtn: {
-    margin: 30,
+    marginTop: 240,
+    marginHorizontal: 15,
+    marginBottom: 20,
   },
   footer: {
     flexDirection: 'row',

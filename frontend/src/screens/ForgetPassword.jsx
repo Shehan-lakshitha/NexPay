@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   headerTitle: {
     color: COLORS.black,
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 25,
+    marginHorizontal: 15,
   },
   label: {
     color: COLORS.black,
