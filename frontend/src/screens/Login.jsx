@@ -8,25 +8,13 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-  CreatePassword: undefined;
-};
 
-type LoginProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'LogIn'>;
-};
 
-export default function Login({navigation}: LoginProps) {
+export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   return (
     <SafeAreaView style={styles.container}>
@@ -81,7 +69,7 @@ export default function Login({navigation}: LoginProps) {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-            onPress={(isChecked: boolean) => {}}
+            onPress={() => {}}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>

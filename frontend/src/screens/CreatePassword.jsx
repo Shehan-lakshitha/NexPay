@@ -3,22 +3,11 @@ import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {StackNavigationProp} from '@react-navigation/stack';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-  CreatePassword: undefined;
-};
 
-type CreatePasswordProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'CreatePassword'>;
-};
 
-const CreatePassword = ({navigation}:CreatePasswordProps) => {
+
+const CreatePassword = ({navigation}) => {
   const [ispasswordShown, setIsPasswordShown] = useState(false);
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
   return (
