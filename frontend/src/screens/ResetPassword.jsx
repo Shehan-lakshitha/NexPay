@@ -9,22 +9,10 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
-import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-};
 
-type ResetPasswordProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'ResetPassword'>;
-};
-
-const ResetPassword = ({navigation}: ResetPasswordProps) => {
+const ResetPassword = ({navigation}) => {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [ispasswordShownConfirm, setIsPasswordShownConfirm] = useState(true);
   return (

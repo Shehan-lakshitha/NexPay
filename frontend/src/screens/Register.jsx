@@ -9,22 +9,10 @@ import {
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {StackNavigationProp} from '@react-navigation/stack';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-  CreatePassword: undefined;
-};
 
-type RegisterProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
-};
 
-const Register = ({navigation}: RegisterProps) => {
+const Register = ({navigation}) => {
   return (
     <SafeAreaView>
       <View

@@ -10,21 +10,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {StackNavigationProp} from '@react-navigation/stack';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-};
 
-type ForgetPasswordProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'ForgetPassword'>;
-};
-
-export default function ForgetPassword({navigation}: ForgetPasswordProps) {
+export default function ForgetPassword({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
