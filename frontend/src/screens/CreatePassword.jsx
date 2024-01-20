@@ -17,7 +17,7 @@ const CreatePassword = ({navigation}) => {
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [errorText, setErrorText] = useState('');
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -35,12 +35,15 @@ const CreatePassword = ({navigation}) => {
       
       if(response.data.success===true){
         navigation.navigate('AccountCreated')
+      }else{
+        setErrorText(response.data.message);
       }
       
       
       
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setErrorText('An unexpected error occurred. Please try again.');
     }
   };
   return (
@@ -170,6 +173,16 @@ const CreatePassword = ({navigation}) => {
             )}
           </TouchableOpacity>
         </View>
+      </View>
+      <View>
+        <Text style={{
+            fontSize: 16,
+            fontWeight: '400',
+            color: COLORS.red,
+            textAlign:'center'
+          }}>
+          {errorText}
+        </Text>
       </View>
       <Button
       onpress={handleSubmit}

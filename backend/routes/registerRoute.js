@@ -1,7 +1,7 @@
 import express from "express"
 import bcrypt from "bcrypt"
 import User from '../models/userModel.js'
-import { errorHandler } from "../utils/error.js"
+
 const router = express.Router()
 const registerController = async(req, res,next) => {
   const {
@@ -14,15 +14,22 @@ const registerController = async(req, res,next) => {
     confirmPassword,
   } = req.body
   if (password !== confirmPassword) {
-    next(errorHandler(400,"password do not match"))
+    return res.send({success:false,message:"Passwords do not match."})
   }else{
     const hashedPassword=bcrypt.hashSync(password,10)
     const newUser=new User({firstName,lastName,email,phoneNumber,NIC,password:hashedPassword})
     try {
         await newUser.save()
-        res.status(201).json({success:true,message:"signup successfull."})  
+       return res.status(201).json({success:true,message:"signup successfull."})  
     } catch (error) {
-       next(error)
+      
+      if(error.code==11000){
+        return res.send({success:false,message:"Email is already in use."})
+      }else{
+        return res.send({success:false,message:"Server Error."})
+      }
+      
+       
     }
   }
   

@@ -17,15 +17,7 @@ mongoose.connect(process.env.MONGOURL).then(()=>{
 }).catch((err)=>{
   console.log('database connected unsuccessully',err)
 })
-app.use((error,req,res,next)=>{
-  const errorStatusCode=error.status||500
-  const errorMessage=error.message||'Internal error'
-  return res.status(errorStatusCode).json({
-      success:false,
-      errorStatusCode,
-      errorMessage
-  })
-})
+
 
 app.use("/api", registerRoutes)
 app.listen(PORT, () => {
