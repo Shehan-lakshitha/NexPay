@@ -18,6 +18,10 @@ const ResetPassword = () => {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [ispasswordShownConfirm, setIsPasswordShownConfirm] = useState(true);
   const navigation = useNavigation();
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>

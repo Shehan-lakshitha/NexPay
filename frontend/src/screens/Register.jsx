@@ -68,7 +68,7 @@ const Register = () => {
                 }}>
                 <TextInput
                   keyboardType="default"
-                  placeholder="Enter first name"
+                  placeholder="Enter your first name"
                   style={{
                     fontSize: 16,
                     fontWeight: '400',
@@ -96,7 +96,7 @@ const Register = () => {
                 }}>
                 <TextInput
                   keyboardType="default"
-                  placeholder="Enter last name"
+                  placeholder="Enter your last name"
                   style={{
                     fontSize: 16,
                     fontWeight: '400',
@@ -130,7 +130,7 @@ const Register = () => {
               }}>
               <TextInput
                 keyboardType="email-address"
-                placeholder="Enter email address"
+                placeholder="Enter your email address"
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -164,7 +164,7 @@ const Register = () => {
               }}>
               <TextInput
                 keyboardType="numeric"
-                placeholder="Enter NIC number"
+                placeholder="Enter your NIC number"
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -211,7 +211,7 @@ const Register = () => {
                 }}
               />
               <TextInput
-                placeholder="Enter phone no."
+                placeholder="Enter your phone no."
                 style={{
                   fontSize: 16,
                   fontWeight: '400',

@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function ForgetPassword() {
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -34,10 +35,12 @@ export default function ForgetPassword() {
       </View>
       <View style={styles.btnContainer}>
         <Button
+
           onpress={() => navigation.navigate('CreatePassword')}
           style={styles.continueBtn}
           title="Continue"
           filled
+
         />
       </View>
     </SafeAreaView>

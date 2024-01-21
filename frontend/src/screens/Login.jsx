@@ -70,7 +70,9 @@ export default function Login() {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
+
             onPress={isChecked => {}}
+
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
