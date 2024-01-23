@@ -7,15 +7,42 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
+import axios from 'axios';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [errMsg,setErrMsg]=useState('');
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        'http://192.168.8.159:5000/api/login',
+        {
+          email: email,
+          password: password,
+        },
+      );
+      if (response.data.success == true) {
+        if(response.data.token){
+          await AsyncStorage.setItem('token', response.data.token);
+          navigation.navigate('Home');
+        }
+      
+      }else{
+        setErrMsg(response.data.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -28,10 +55,10 @@ export default function Login({navigation}) {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <View style={styles.input}>
-            
             <TextInput
-              keyboardType="number-pad"
-              onChangeText={() => {}}
+              onChangeText={text => {
+                setEmail(text);
+              }}
               placeholder=""
               style={{width: '100%'}}
             />
@@ -43,6 +70,9 @@ export default function Login({navigation}) {
             <TextInput
               secureTextEntry={ispasswordShown}
               style={{width: '100%'}}
+              onChangeText={text => {
+                setPassword(text);
+              }}
             />
             <TouchableOpacity
               onPress={() => setIsPasswordShown(!ispasswordShown)}
@@ -77,12 +107,16 @@ export default function Login({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-
+      <View style={styles.errConatiner}>
+        <Text style={styles.errMsgStyles}>
+           {errMsg}
+        </Text>
+      </View>
       <Button
         style={styles.loginBtn}
         title="Login"
         filled
-        onpress={() => navigation.navigate('Home')}
+        onpress={handleSubmit}
       />
 
       <View style={styles.footer}>
@@ -133,7 +167,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
- 
+  prefix: {
+    color: COLORS.black,
+    fontSize: 16,
+    opacity: 0.5,
+  },
   formFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -143,6 +181,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     opacity: 0.8,
     fontWeight: '400',
+  },
+  errConatiner:{
+    alignItems:'center',
+    justifyContent:'center',
+    marginTop:20
+  },
+  errMsgStyles:{
+    fontSize: 20,
+    fontWeight: '400',
+    color: COLORS.red,
   },
   loginBtn: {
     marginTop: 240,
