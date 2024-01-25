@@ -9,24 +9,19 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
-import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
+import { useNavigation } from '@react-navigation/native';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-};
 
-type ResetPasswordProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'ResetPassword'>;
-};
 
-const ResetPassword = ({navigation}: ResetPasswordProps) => {
+const ResetPassword = () => {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [ispasswordShownConfirm, setIsPasswordShownConfirm] = useState(true);
+  const navigation = useNavigation();
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -100,7 +95,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   headerTitle: {
     color: COLORS.black,
@@ -109,8 +104,8 @@ const styles = StyleSheet.create({
     marginHorizontal: '20%',
   },
   form: {
-    margin: 25,
-    marginTop: 50,
+    margin: 15,
+    marginTop: 100,
   },
   inputContainer: {
     marginBottom: 25,
@@ -140,9 +135,9 @@ const styles = StyleSheet.create({
     color: COLORS.black,
   },
   btnContainer: {
-    marginVertical: 300,
+    marginVertical: 250,
   },
   ConfirmBtn: {
-    margin: 24,
+    margin: 15,
   },
 });
