@@ -1,4 +1,5 @@
-import React, {useState, useRef} from 'react';
+// React Native screen for OTP verification
+import React from 'react';
 import {
   View,
   Text,
@@ -13,52 +14,27 @@ import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const OTPVerificationScreen = () => {
-  const navigation = useNavigation();
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const refs = useRef([...Array(6)].map(() => React.createRef()));
+const OtpInput = ({length = 6, onOtpSubmit = () => {}}) => {
+  const [otp, setOtp] = React.useState(new Array(length).fill(''));
+  const inputRefs = React.useRef([]);
 
-  // Function to handle OTP input
-  const handleOtpInput = (index, value) => {
-    // Validate input to be a single numeric character
-    if (/^[0-9]$/.test(value)) {
-      // Update the OTP array with the entered digit
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
+  React.useEffect(() => {
+    if (inputRefs.current[0]) {
+      inputRefs.current[0].focus();
+    }
+  }, []);
 
-      // Move focus to the next input box
-      if (
-        index < 5 &&
-        refs.current[index + 1] &&
-        refs.current[index + 1].current
-      ) {
-        refs.current[index + 1].current.focus();
-      }
-    } else if (value === '' && index > 0) {
-      // If the value is empty, move focus to the previous input box
-      if (refs.current[index - 1] && refs.current[index - 1].current) {
-        refs.current[index - 1].current.focus();
-      }
-    } else if (value === ' ' && index > 0) {
-      // Allow backspacing by clearing the current digit and moving focus to the previous input
-      const newOtp = [...otp];
-      newOtp[index] = '';
-      setOtp(newOtp);
+  const handleChange = (index, value) => {
+    const newOtp = [...otp];
+    newOtp[index] = value;
 
-      if (refs.current[index - 1] && refs.current[index - 1].current) {
-        refs.current[index - 1].current.focus();
-      }
-    } else if (/^[0-9]$/.test(value) && index < 5) {
-      // If user enters a number again, clear the current digit and replace with the new one
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
+    setOtp(newOtp);
 
-      // Move focus to the next input box
-      if (refs.current[index + 1] && refs.current[index + 1].current) {
-        refs.current[index + 1].current.focus();
-      }
+    const combinedOtp = newOtp.join('');
+    if (combinedOtp.length === length) onOtpSubmit(combinedOtp);
+
+    if (value && index < length - 1 && inputRefs.current[index + 1]) {
+      inputRefs.current[index + 1].focus();
     }
   };
 
@@ -69,8 +45,8 @@ const OTPVerificationScreen = () => {
   };
 
   // Function to handle verification
-  const handleVerify = () => {
-    console.log('Verify Button Pressed');
+  const handleVerify = otp => {
+    console.log('Verify Button Pressed with OTP:', otp);
     // Implement verification logic
   };
 
@@ -103,19 +79,8 @@ const OTPVerificationScreen = () => {
           <Text style={styles.userEmail}>user@example.com</Text>
 
           {/* OTP input boxes */}
-          <View style={styles.otpContainer}>
-            {otp.map((digit, index) => (
-              <TextInput
-                key={index}
-                ref={refs.current[index]}
-                style={styles.otpInput}
-                value={digit}
-                keyboardType="numeric"
-                maxLength={1}
-                onChangeText={value => handleOtpInput(index, value)}
-              />
-            ))}
-          </View>
+          {/* Integrated OtpInput component */}
+          <OtpInput length={6} onOtpSubmit={handleVerify} />
 
           {/* Resend OTP option */}
           <TouchableOpacity onPress={handleResendOTP}>
