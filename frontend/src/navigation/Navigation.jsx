@@ -7,18 +7,25 @@ import ForgetPassword from '../screens/ForgetPassword';
 import ResetPassword from '../screens/ResetPassword';
 import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
+import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="OTPVerificationScreen">
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
+        <Stack.Screen
+          name="OTPVerificationScreen"
+          component={OTPVerificationScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
