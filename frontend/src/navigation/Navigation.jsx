@@ -13,7 +13,9 @@ export default function Navigation() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="OTPVerificationScreen">
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />

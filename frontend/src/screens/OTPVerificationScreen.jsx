@@ -38,6 +38,37 @@ const OtpInput = ({length = 6, onOtpSubmit = () => {}}) => {
     }
   };
 
+  const handleKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && index > 0 && !otp[index]) {
+      // Move focus to the previous input field on backspace
+      inputRefs.current[index - 1].focus();
+    } else if (e.key === 'Backspace' && index === 0 && otp[index] === '') {
+      // Move focus to the last input field if backspace is pressed on the first empty field
+      inputRefs.current[length - 1].focus();
+    }
+  };
+
+  return (
+    <View style={styles.otpContainer}>
+      {otp.map((digit, index) => (
+        <TextInput
+          key={index}
+          ref={ref => (inputRefs.current[index] = ref)}
+          style={styles.otpInput}
+          value={digit}
+          keyboardType="numeric"
+          maxLength={1}
+          onChangeText={value => handleChange(index, value)}
+          onKeyDown={e => handleKeyDown(index, e)}
+        />
+      ))}
+    </View>
+  );
+};
+
+const OTPVerificationScreen = () => {
+  const navigation = useNavigation();
+
   // Function to handle resend OTP
   const handleResendOTP = () => {
     console.log('Resend OTP');
