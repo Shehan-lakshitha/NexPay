@@ -21,7 +21,9 @@ import axios from "axios"
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        navigation.navigate('OTPVerificationScreen')
+        navigation.navigate('OTPVerificationScreen',{
+          email:email
+        })
       }
       
       
