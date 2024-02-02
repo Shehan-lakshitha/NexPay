@@ -12,6 +12,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -42,6 +43,13 @@ export default function Login({navigation}) {
       console.log(error);
     }
   };
+
+import {useNavigation} from '@react-navigation/native';
+
+export default function Login() {
+  const [ispasswordShown, setIsPasswordShown] = useState(true);
+  const navigation = useNavigation();
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,7 +107,9 @@ export default function Login({navigation}) {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-            onPress={() => {}}
+
+            onPress={isChecked => {}}
+
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>

@@ -10,6 +10,8 @@ import {
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -20,6 +22,11 @@ const Register = ({navigation}) => {
   const [NIC, setNIC] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
  
+
+const Register = () => {
+  const navigation = useNavigation();
+  
+
   return (
     <SafeAreaView>
       <View

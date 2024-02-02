@@ -6,7 +6,15 @@ import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import { useRoute } from '@react-navigation/native';
 
+import Toast from '../components/Toast';
+import {useNavigation} from '@react-navigation/native';
 
+const CreatePassword = () => {
+  const [ispasswordShown, setIsPasswordShown] = useState(true);
+  const [ispasswordShownC, setIsPasswordShownC] = useState(true);
+  const [showAnimation, setShowAnimation] = useState(false);
+
+  const navigation = useNavigation();
 
 
 const CreatePassword = ({navigation}) => {
@@ -46,6 +54,8 @@ const CreatePassword = ({navigation}) => {
       setErrorText('An unexpected error occurred. Please try again.');
     }
   };
+
+
   return (
     <View
       style={{
@@ -53,8 +63,7 @@ const CreatePassword = ({navigation}) => {
         marginTop: 22,
       }}>
       <View>
-        <TouchableOpacity
-        onPress={()=> navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text
@@ -94,8 +103,12 @@ const CreatePassword = ({navigation}) => {
           <TextInput
             secureTextEntry={ispasswordShown}
             placeholder="Enter your password"
+
             value={password}
             onChangeText={text => setPassword(text)}
+
+            id="password"
+
             style={{
               fontSize: 16,
               fontWeight: '400',
@@ -111,9 +124,9 @@ const CreatePassword = ({navigation}) => {
               top: 10,
             }}>
             {ispasswordShown == true ? (
-              <Icon name="eye" size={24} color={COLORS.primary} />
-            ) : (
               <Icon name="eye-slash" size={24} color={COLORS.primary} />
+            ) : (
+              <Icon name="eye" size={24} color={COLORS.primary} />
             )}
           </TouchableOpacity>
           <Text
@@ -149,8 +162,12 @@ const CreatePassword = ({navigation}) => {
           <TextInput
             secureTextEntry={ispasswordShownC}
             placeholder="Confirm your password"
+
             value={confirmPassword}
             onChangeText={text => setConfirmPassword(text)}
+
+            id="confirmPassword"
+
             style={{
               fontSize: 16,
               fontWeight: '400',
@@ -167,9 +184,9 @@ const CreatePassword = ({navigation}) => {
               top: 10,
             }}>
             {ispasswordShownC == true ? (
-              <Icon name="eye" size={24} color={COLORS.primary} />
-            ) : (
               <Icon name="eye-slash" size={24} color={COLORS.primary} />
+            ) : (
+              <Icon name="eye" size={24} color={COLORS.primary} />
             )}
           </TouchableOpacity>
         </View>
@@ -191,6 +208,7 @@ const CreatePassword = ({navigation}) => {
         }}
         title="Confirm"
         filled
+        onpress={() => navigation.navigate('AccountCreated')}
       />
     </View>
   );
