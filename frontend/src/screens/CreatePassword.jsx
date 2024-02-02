@@ -34,7 +34,9 @@ const CreatePassword = ({navigation}) => {
       );
       
       if(response.data.success===true){
-        navigation.navigate('AccountCreated')
+        navigation.navigate('AccountCreated',{
+          email
+        })
       }else{
         setErrorText(response.data.message);
       }

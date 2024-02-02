@@ -4,6 +4,7 @@ import cors from "cors"
 import mongoose from "mongoose"
 import { registerRoutes } from "./routes/registerRoute.js"
 import { loginRoutes } from "./routes/loginRoute.js"
+import { otpGenerate } from "./routes/otp_generator.js"
 
 
 dotenv.config()
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGOURL).then(()=>{
 
 app.use("/api", registerRoutes)
 app.use("/api", loginRoutes)
+app.use("/api", otpGenerate)
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`)
 })
