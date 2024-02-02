@@ -5,10 +5,7 @@ import COLORS from '../constants/colors';
 import Button from '../components/Button';
 
 import Toast from '../components/Toast';
-import { useNavigation } from '@react-navigation/native';
-
-
-
+import {useNavigation} from '@react-navigation/native';
 
 const CreatePassword = () => {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
@@ -25,7 +22,6 @@ const CreatePassword = () => {
       }}>
       <View>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text
@@ -81,11 +77,9 @@ const CreatePassword = () => {
               top: 10,
             }}>
             {ispasswordShown == true ? (
-             
               <Icon name="eye-slash" size={24} color={COLORS.primary} />
             ) : (
               <Icon name="eye" size={24} color={COLORS.primary} />
-
             )}
           </TouchableOpacity>
           <Text
@@ -121,9 +115,7 @@ const CreatePassword = () => {
           <TextInput
             secureTextEntry={ispasswordShownC}
             placeholder="Confirm your password"
-
             id="confirmPassword"
-
             style={{
               fontSize: 16,
               fontWeight: '400',
@@ -139,11 +131,9 @@ const CreatePassword = () => {
               top: 10,
             }}>
             {ispasswordShownC == true ? (
-
               <Icon name="eye-slash" size={24} color={COLORS.primary} />
             ) : (
               <Icon name="eye" size={24} color={COLORS.primary} />
-
             )}
           </TouchableOpacity>
         </View>
@@ -154,6 +144,7 @@ const CreatePassword = () => {
         }}
         title="Confirm"
         filled
+        onpress={() => navigation.navigate('AccountCreated')}
       />
     </View>
   );
