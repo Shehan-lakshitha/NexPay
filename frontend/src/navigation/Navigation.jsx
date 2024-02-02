@@ -9,7 +9,7 @@ import ResetPassword from '../screens/ResetPassword';
 import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
 
-import AccountCreated from '../screens/AccountCreated';
+
 
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 
@@ -28,7 +28,7 @@ export default function Navigation() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
 
-        <Stack.Screen name="AccountCreated" component={AccountCreated} />
+        
 
         <Stack.Screen
           name="OTPVerificationScreen"
