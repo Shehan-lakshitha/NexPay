@@ -1,3 +1,20 @@
+
+import React from 'react'
+import {
+  SafeAreaView,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+function AccountCreated({navigation}) {
+  return (
+    <Text>AccountCreated</Text>
+  )
+}
+
+export default AccountCreated
+
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -53,3 +70,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
 });
+
