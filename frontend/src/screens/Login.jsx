@@ -6,13 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -20,7 +19,7 @@ export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [errMsg,setErrMsg]=useState('');
+
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -36,20 +35,11 @@ export default function Login({navigation}) {
           navigation.navigate('Home');
         }
       
-      }else{
-        setErrMsg(response.data.message)
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-import {useNavigation} from '@react-navigation/native';
-
-export default function Login() {
-  const [ispasswordShown, setIsPasswordShown] = useState(true);
-  const navigation = useNavigation();
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,20 +97,13 @@ export default function Login() {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-
-            onPress={isChecked => {}}
-
+            onPress={() => {}}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget Password</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.errConatiner}>
-        <Text style={styles.errMsgStyles}>
-           {errMsg}
-        </Text>
       </View>
       <Button
         style={styles.loginBtn}
@@ -191,16 +174,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     opacity: 0.8,
     fontWeight: '400',
-  },
-  errConatiner:{
-    alignItems:'center',
-    justifyContent:'center',
-    marginTop:20
-  },
-  errMsgStyles:{
-    fontSize: 20,
-    fontWeight: '400',
-    color: COLORS.red,
   },
   loginBtn: {
     marginTop: 240,

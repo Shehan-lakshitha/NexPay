@@ -1,19 +1,5 @@
 
-import React from 'react'
-import {
-  SafeAreaView,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-function AccountCreated({navigation}) {
-  return (
-    <Text>AccountCreated</Text>
-  )
-}
 
-export default AccountCreated
 
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
@@ -23,8 +9,8 @@ import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 
-const AccountCreated = () => {
-  const navigation = useNavigation();
+ const AccountCreated = ({navigation}) => {
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +30,7 @@ const AccountCreated = () => {
   );
 };
 
-export default AccountCreated;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -71,3 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default AccountCreated;

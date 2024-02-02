@@ -3,7 +3,7 @@ const COLORS = {
     black: '#000',
     primary: '#9747FF',
  
-    red:'#FF0000'
+    red:'#FF0000',
     green: '#006400'
 
 }
