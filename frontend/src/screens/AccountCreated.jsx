@@ -1,3 +1,6 @@
+
+
+
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -5,10 +8,29 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
-
-const AccountCreated = () => {
-  const navigation = useNavigation();
-
+import { useRoute } from '@react-navigation/native';
+import axios from "axios"
+ const AccountCreated = ({navigation}) => {
+  const route = useRoute();
+  const {email} = route.params;
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        'http://192.168.8.159:5000/api/generate',
+        {email: email,},
+      );
+      console.log(response.data.message)
+      if(response.data.success==true){
+        navigation.navigate('OTPVerificationScreen')
+      }
+      
+      
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>
@@ -21,13 +43,13 @@ const AccountCreated = () => {
         style={styles.btn}
         title="Continue"
         filled
-        onpress={() => navigation.navigate('OTPVerificationScreen')}
+        onpress={handleSubmit}
       />
     </SafeAreaView>
   );
 };
 
-export default AccountCreated;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -53,3 +75,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
 });
+
+export default AccountCreated;

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
   SafeAreaView,
   Text,
@@ -9,12 +10,16 @@ import {
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
 
 
-const Register = () => {
-  const navigation = useNavigation();
-  
+
+const Register = ({navigation}) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [NIC, setNIC] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+ 
   return (
     <SafeAreaView>
       <View
@@ -69,6 +74,8 @@ const Register = () => {
                 <TextInput
                   keyboardType="default"
                   placeholder="Enter your first name"
+                  value={firstName}
+                  onChangeText={text => setFirstName(text)}
                   style={{
                     fontSize: 16,
                     fontWeight: '400',
@@ -97,6 +104,8 @@ const Register = () => {
                 <TextInput
                   keyboardType="default"
                   placeholder="Enter your last name"
+                  value={lastName}
+                  onChangeText={text => setLastName(text)}
                   style={{
                     fontSize: 16,
                     fontWeight: '400',
@@ -131,6 +140,8 @@ const Register = () => {
               <TextInput
                 keyboardType="email-address"
                 placeholder="Enter your email address"
+                value={email}
+                onChangeText={text => setEmail(text)}
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -165,6 +176,8 @@ const Register = () => {
               <TextInput
                 keyboardType="numeric"
                 placeholder="Enter your NIC number"
+                value={NIC}
+                onChangeText={text => setNIC(text)}
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -199,19 +212,11 @@ const Register = () => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <TextInput
-                placeholder="+94"
-                keyboardType="numeric"
-                style={{
-                  fontSize: 16,
-                  fontWeight: '400',
-                  width: '12%',
-                  height: '100%',
-                  marginLeft: 10,
-                }}
-              />
+              
               <TextInput
                 placeholder="Enter your phone no."
+                value={phoneNumber}
+                onChangeText={text => setPhoneNumber(text)}
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -250,7 +255,15 @@ const Register = () => {
             by register, you accept our Terms and conditions
           </Text>
           <Button
-            onpress={() => navigation.navigate('CreatePassword')}
+            onpress={() => {
+              navigation.navigate('CreatePassword', {
+                firstName,
+                lastName,
+                email,
+                NIC,
+                phoneNumber,
+              });
+            }}
             title="Register"
             filled
           />
