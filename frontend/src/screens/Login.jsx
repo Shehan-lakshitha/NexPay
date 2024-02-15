@@ -6,41 +6,57 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {StackNavigationProp} from '@react-navigation/stack';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type RootStackParamList = {
-  Home: undefined;
-  ResetPassword: undefined;
-  ForgetPassword: undefined;
-  Register: undefined;
-  LogIn: undefined;
-  CreatePassword: undefined;
-};
 
-type LoginProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'LogIn'>;
-};
-
-export default function Login({navigation}: LoginProps) {
+export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        'http://192.168.8.159:5000/api/login',
+        {
+          email: email,
+          password: password,
+        },
+      );
+      if (response.data.success == true) {
+        if(response.data.token){
+          await AsyncStorage.setItem('token', response.data.token);
+          navigation.navigate('Home');
+        }
+      
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Login</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} color={COLORS.black} />
+        </TouchableOpacity>
+        <Text style={styles.headertitle}>Login</Text>
       </View>
       <View style={styles.form}>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Phone number</Text>
+          <Text style={styles.label}>Email</Text>
           <View style={styles.input}>
-            <Text style={styles.prefix}>+94</Text>
             <TextInput
-              keyboardType="number-pad"
-              onChangeText={() => {}}
+              onChangeText={text => {
+                setEmail(text);
+              }}
               placeholder=""
               style={{width: '100%'}}
             />
@@ -52,6 +68,9 @@ export default function Login({navigation}: LoginProps) {
             <TextInput
               secureTextEntry={ispasswordShown}
               style={{width: '100%'}}
+              onChangeText={text => {
+                setPassword(text);
+              }}
             />
             <TouchableOpacity
               onPress={() => setIsPasswordShown(!ispasswordShown)}
@@ -78,7 +97,7 @@ export default function Login({navigation}: LoginProps) {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-            onPress={(isChecked: boolean) => {}}
+            onPress={() => {}}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
@@ -86,12 +105,11 @@ export default function Login({navigation}: LoginProps) {
           </TouchableOpacity>
         </View>
       </View>
-
       <Button
         style={styles.loginBtn}
         title="Login"
         filled
-        onpress={() => navigation.navigate('Home')}
+        onpress={handleSubmit}
       />
 
       <View style={styles.footer}>
@@ -107,21 +125,23 @@ export default function Login({navigation}: LoginProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 16,
+    marginHorizontal: 22,
+    marginTop: 22,
   },
   header: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    marginVertical: 28,
   },
-  title: {
+  headertitle: {
     color: COLORS.black,
-    fontSize: 22,
-    fontWeight: '500',
-    marginBottom: 40,
+    fontSize: 24,
+    fontWeight: '600',
+    marginHorizontal: '35%',
   },
   form: {
-    margin: 25,
+    marginTop: 100,
+    marginHorizontal: 15,
   },
   inputContainer: {
     marginBottom: 25,
@@ -156,7 +176,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   loginBtn: {
-    margin: 30,
+    marginTop: 240,
+    marginHorizontal: 15,
+    marginBottom: 20,
   },
   footer: {
     flexDirection: 'row',
