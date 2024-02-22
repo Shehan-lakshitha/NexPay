@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Easing} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Easing,
+  TextInput,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,6 +16,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import Button from '../components/Button';
 
 const AddCard = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -50,7 +58,7 @@ const AddCard = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
-      <Text style={styles.register}>Wallet</Text>
+      <Text style={styles.register}>Add New Card</Text>
       <TouchableOpacity style={styles.addbtn} onPress={handleFlip}>
         <Icon name="plus" size={12} color={COLORS.white} />
         <Text style={styles.addbtntext}>Flip Card</Text>
@@ -73,6 +81,63 @@ const AddCard = () => {
       <Animated.View style={[styles.cardBack, backAnimatedStyle]}>
         <Text style={styles.cvv}>{cvv || 'CVV'}</Text>
       </Animated.View>
+
+      <View>
+        <Text style={styles.name}>Card holder's Name</Text>
+        <View style={styles.input}>
+          <TextInput
+            onChangeText={name => {
+              setHolderName(name);
+            }}
+            placeholder=""
+            style={{width: '100%'}}
+          />
+        </View>
+      </View>
+
+      <View>
+        <Text style={styles.name}>Card Number</Text>
+        <View style={styles.input}>
+          <TextInput
+            onChangeText={number => {
+              setCardNumber(number);
+            }}
+            placeholder=""
+            style={{width: '100%'}}
+          />
+        </View>
+      </View>
+
+      <View style={styles.expCvv}>
+        <View>
+          <Text style={styles.name}>Expire Date</Text>
+          <View style={styles.input}>
+            <TextInput
+              onChangeText={expDate => {
+                setExpiryDate(expDate);
+              }}
+              placeholder=""
+              style={{width: '100%'}}
+            />
+          </View>
+        </View>
+
+        <View style={styles.cvvI}>
+          <Text style={styles.name}>CVV</Text>
+          <View style={styles.input}>
+            <TextInput
+              onChangeText={cvv => {
+                setCvv(cvv);
+              }}
+              onPressIn={handleFlip}
+              placeholder=""
+              style={{width: '100%'}}
+            />
+          </View>
+        </View>
+      </View>
+
+      <Button style={styles.savebtn} title="Save my card" filled />
     </View>
   );
 };
@@ -96,7 +161,7 @@ const styles = StyleSheet.create({
   cardBack: {
     height: 230,
     width: '100%',
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.primary,
     marginTop: 55,
     borderRadius: 20,
     backfaceVisibility: 'hidden',
@@ -155,5 +220,30 @@ const styles = StyleSheet.create({
     right: 0,
     marginTop: 100,
     marginEnd: 20,
+  },
+  name: {
+    color: COLORS.black,
+    fontSize: 16,
+    fontWeight: '400',
+    marginTop: 20,
+  },
+  input: {
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  expCvv: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 183,
+  },
+  cvvI: {
+    marginStart: 25,
+  },
+  savebtn: {
+    top: 70,
   },
 });
