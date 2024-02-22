@@ -4,10 +4,11 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Easing,
   TextInput,
+  Image,
+  ImageBackground,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import {useNavigation} from '@react-navigation/native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Animated, {
@@ -17,12 +18,16 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Button from '../components/Button';
+import visa from '../Assets/Visa_Logo.png';
+import masterCard from '../Assets/MasterCard.png';
+import cardFront from '../Assets/cardFront.png';
 
 const AddCard = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [cardType, setCardType] = useState('');
   const navigation = useNavigation();
 
   const spin = useSharedValue(0);
@@ -53,28 +58,66 @@ const AddCard = () => {
     spin.value = spin.value ? 0 : 1;
   };
 
+  const formattedCardNumber = number => {
+    let formattedInput = number.replace(/\D/g, '');
+
+    formattedInput = formattedInput.replace(/(.{4})/g, '$1 ').trim();
+    setCardNumber(formattedInput);
+    checkCardType(formattedInput);
+  };
+
+  const formattedExpiryDate = date => {
+    let formattedInput = date.replace(/\D/g, '');
+
+    formattedInput = formattedInput.replace(/(\d{2})(\d{0,2})/, '$1/$2').trim();
+    setExpiryDate(formattedInput);
+  };
+
+  const checkCardType = number => {
+    const firstNumber = number.charAt(0);
+    if (firstNumber === '4') {
+      setCardType('visa');
+    } else if (firstNumber === '5') {
+      setCardType('mastercard');
+    } else {
+      setCardType('');
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log(
+      'Card Number: ' + cardNumber,
+      '\nCard holders name: ' + holderName,
+      '\nExpire Date: ' + expiryDate,
+      '\nCVV: ' + cvv,
+    );
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
       <Text style={styles.register}>Add New Card</Text>
-      <TouchableOpacity style={styles.addbtn} onPress={handleFlip}>
-        <Icon name="plus" size={12} color={COLORS.white} />
-        <Text style={styles.addbtntext}>Flip Card</Text>
-      </TouchableOpacity>
 
       {/* Front side */}
       <Animated.View style={[styles.cardFront, frontAnimatedStyle]}>
-        <View style={styles.cardNameDate}>
-          <Text style={styles.holderName}>
-            {holderName || "Card Holder's Name"}
+        <ImageBackground source={cardFront} style={styles.cardFrontImg}>
+          <View style={styles.cardNameDate}>
+            <Text style={styles.holderName}>
+              {holderName || "Card Holder's Name"}
+            </Text>
+            <Text style={styles.expiry}>{expiryDate || 'MM/YY'}</Text>
+          </View>
+          <Text style={styles.cardNumber}>
+            {cardNumber || '**** **** **** ****'}
           </Text>
-          <Text style={styles.expiry}>{expiryDate || 'MM/YY'}</Text>
-        </View>
-        <Text style={styles.cardNumber}>
-          {cardNumber || '**** **** **** ****'}
-        </Text>
+          {cardType === 'visa' && (
+            <Image style={styles.visaLogo} source={visa} />
+          )}
+          {cardType === 'mastercard' && (
+            <Image style={styles.mastercardLogo} source={masterCard} />
+          )}
+        </ImageBackground>
       </Animated.View>
 
       {/* Back side */}
@@ -90,7 +133,6 @@ const AddCard = () => {
               setHolderName(name);
             }}
             placeholder=""
-            style={{width: '100%'}}
           />
         </View>
       </View>
@@ -100,10 +142,10 @@ const AddCard = () => {
         <View style={styles.input}>
           <TextInput
             onChangeText={number => {
-              setCardNumber(number);
+              formattedCardNumber(number);
             }}
+            maxLength={16}
             placeholder=""
-            style={{width: '100%'}}
           />
         </View>
       </View>
@@ -114,8 +156,9 @@ const AddCard = () => {
           <View style={styles.input}>
             <TextInput
               onChangeText={expDate => {
-                setExpiryDate(expDate);
+                formattedExpiryDate(expDate);
               }}
+              maxLength={4}
               placeholder=""
               style={{width: '100%'}}
             />
@@ -129,7 +172,9 @@ const AddCard = () => {
               onChangeText={cvv => {
                 setCvv(cvv);
               }}
-              onPressIn={handleFlip}
+              maxLength={3}
+              onFocus={handleFlip}
+              onBlur={handleFlip}
               placeholder=""
               style={{width: '100%'}}
             />
@@ -137,7 +182,12 @@ const AddCard = () => {
         </View>
       </View>
 
-      <Button style={styles.savebtn} title="Save my card" filled />
+      <Button
+        style={styles.savebtn}
+        onpress={handleSubmit}
+        title="Save my card"
+        filled
+      />
     </View>
   );
 };
@@ -151,12 +201,16 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   cardFront: {
-    height: 230,
     width: '100%',
-    backgroundColor: COLORS.primary,
     marginTop: 80,
     position: 'absolute',
     borderRadius: 20,
+  },
+  cardFrontImg: {
+    width: '100%',
+    height: 245,
+    right: 0,
+    marginStart: 8,
   },
   cardBack: {
     height: 230,
@@ -245,5 +299,19 @@ const styles = StyleSheet.create({
   },
   savebtn: {
     top: 70,
+  },
+  visaLogo: {
+    position: 'absolute',
+    bottom: 40,
+    left: -10,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  mastercardLogo: {
+    position: 'absolute',
+    bottom: 40,
+    right: 25,
+    height: 50,
+    resizeMode: 'contain',
   },
 });
