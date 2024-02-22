@@ -8,6 +8,7 @@ import ForgetPassword from '../screens/ForgetPassword';
 import ResetPassword from '../screens/ResetPassword';
 import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
+import AddCard from '../screens/AddCard';
 
 
 
@@ -19,7 +20,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}>
+        screenOptions={{headerShown: false}} >
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -27,13 +28,11 @@ export default function Navigation() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
-
-        
-
         <Stack.Screen
           name="OTPVerificationScreen"
           component={OTPVerificationScreen}
         />
+        <Stack.Screen name="AddCard" component={AddCard} />
 
       </Stack.Navigator>
     </NavigationContainer>
