@@ -6,8 +6,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react'
 import COLORS from '../constants/colors';
 
-export default function NavBar({navigation}) {
+export default function NavBar({navigation,data}) {
     const colorScheme = useColorScheme();
+    
     const backgroundColor = colorScheme === 'dark' ? 'black' : 'white';
   return (
     
@@ -38,7 +39,7 @@ export default function NavBar({navigation}) {
       </TouchableOpacity>
     </View>
     <View style={styles.nav}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('Profile',{data})}>
       <AwesomeIcon name="user-o" size={30} color={COLORS.white} /> 
       </TouchableOpacity>
     </View>
