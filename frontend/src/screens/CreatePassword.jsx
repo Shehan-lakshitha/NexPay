@@ -21,7 +21,7 @@ const CreatePassword = ({navigation}) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.43.199:5000/api/register',
+        'http://10.0.2.2:5000/api/register',
         {
           firstName: firstName,
           lastName: lastName,

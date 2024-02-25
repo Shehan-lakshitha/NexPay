@@ -23,7 +23,7 @@ export default function Login({navigation}) {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.43.199:5000/api/login',
+        'http://10.0.2.2:5000/api/login',
         {
           email: email,
           password: password,

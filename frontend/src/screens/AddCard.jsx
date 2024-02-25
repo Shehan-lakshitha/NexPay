@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
   expiry: {
     color: COLORS.white,
     fontSize: 16,
+    fontWeight: '500',
     marginEnd: 30,
   },
   cvv: {
