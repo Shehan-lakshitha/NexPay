@@ -21,6 +21,7 @@ import Button from '../components/Button';
 import visa from '../Assets/Visa_Logo.png';
 import masterCard from '../Assets/MasterCard.png';
 import cardFront from '../Assets/cardFront.png';
+import cardBack from '../Assets/cardBack.png';
 
 const AddCard = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -122,7 +123,9 @@ const AddCard = () => {
 
       {/* Back side */}
       <Animated.View style={[styles.cardBack, backAnimatedStyle]}>
-        <Text style={styles.cvv}>{cvv || 'CVV'}</Text>
+        <ImageBackground source={cardBack} style={styles.cardFrontImg}>
+          <Text style={styles.cvv}>{cvv || 'CVV'}</Text>
+        </ImageBackground>
       </Animated.View>
 
       <View>
@@ -215,7 +218,6 @@ const styles = StyleSheet.create({
   cardBack: {
     height: 230,
     width: '100%',
-    backgroundColor: COLORS.primary,
     marginTop: 55,
     borderRadius: 20,
     backfaceVisibility: 'hidden',
@@ -269,10 +271,10 @@ const styles = StyleSheet.create({
     marginEnd: 30,
   },
   cvv: {
-    color: COLORS.white,
+    color: COLORS.black,
     fontSize: 16,
     position: 'absolute',
-    right: 0,
+    right: 58,
     marginTop: 100,
     marginEnd: 20,
   },

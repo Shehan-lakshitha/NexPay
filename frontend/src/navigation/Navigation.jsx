@@ -20,7 +20,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{headerShown: false}} initialRouteName='Wallet' >
+        screenOptions={{headerShown: false}}>
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />

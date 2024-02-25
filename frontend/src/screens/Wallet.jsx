@@ -9,11 +9,13 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import cardFront from '../Assets/cardFront.png';
+import {useNavigation} from '@react-navigation/native';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -21,7 +23,7 @@ const Wallet = () => {
       </TouchableOpacity>
       <Text style={styles.register}>Wallet</Text>
 
-      <TouchableOpacity style={styles.headerbtn}>
+      <TouchableOpacity style={styles.headerbtn} onPress={() => navigation.navigate('AddCard')}>
         <Icon name="plus" size={16} color={COLORS.white} />
         <Text style={styles.addCardbtn}>Add Card</Text>
       </TouchableOpacity>
