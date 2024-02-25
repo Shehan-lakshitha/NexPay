@@ -10,15 +10,15 @@ const otpVerifyController = async (req, res) => {
            const user=await User.findOne({email})
            
            const validOtp=await bcrypt.compare(otp.toString(), user.otp) 
-           console.log(validOtp)
+           
            if(validOtp){
             const currentTime = Date.now()
             const expireTime=new Date(user.updatedAt).getTime()
             
             const expiredOtp = currentTime > expireTime+15*60*1000;
 
-            //console.log(new Date(user.updatedAt).getTime())
-            console.log(currentTime)
+           
+           
             if(expiredOtp){
               console.log("OTP has been expired")
               return res.status(200).send({message:"Unsuccessfull",success:false})

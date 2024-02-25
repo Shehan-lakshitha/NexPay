@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import { useRoute } from '@react-navigation/native';
-
+import { URL } from '../constants/URL';
 
 
 
@@ -21,7 +21,7 @@ const CreatePassword = ({navigation}) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.43.199:5000/api/register',
+        `${URL}/api/register`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -35,7 +35,8 @@ const CreatePassword = ({navigation}) => {
       
       if(response.data.success===true){
         navigation.navigate('AccountCreated',{
-          email
+          email,
+          firstName
         })
       }else{
         setErrorText(response.data.message);
