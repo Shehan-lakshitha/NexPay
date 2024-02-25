@@ -7,7 +7,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import axios from "axios"
  const AccountCreated = ({navigation}) => {
@@ -16,12 +15,14 @@ import axios from "axios"
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.8.159:5000/api/generate',
+        'http://192.168.43.199:5000/api/generate',
         {email: email,},
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        navigation.navigate('OTPVerificationScreen')
+        navigation.navigate('OTPVerificationScreen',{
+          email:email
+        })
       }
       
       

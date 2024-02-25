@@ -20,6 +20,7 @@ const otpController =async (req, res,next) => {
         upperCaseAlphabets: false,
         specialChars: false,
       })
+      console.log(token)
       const hashedOtp=bcrypt.hashSync(token,10)
       await User.findOneAndUpdate({email},{otp:hashedOtp},{new:true})
         

@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import COLORS from '../constants/colors';
@@ -23,7 +23,7 @@ export default function Login({navigation}) {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.8.159:5000/api/login',
+        'http://192.168.43.199:5000/api/login',
         {
           email: email,
           password: password,
@@ -32,7 +32,7 @@ export default function Login({navigation}) {
       if (response.data.success == true) {
         if(response.data.token){
           await AsyncStorage.setItem('token', response.data.token);
-          navigation.navigate('Home');
+          navigation.navigate('Home',{email});
         }
       
       }
