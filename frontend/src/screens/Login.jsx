@@ -13,7 +13,7 @@ import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { URL } from '../constants/URL';
 
 export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
@@ -23,7 +23,7 @@ export default function Login({navigation}) {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://10.0.2.2:5000/api/login',
+        `${URL}/api/login`,
         {
           email: email,
           password: password,

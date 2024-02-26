@@ -91,7 +91,7 @@ const OTPVerificationScreen = () => {
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        navigation.navigate('Home')
+        navigation.navigate('Home',{email})
         
         
       }else{

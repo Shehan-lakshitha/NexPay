@@ -19,14 +19,16 @@ import NavBar from '../components/NavBar';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { URL } from '../constants/URL';
 
 
 
-export default function Home() {
+export default function Home({navigation}) {
   const route = useRoute();
   const {email} = route.params;
   const [currentDate, setCurrentDate] = useState('');
   const [userName, setUserName] = useState('');
+  const [userData, setUserData] = useState(null);
   const colorScheme = useColorScheme();
   const backgroundColor = colorScheme === 'dark' ? 'black' : 'white';
   const navigation = useNavigation();
@@ -36,9 +38,9 @@ export default function Home() {
     setCurrentDate(date);
     const fetchData=async()=>{
       try {
-        const response=await axios.get(`http://10.0.2.2:5000/api/home/${email}`)
-        
+        const response=await axios.get(`${URL}/api/home/${email}`)
           setUserName(`${response.data.firstName} ${response.data.lastName}`)
+          setUserData(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -158,7 +160,7 @@ export default function Home() {
         </View>
       </View>
       </View>
-      <NavBar/>
+      <NavBar navigation={navigation} data={userData}/>
       
       
     </SafeAreaView>

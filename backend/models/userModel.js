@@ -36,6 +36,10 @@ const newSchema=mongoose.Schema({
     otp:{
         type:String,
         
+    },
+    userImg:{
+        type:String,
+
     }
    
     

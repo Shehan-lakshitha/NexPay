@@ -30,7 +30,7 @@ const otpController =async (req, res,next) => {
           sendMail(email, token, res)
           lastOTPRequest.set(email, currentTime)
             return res.status(200).send({
-              message: "OTP, and expiration time stored in database",success:true
+              message: "OTP stored in database",success:true
       })
 
       
