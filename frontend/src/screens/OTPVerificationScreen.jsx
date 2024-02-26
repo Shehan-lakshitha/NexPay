@@ -85,7 +85,7 @@ const OTPVerificationScreen = () => {
     // Implement verification logic
     try {
       const response = await axios.post(
-        'http://192.168.8.159:5000/api/otpverify',
+        'http://10.0.2.2:5000/api/otpverify',
         {email: email,
         otp:otp},
       );

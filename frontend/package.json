@@ -27,6 +27,7 @@
     "react-native": "0.72.3",
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-easy-toast": "^2.3.0",
+
     "react-native-feather": "^1.1.2",
     "react-native-gesture-handler": "^2.12.0",
     "react-native-image-picker": "^7.1.0",

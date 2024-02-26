@@ -8,6 +8,8 @@ import ForgetPassword from '../screens/ForgetPassword';
 import ResetPassword from '../screens/ResetPassword';
 import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
+import AddCard from '../screens/AddCard';
+import Wallet from '../screens/Wallet';
 
 
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
@@ -28,12 +30,13 @@ export default function Navigation() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
         <Stack.Screen name="Profile" component={Profile} />
-        
 
         <Stack.Screen
           name="OTPVerificationScreen"
           component={OTPVerificationScreen}
         />
+        <Stack.Screen name="AddCard" component={AddCard} />
+        <Stack.Screen name="Wallet" component={Wallet} />
 
       </Stack.Navigator>
     </NavigationContainer>

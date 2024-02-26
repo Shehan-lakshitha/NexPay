@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "module": "^1.2.5",
+    "react-native-reanimated": "^3.7.1",
     "react-native-safe-area-context": "^4.7.1"
   }
 }

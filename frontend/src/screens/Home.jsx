@@ -14,11 +14,13 @@ import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Img from '../assets/img1.png'
+import Img from '../Assets/img1.png'
 import NavBar from '../components/NavBar';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { URL } from '../constants/URL';
+
 
 
 export default function Home({navigation}) {
@@ -29,6 +31,7 @@ export default function Home({navigation}) {
   const [userData, setUserData] = useState(null);
   const colorScheme = useColorScheme();
   const backgroundColor = colorScheme === 'dark' ? 'black' : 'white';
+  const navigation = useNavigation();
 
   useEffect(() => {
     let date = moment().format('llll');
@@ -36,7 +39,6 @@ export default function Home({navigation}) {
     const fetchData=async()=>{
       try {
         const response=await axios.get(`${URL}/api/home/${email}`)
-        
           setUserName(`${response.data.firstName} ${response.data.lastName}`)
           setUserData(response.data)
       } catch (error) {
@@ -67,7 +69,7 @@ export default function Home({navigation}) {
       <View style={styles.addCard}>
         <Image source={Img} style={styles.imageStyles}/>
         <View style={styles.plus}>
-          <TouchableOpacity onPress={()=>{}}>
+          <TouchableOpacity onPress={()=> navigation.navigate('Wallet')}>
           <FontAwesomeIcon name='circle-plus' size={30} color={COLORS.white}/>
           </TouchableOpacity>
         </View>
