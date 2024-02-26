@@ -1,5 +1,5 @@
 // React Native screen for OTP verification
-import React from 'react';
+import React, { useState  } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,12 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import axios from 'axios';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { useRoute } from '@react-navigation/native';
 const OtpInput = ({length = 6, onOtpSubmit = () => {}}) => {
   const [otp, setOtp] = React.useState(new Array(length).fill(''));
   const inputRefs = React.useRef([]);
@@ -67,8 +68,11 @@ const OtpInput = ({length = 6, onOtpSubmit = () => {}}) => {
 };
 
 const OTPVerificationScreen = () => {
+  
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const {email} = route.params;
+  const [errMsg,setErrmsg]=useState('')
   // Function to handle resend OTP
   const handleResendOTP = () => {
     console.log('Resend OTP');
@@ -76,9 +80,33 @@ const OTPVerificationScreen = () => {
   };
 
   // Function to handle verification
-  const handleVerify = otp => {
+  const handleVerify = async otp => {
     console.log('Verify Button Pressed with OTP:', otp);
     // Implement verification logic
+    try {
+      const response = await axios.post(
+        'http://10.0.2.2:5000/api/otpverify',
+        {email: email,
+        otp:otp},
+      );
+      console.log(response.data.message)
+      if(response.data.success==true){
+        navigation.navigate('Home',{email})
+        
+        
+      }else{
+        setErrmsg(response.data.message)
+        
+          
+      }
+
+      
+      
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
   };
 
   return (
@@ -119,7 +147,13 @@ const OTPVerificationScreen = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
+      
+       <Text style={{
+            fontSize: 16,
+            fontWeight: '400',
+            color: COLORS.red,
+            textAlign:'center'
+          }}>{errMsg}</Text>
       {/* Verify button */}
       <Button style={styles.verifyButton} title="Verify" filled />
     </SafeAreaView>

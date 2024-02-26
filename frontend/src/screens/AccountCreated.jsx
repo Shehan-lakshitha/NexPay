@@ -7,21 +7,23 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import axios from "axios"
+import { URL } from '../constants/URL';
  const AccountCreated = ({navigation}) => {
   const route = useRoute();
-  const {email} = route.params;
+  const {email,firstName} = route.params;
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        'http://192.168.8.159:5000/api/generate',
+        `${URL}/api/generate`,
         {email: email,},
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        navigation.navigate('OTPVerificationScreen')
+        navigation.navigate('OTPVerificationScreen',{
+          email:email
+        })
       }
       
       
@@ -36,7 +38,7 @@ import axios from "axios"
       <View style={styles.body}>
         <Icon name="check" size={100} color={COLORS.green} />
         <Text style={styles.heading}>Account Created</Text>
-        <Text style={styles.text}>Amila, Your account has being created</Text>
+        <Text style={styles.text}>{`${firstName}, Your account has being created`}</Text>
       </View>
 
       <Button
