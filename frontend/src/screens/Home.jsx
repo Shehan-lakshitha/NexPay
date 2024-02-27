@@ -23,7 +23,7 @@ import { URL } from '../constants/URL';
 
 
 
-export default function Home({navigation}) {
+export default function Home() {
   const route = useRoute();
   const {email} = route.params;
   const [currentDate, setCurrentDate] = useState('');

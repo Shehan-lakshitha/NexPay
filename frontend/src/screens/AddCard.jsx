@@ -30,7 +30,7 @@ const AddCard = () => {
   const [cvv, setCvv] = useState('');
   const [cardType, setCardType] = useState('');
   const navigation = useNavigation();
-
+  
   const spin = useSharedValue(0);
 
   const frontAnimatedStyle = useAnimatedStyle(() => {

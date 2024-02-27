@@ -14,6 +14,7 @@ import Wallet from '../screens/Wallet';
 
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
+import QRScan from '../screens/QRScan';
 
 
 export default function Navigation() {
@@ -37,6 +38,7 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
+        <Stack.Screen name="QRScan" component={QRScan} />
 
       </Stack.Navigator>
     </NavigationContainer>
