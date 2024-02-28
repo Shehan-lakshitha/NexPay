@@ -11,17 +11,19 @@ import CreatePassword from '../screens/CreatePassword';
 import AddCard from '../screens/AddCard';
 import Wallet from '../screens/Wallet';
 
-
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
-
+import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen
+          name="IntroLogoAnimationScreen"
+          component={IntroLogoAnimationScreen}
+        />
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -37,7 +39,6 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
