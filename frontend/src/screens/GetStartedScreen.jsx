@@ -32,7 +32,7 @@ const GetStartedScreen = () => {
           data={Slides}
           renderItem={({item}) => <GetStartedSlideItems item={item} />}
           horizontal
-          showsHorizontalScrollIndicator
+          showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
         />
