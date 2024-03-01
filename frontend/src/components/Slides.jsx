@@ -7,7 +7,7 @@ export default [
   },
   {
     id: 2,
-    title: 'Greetings Manage your finance',
+    title: 'Manage your finance',
     desc: 'From insurance to shopping list to loan payments, wallet  helps you plans and anticipate every move. NexPay, your money managing wallet',
     imgURL: require('../Assets/slideImg2.png'),
   },
