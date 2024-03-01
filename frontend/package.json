@@ -20,6 +20,7 @@
     "axios": "^1.6.5",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
+    "lottie-react-native": "^6.6.0",
     "moment": "^2.29.4",
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
