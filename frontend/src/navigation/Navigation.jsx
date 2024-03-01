@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login';
@@ -15,7 +15,7 @@ import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
 import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
-
+import TwoFactorAuthScreen from '../screens/TwoFactorAuthScreen';
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
@@ -24,18 +24,25 @@ export default function Navigation() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
-    
-    }, 1600);
+    }, 980);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        {showIntro ? <Stack.Screen
-          name="IntroLogoAnimationScreen"
-          component={IntroLogoAnimationScreen}
-        />: null}
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="TwoFactorAuthScreen">
+        {showIntro ? (
+          <Stack.Screen
+            name="IntroLogoAnimationScreen"
+            component={IntroLogoAnimationScreen}
+          />
+        ) : null}
+        <Stack.Screen
+          name="twoFactorAuthScreen"
+          component={TwoFactorAuthScreen}
+        />
         <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
