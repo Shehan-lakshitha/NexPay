@@ -11,7 +11,7 @@ const IntroLogoAnimationScreen = () => {
           <View>
             <LottieView
               style={styles.logoAnimation}
-              source={require('../assets/LogoAnimation.json')}
+              source={require('../Assets/logo.json')}
               autoPlay
             />
           </View>
