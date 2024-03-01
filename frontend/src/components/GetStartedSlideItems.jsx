@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '700',
     color: COLORS.black,
   },
