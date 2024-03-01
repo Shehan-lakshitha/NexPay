@@ -30,25 +30,23 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="TwoFactorAuthScreen">
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {showIntro ? (
           <Stack.Screen
             name="IntroLogoAnimationScreen"
             component={IntroLogoAnimationScreen}
           />
         ) : null}
-        <Stack.Screen
-          name="twoFactorAuthScreen"
-          component={TwoFactorAuthScreen}
-        />
         <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        <Stack.Screen
+          name="twoFactorAuthScreen"
+          component={TwoFactorAuthScreen}
+        />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
         <Stack.Screen name="Profile" component={Profile} />
