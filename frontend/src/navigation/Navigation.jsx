@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login';
@@ -17,13 +17,23 @@ import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    
+    }, 1600);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen
+        {showIntro ? <Stack.Screen
           name="IntroLogoAnimationScreen"
           component={IntroLogoAnimationScreen}
-        />
+        />: null}
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
