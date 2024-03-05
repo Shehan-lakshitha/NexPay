@@ -20,7 +20,10 @@ import {useRoute} from '@react-navigation/native';
 import GetStartedSlideItems from '../components/GetStartedSlideItems';
 import Slides from '../components/Slides';
 
+
 const GetStartedScreen = () => {
+
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -40,10 +43,10 @@ const GetStartedScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
-          <Button style={styles.button} title={'Register'} filled />
+          <Button style={styles.button} title={'Register'} onpress={()=> navigation.navigate('Register')} filled />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Button style={styles.button} title={'Login'} />
+          <Button style={styles.button} title={'LogIn'} onpress={()=> navigation.navigate('LogIn')}/>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
