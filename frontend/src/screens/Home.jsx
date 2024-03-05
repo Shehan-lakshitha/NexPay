@@ -53,7 +53,7 @@ export default function Home() {
       <View style={styles.Container}>
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
-          <Text style={styles.Date}>{`Today ${currentDate}`}</Text>
+          <Text style={styles.Date}>{'Today' + `${currentDate}`}</Text>
           <Text style={styles.name}>{userName}</Text>
         </View>
         <View style={styles.headerBtns}>
@@ -113,7 +113,7 @@ export default function Home() {
         <View style={styles.serviceTabs}>
         <View style={styles.serviceTabContainer}>
 
-        <TouchableOpacity onPress={()=>{}}>
+        <TouchableOpacity onPress={()=>{navigation.navigate('Card',{userData})}}>
           <View style={styles.serviceTab}>
             <FontAwesomeIcon name="money-bill-1" size={25} color={COLORS.purple} />
            </View>
@@ -127,7 +127,7 @@ export default function Home() {
             <FontAwesomeIcon name="mobile-screen" size={25} color={COLORS.purple} />
             </View>
           </TouchableOpacity>
-          <Text style={styles.serviceText}>{`Mobile\n top up`}</Text>
+          <Text style={styles.serviceText}>{'Mobile\n top up'}</Text>
           </View>
 
           <View style={styles.serviceTabContainer}>
@@ -321,6 +321,6 @@ const styles = StyleSheet.create({
   },
   transactions:{
     height:100,
-  },
-  
+  },
+  
 });

@@ -20,6 +20,7 @@
     "axios": "^1.6.5",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
+    "lottie-react-native": "^6.6.0",
     "moment": "^2.29.4",
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
@@ -29,7 +30,7 @@
     "react-native-camera-kit": "^13.0.0",
     "react-native-easy-toast": "^2.3.0",
     "react-native-feather": "^1.1.2",
-    "react-native-gesture-handler": "^2.12.0",
+    "react-native-gesture-handler": "^2.15.0",
     "react-native-image-picker": "^7.1.0",
     "react-native-qrcode-svg": "^6.3.0",
     "react-native-reanimated": "^3.7.1",
@@ -38,6 +39,7 @@
     "react-native-svg": "^14.1.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.0.0",
+    "reanimated": "^0.0.1-alpha",
     "run": "^1.5.0"
   },
   "devDependencies": {

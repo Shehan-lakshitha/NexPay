@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login';
@@ -11,18 +11,36 @@ import CreatePassword from '../screens/CreatePassword';
 import AddCard from '../screens/AddCard';
 import Wallet from '../screens/Wallet';
 
-
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
+
 import QRScan from '../screens/QRScan';
+
+import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
+import GetStartedScreen from '../screens/GetStartedScreen';
+
 
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    
+    }, 1600);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {showIntro ? <Stack.Screen
+          name="IntroLogoAnimationScreen"
+          component={IntroLogoAnimationScreen}
+        />: null}
+        <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -38,7 +56,9 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
+
         <Stack.Screen name="QRScan" component={QRScan} />
+
 
       </Stack.Navigator>
     </NavigationContainer>
