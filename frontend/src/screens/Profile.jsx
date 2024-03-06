@@ -13,6 +13,8 @@ import {launchImageLibrary,launchCamera} from 'react-native-image-picker';
 import axios from 'axios'
 import { useRoute } from '@react-navigation/native';
 import QR from '../components/QR';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Profile({navigation}) {
   const route = useRoute();
   const {data}=route.params
@@ -149,6 +151,11 @@ Alert.alert(
 );
 };
 
+const signOut = () => {
+  AsyncStorage.setItem('isLoggedIn', '');
+  AsyncStorage.setItem('token', '');
+  navigation.navigate('GetStartedScreen');
+}
 
 return (
      <ScrollView >
@@ -158,7 +165,7 @@ return (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => signOut()}>
           <Icon name="sign-out" size={24} color={COLORS.black}/>
       </TouchableOpacity>
       
