@@ -154,6 +154,7 @@ Alert.alert(
 const signOut = () => {
   AsyncStorage.setItem('isLoggedIn', '');
   AsyncStorage.setItem('token', '');
+  AsyncStorage.setItem('email', '');
   navigation.navigate('GetStartedScreen');
 }
 

@@ -18,7 +18,7 @@ const PinScreen = () => {
   const [isPinComplete, setIsPinComplete] = useState(false);
   const navigation = useNavigation();
 
-  const handlePinPress = (digit) => {
+  const handlePinPress = async (digit) => {
     if(isPinComplete) return;
 
     const newPin = pin + digit;
@@ -27,9 +27,9 @@ const PinScreen = () => {
     if(newPin.length === 4){
       setIsPinComplete(true);
       if(newPin === '4242'){
-        const email =  AsyncStorage.getItem('email');
+        const email = await AsyncStorage.getItem('email');
         console.log(email);
-        navigation.navigate('Home',{email});
+        navigation.navigate('Home',{email:email});
       }
     }
   }
