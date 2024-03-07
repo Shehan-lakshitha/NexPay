@@ -98,7 +98,7 @@ export default function Login({navigation}) {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-            isChecked={setChecked(true)}
+            onPress={()=> setChecked(!checked)}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
