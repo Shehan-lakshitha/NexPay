@@ -32,7 +32,7 @@ export default function Login({navigation}) {
           await AsyncStorage.setItem('token', response.data.token);
           if (checked) {
             AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
-            AsyncStorage.setItem('email', JSON.stringify(email));
+            AsyncStorage.setItem('email', email);
           }
           navigation.navigate('Home', {email});
         }

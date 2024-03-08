@@ -151,11 +151,12 @@ Alert.alert(
 );
 };
 
-const signOut = () => {
+const handlesignOut = () => {
+  navigation.navigate('GetStartedScreen');
   AsyncStorage.setItem('isLoggedIn', '');
   AsyncStorage.setItem('token', '');
   AsyncStorage.setItem('email', '');
-  navigation.navigate('GetStartedScreen');
+  
 }
 
 return (
@@ -166,7 +167,7 @@ return (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => signOut()}>
+      <TouchableOpacity onPress={() => handlesignOut()}>
           <Icon name="sign-out" size={24} color={COLORS.black}/>
       </TouchableOpacity>
       
