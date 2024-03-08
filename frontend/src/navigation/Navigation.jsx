@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Login from '../screens/Login';
 import AccountCreated from '../screens/AccountCreated';
 import Register from '../screens/Register';
@@ -16,17 +18,27 @@ import Profile from '../screens/Profile';
 import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
 import TwoFactorAuthScreen from '../screens/TwoFactorAuthScreen';
+import PinScreen from '../screens/PinScreen';
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   const [showIntro, setShowIntro] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkLoggedIn = async () => {
+    const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+    setIsLoggedIn(isLoggedIn);
+  }
 
   useEffect(() => {
+    checkLoggedIn();
     const timer = setTimeout(() => {
       setShowIntro(false);
     }, 980);
     return () => clearTimeout(timer);
   }, []);
+
+ 
 
   return (
     <NavigationContainer>
@@ -37,7 +49,14 @@ export default function Navigation() {
             component={IntroLogoAnimationScreen}
           />
         ) : null}
-        <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
+        {
+          isLoggedIn ? (
+            <Stack.Screen name="PinScreen" component={PinScreen} />
+          ) : 
+          (
+            <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
+          )
+        }
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -57,6 +76,7 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
