@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -9,13 +9,57 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import cardFront from '../Assets/cardFront.png';
-import {useNavigation} from '@react-navigation/native';
-
+import {useNavigation, useRoute} from '@react-navigation/native';
+import { URL } from '../constants/URL';
+import axios from 'axios';
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const navigation = useNavigation();
+  const route = useRoute();
+  const {userData} = route.params;
+  // In the screen where you navigate to
+ 
+   useEffect(()=>{
+    const fetchDetails=async ()=>{
+      try {
+        const response=await axios.post(`${URL}/api/carddetails`,{
+          id:userData._id
+        })
+         if(response){
+             setCardNumber(response?.data.cardNumber)
+             setExpiryDate(response?.data.expireData)
+             setHolderName(response?.data.holderName)
+         }
+    
+      } catch (error) {
+        console.log(error)
+        return null
+      }
+    }
+    fetchDetails()
+   })
+
+  
+// Use the retrieved data as needed
+      
+const addCard=async ()=>{
+  try {
+    const response=await axios.post(`${URL}/api/createuser`,{
+      id:userData._id
+    })
+     if(response.data.success===true){
+      navigation.navigate('AddCard',{
+        id:userData._id
+      })
+     }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -23,7 +67,7 @@ const Wallet = () => {
       </TouchableOpacity>
       <Text style={styles.register}>Wallet</Text>
 
-      <TouchableOpacity style={styles.headerbtn} onPress={() => navigation.navigate('AddCard')}>
+      <TouchableOpacity style={styles.headerbtn} onPress={addCard}>
         <Icon name="plus" size={16} color={COLORS.white} />
         <Text style={styles.addCardbtn}>Add Card</Text>
       </TouchableOpacity>

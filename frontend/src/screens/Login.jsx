@@ -19,6 +19,37 @@ export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [emailValidity,setEmailValidity]=useState(true)
+  const [passwordValidity,setPassswordValidity]=useState(true)
+  const [error,setError]=useState('')
+  const handleCheckEmail = (text) => {
+   
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    setEmail(text);
+    if (emailRegex.test(text)) {
+        
+        setEmailValidity(true);
+    } else {
+        setEmailValidity(false) 
+        setError('Invalid Email') 
+    }
+
+};
+
+ const handleCheckPassword=(value)=>{
+     const isNoWhiteSpace=/^\S+$/;
+     if(!isNoWhiteSpace.test(value)){
+      setPassswordValidity(false)
+      setError('Password must not contain Whitespaces.')
+      
+     }else{
+      setPassswordValidity(true)
+      setPassword(value)
+     }
+   
+ }
+
 
   const handleSubmit = async () => {
     try {
@@ -29,15 +60,18 @@ export default function Login({navigation}) {
           password: password,
         },
       );
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         if(response.data.token){
           await AsyncStorage.setItem('token', response.data.token);
           navigation.navigate('Home',{email});
         }
       
+      }else if(response.data.success === false){
+        setError('Invalid Email or Password')
       }
     } catch (error) {
       console.log(error);
+      setError('Invalid Email or Password')
     }
   };
 
@@ -55,12 +89,14 @@ export default function Login({navigation}) {
           <View style={styles.input}>
             <TextInput
               onChangeText={text => {
-                setEmail(text);
+                handleCheckEmail(text);
               }}
               placeholder=""
+              value={email}
               style={{width: '100%'}}
             />
           </View>
+          {!emailValidity? <Text style={styles.errorStyle}>{error}</Text>:''}
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
@@ -69,7 +105,7 @@ export default function Login({navigation}) {
               secureTextEntry={ispasswordShown}
               style={{width: '100%'}}
               onChangeText={text => {
-                setPassword(text);
+                handleCheckPassword(text);
               }}
             />
             <TouchableOpacity
@@ -86,6 +122,7 @@ export default function Login({navigation}) {
               )}
             </TouchableOpacity>
           </View>
+          {!passwordValidity? <Text style={styles.errorStyle}>{error}</Text>:''}
         </View>
 
         <View style={styles.formFooter}>
@@ -100,7 +137,7 @@ export default function Login({navigation}) {
             onPress={() => {}}
           />
           <TouchableOpacity
-            onPress={() => navigation.navigate('ForgetPassword')}>
+            onPress={() => navigation.navigate('PinScreen',{email})}>
             <Text style={styles.forgetPassword}>Forget Password</Text>
           </TouchableOpacity>
         </View>
@@ -159,6 +196,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  errorStyle:{
+    textAlign:'right',
+    color:COLORS.warning,
+    fontWeight:'500',
+    marginTop:2
   },
   prefix: {
     color: COLORS.black,

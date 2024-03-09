@@ -19,6 +19,20 @@ const Register = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [NIC, setNIC] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [emailValidity,setEmailValidity]=useState(true)
+  const [error,setError]=useState('')
+  const handleCheckEmail = (text) => {
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    setEmail(text);
+    if (emailRegex.test(text)) {
+        
+        setEmailValidity(true);
+    } else {
+        setEmailValidity(false) 
+        setError('Invalid Email') 
+    }
+};
  
   return (
     <SafeAreaView>
@@ -75,6 +89,7 @@ const Register = ({navigation}) => {
                   keyboardType="default"
                   placeholder="Enter your first name"
                   value={firstName}
+                  maxLength={12}
                   onChangeText={text => setFirstName(text)}
                   style={{
                     fontSize: 16,
@@ -105,6 +120,7 @@ const Register = ({navigation}) => {
                   keyboardType="default"
                   placeholder="Enter your last name"
                   value={lastName}
+                  maxLength={12}
                   onChangeText={text => setLastName(text)}
                   style={{
                     fontSize: 16,
@@ -141,7 +157,7 @@ const Register = ({navigation}) => {
                 keyboardType="email-address"
                 placeholder="Enter your email address"
                 value={email}
-                onChangeText={text => setEmail(text)}
+                onChangeText={text => handleCheckEmail(text)}
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
@@ -150,8 +166,17 @@ const Register = ({navigation}) => {
                 }}
               />
             </View>
+            {!emailValidity? 
+            <Text 
+            style={{
+              textAlign:'right',
+               color:COLORS.warning,
+              fontWeight:'500',
+              marginTop:2
+                    }}>
+            {error}</Text>:''}
           </View>
-
+          
           {/* NIC section */}
           <View
             style={{
@@ -174,7 +199,7 @@ const Register = ({navigation}) => {
                 borderRadius: 8,
               }}>
               <TextInput
-                keyboardType="numeric"
+                keyboardType="default"
                 placeholder="Enter your NIC number"
                 value={NIC}
                 onChangeText={text => setNIC(text)}
@@ -214,8 +239,10 @@ const Register = ({navigation}) => {
               }}>
               
               <TextInput
+                keyboardType="numeric"
                 placeholder="Enter your phone no."
                 value={phoneNumber}
+                maxLength={10}
                 onChangeText={text => setPhoneNumber(text)}
                 style={{
                   fontSize: 16,
@@ -231,7 +258,7 @@ const Register = ({navigation}) => {
                 fontSize: 16,
                 color: COLORS.black,
               }}>
-              If you have an accout{' '}
+              If you have an account{' '}
               <Text
                 style={{
                   color: COLORS.primary,

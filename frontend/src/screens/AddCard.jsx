@@ -7,8 +7,9 @@ import {
   TextInput,
   Image,
   ImageBackground,
+  Alert,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Animated, {
@@ -22,15 +23,23 @@ import visa from '../Assets/Visa_Logo.png';
 import masterCard from '../Assets/MasterCard.png';
 import cardFront from '../Assets/cardFront.png';
 import cardBack from '../Assets/cardBack.png';
+import axios from 'axios';
+import { URL } from '../constants/URL';
+const STRIPE_PUBLISHABLE_KEY='pk_test_51Oh4IYEyzMUhUrfVIWb0XCP0LzzOeO6ebVkc7VGXAwfjtX6SQIjk6COkVslz2iYcUBN40Tkps0LMFt1BhHJmz35g0011NTGNPn'
+  
 
 const AddCard = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
-  const [cvv, setCvv] = useState('');
+  const [cvc, setCvc] = useState('');
   const [cardType, setCardType] = useState('');
+  const [token, setToken] = useState('');
   const navigation = useNavigation();
-
+  const month=expiryDate.split('/')[0]
+  const year=expiryDate.split('/')[1]
+  const route = useRoute();
+  const {id} = route.params;
   const spin = useSharedValue(0);
 
   const frontAnimatedStyle = useAnimatedStyle(() => {
@@ -85,14 +94,71 @@ const AddCard = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(
-      'Card Number: ' + cardNumber,
-      '\nCard holders name: ' + holderName,
-      '\nExpire Date: ' + expiryDate,
-      '\nCVV: ' + cvv,
-    );
+  const handleSubmit = async() => {
+    
+    
+    const card = {
+      'card[number]': cardNumber,
+      'card[exp_month]':month,
+      'card[exp_year]': year,
+      'card[cvc]': cvc
+    };
+  
+
+    try {
+      const response = await axios.post('https://api.stripe.com/v1/tokens', 
+        Object.keys(card)
+          .map(key => key + '=' + card[key])
+          .join('&'),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: `Bearer ${STRIPE_PUBLISHABLE_KEY}`
+          }
+        }
+      );
+      console.log(response.data.id)
+      setToken(response.data.id)
+      Alert.alert(
+        "Confirmation",
+        "Are you sure you want to proceed?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => dataSubmit() }
+        ],
+        { cancelable: false }
+      );
+    
+     
+      
+     
+
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+    
   };
+  const dataSubmit=async()=>{
+    try {
+      const resToken=await axios.post(`${URL}/api/paymentmethod`,{
+        id:id,
+        token:token,
+        name:holderName
+      })
+       if(resToken.data.success===true){
+        navigation.goBack()
+       }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -124,7 +190,7 @@ const AddCard = () => {
       {/* Back side */}
       <Animated.View style={[styles.cardBack, backAnimatedStyle]}>
         <ImageBackground source={cardBack} style={styles.cardFrontImg}>
-          <Text style={styles.cvv}>{cvv || 'CVV'}</Text>
+          <Text style={styles.cvv}>{cvc || 'CVC'}</Text>
         </ImageBackground>
       </Animated.View>
 
@@ -172,8 +238,8 @@ const AddCard = () => {
           <Text style={styles.name}>CVV</Text>
           <View style={styles.input}>
             <TextInput
-              onChangeText={cvv => {
-                setCvv(cvv);
+              onChangeText={cvc => {
+                setCvc(cvc);
               }}
               maxLength={3}
               onFocus={handleFlip}

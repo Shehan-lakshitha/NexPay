@@ -23,7 +23,7 @@ const registerController = async(req, res,next) => {
        return res.status(201).json({success:true,message:"signup successfull."})  
     } catch (error) {
       
-      if(error.code==11000){
+      if(error.code===11000){
         return res.send({success:false,message:"Email is already in use."})
       }else{
         return res.send({success:false,message:"Server Error."})

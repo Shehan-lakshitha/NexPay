@@ -4,13 +4,15 @@ import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import { useRoute } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
 
 
 
-const CreatePassword = ({navigation}) => {
+const CreatePassword = () => {
   const route = useRoute();
+  const navigation=useNavigation()
   const {firstName, lastName, email, NIC, phoneNumber} = route.params;
    
   const [ispasswordShown, setIsPasswordShown] = useState(false);
@@ -18,6 +20,8 @@ const CreatePassword = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorText, setErrorText] = useState('');
+  const [error,setError]=useState('')
+  const [passwordValidity,setPassswordValidity]=useState(true)
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -40,6 +44,11 @@ const CreatePassword = ({navigation}) => {
         })
       }else{
         setErrorText(response.data.message);
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: `${errorText}`,
+        })
       }
       
       
@@ -47,8 +56,33 @@ const CreatePassword = ({navigation}) => {
     } catch (error) {
       console.error(error);
       setErrorText('An unexpected error occurred. Please try again.');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: `${errorText}`,
+      })
     }
   };
+
+    const checkValidPassword=(value)=>{
+      const minLength = 8; 
+      const uppercaseRegex = /[A-Z]/; 
+      const lowercaseRegex = /[a-z]/; 
+      const digitRegex = /[0-9]/; 
+      const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; 
+  
+      setPassword(value)
+     if(password.length >= minLength && uppercaseRegex.test(password) && lowercaseRegex.test(password) && digitRegex.test(password) && specialCharRegex.test(password)){
+         setPassswordValidity(true)
+         setPassword(value)
+
+     }else{
+      setPassswordValidity(false)
+      setError('Weak Password,should incude letters,special characters and numbers.')
+     }
+
+    }
+
   return (
     <View
       style={{
@@ -98,7 +132,7 @@ const CreatePassword = ({navigation}) => {
             secureTextEntry={ispasswordShown}
             placeholder="Enter your password"
             value={password}
-            onChangeText={text => setPassword(text)}
+            onChangeText={text => checkValidPassword(text)}
             style={{
               fontSize: 16,
               fontWeight: '400',
@@ -123,9 +157,17 @@ const CreatePassword = ({navigation}) => {
             style={{
               marginTop: 4,
             }}>
-            at least 9 characters, contaning a letter and a number
+            at least 8 characters, contaning a letter and a number
           </Text>
         </View>
+        {!passwordValidity? 
+        <Text 
+        style={{
+          textAlign:'center',
+           color:COLORS.warning,
+          fontWeight:'500',
+          marginTop:16
+                }}>{error}</Text>:''}
       </View>
 
       {/* Confirm Password */}
@@ -178,14 +220,7 @@ const CreatePassword = ({navigation}) => {
         </View>
       </View>
       <View>
-        <Text style={{
-            fontSize: 16,
-            fontWeight: '400',
-            color: COLORS.red,
-            textAlign:'center'
-          }}>
-          {errorText}
-        </Text>
+        
       </View>
       <Button
       onpress={handleSubmit}

@@ -12,6 +12,10 @@ import { dirname } from 'path';
 import path from 'path';
 import { imgUpload } from "./routes/imageUpload.js"
 import { imgDisplay } from "./routes/imageDisplay.js"
+import router from "./routes/paymentRoute.js"
+import { addPin } from "./routes/addPinRoute.js"
+import { addUser } from "./routes/addUsers.js"
+import { reset } from "./routes/resetPassword.js"
 
 
 dotenv.config()
@@ -37,6 +41,10 @@ app.use("/api", otpVerify)
 app.use("/api", homeRoutes)
 app.use("/api", imgUpload)
 app.use("/api", imgDisplay)
+app.use("/api", router)
+app.use("/api", addPin)
+app.use("/api", addUser)
+app.use("/api", reset)
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`)
