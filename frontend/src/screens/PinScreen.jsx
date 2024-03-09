@@ -28,7 +28,6 @@ const PinScreen = () => {
       setIsPinComplete(true);
       if(newPin === '4242'){
         const email = await AsyncStorage.getItem('email');
-        console.log(email);
         navigation.navigate('Home',{email:email});
       }
     }

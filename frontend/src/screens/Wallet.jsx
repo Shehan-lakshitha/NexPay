@@ -15,7 +15,15 @@ const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [addCard, setAddCard] = useState(false);
   const navigation = useNavigation();
+
+  const handleAddCredit = () => {
+    if(addCard){
+      navigation.navigate('AddCredit');
+    }
+    
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -23,7 +31,9 @@ const Wallet = () => {
       </TouchableOpacity>
       <Text style={styles.register}>Wallet</Text>
 
-      <TouchableOpacity style={styles.headerbtn} onPress={() => navigation.navigate('AddCard')}>
+      <TouchableOpacity
+        style={styles.headerbtn}
+        onPress={() => navigation.navigate('AddCard')}>
         <Icon name="plus" size={16} color={COLORS.white} />
         <Text style={styles.addCardbtn}>Add Card</Text>
       </TouchableOpacity>
@@ -40,6 +50,11 @@ const Wallet = () => {
             {cardNumber || '**** **** **** ****'}
           </Text>
         </ImageBackground>
+
+        <TouchableOpacity style={styles.addCredit} onPress={() => handleAddCredit()}>
+          <Icon name="plus" size={12} color={COLORS.white} />
+          <Text style={styles.addCreditText}>Add Credit</Text>
+        </TouchableOpacity>
 
         <View>
           <Text style={styles.transfers}>Quick Transfers</Text>
@@ -168,4 +183,22 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  addCredit: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: COLORS.primary,
+    width: 90,
+    padding: 8,
+    borderRadius: 30,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: -20,
+    marginBottom: 20,
+  },
+  addCreditText: {
+    color: COLORS.white,
+    fontSize: 12,
+    fontWeight: '500',
+  }
 });
