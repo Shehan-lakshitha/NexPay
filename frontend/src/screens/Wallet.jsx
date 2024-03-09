@@ -10,19 +10,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import cardFront from '../Assets/cardFront.png';
 import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
-  const [addCard, setAddCard] = useState(false);
+  const [addCard, setAddCard] = useState(true);
   const navigation = useNavigation();
 
   const handleAddCredit = () => {
     if(addCard){
       navigation.navigate('AddCredit');
+    }else{
+      Toast.show({
+        type: 'error',
+        text1: 'Card Not Added',
+        text2: 'Please add a card to add credit',
+      })
     }
-    
+
   }
   return (
     <View style={styles.container}>

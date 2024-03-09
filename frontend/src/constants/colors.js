@@ -7,7 +7,7 @@ const COLORS = {
     green: '#006400',
     low_purple:"#B9AAEE",
     low_grey:'#E3E1D9',
-    subText:"#A8A8A8"
+    subText:"#A8A8A8",
 
 }
 
