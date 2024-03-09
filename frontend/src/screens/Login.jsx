@@ -6,19 +6,20 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { URL } from '../constants/URL';
+import {URL} from '../constants/URL';
 
 export default function Login({navigation}) {
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
   const [emailValidity,setEmailValidity]=useState(true)
   const [passwordValidity,setPassswordValidity]=useState(true)
   const [error,setError]=useState('')
@@ -63,11 +64,12 @@ export default function Login({navigation}) {
       if (response.data.success === true) {
         if(response.data.token){
           await AsyncStorage.setItem('token', response.data.token);
-          navigation.navigate('Home',{email});
+          navigation.navigate('Home', {email});
         }
-      
+
       }else if(response.data.success === false){
         setError('Invalid Email or Password')
+
       }
     } catch (error) {
       console.log(error);
@@ -134,7 +136,7 @@ export default function Login({navigation}) {
             textStyle={{textDecorationLine: 'none', marginHorizontal: 0}}
             unfillColor="#FFFFFF"
             innerIconStyle={{borderWidth: 2, borderRadius: 4}}
-            onPress={() => {}}
+            onPress={()=> setChecked(!checked)}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('PinScreen',{email})}>

@@ -14,6 +14,8 @@ import axios from 'axios'
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QR from '../components/QR';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Profile({navigation}) {
   const route = useRoute();
   const {data}=route.params
@@ -149,6 +151,7 @@ Alert.alert(
   { cancelable: false }
 );
 };
+
 handleLogout = async () => {
   try {
    
@@ -161,6 +164,7 @@ handleLogout = async () => {
   }
 };
 
+
 return (
      <ScrollView >
     <SafeAreaView style={[styles.Container,{backgroundColor}]}>
@@ -169,7 +173,9 @@ return (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
+
       <TouchableOpacity onPress={handleLogout}>
+
           <Icon name="sign-out" size={24} color={COLORS.black}/>
       </TouchableOpacity>
       

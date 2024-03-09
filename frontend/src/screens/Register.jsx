@@ -42,7 +42,7 @@ const Register = ({navigation}) => {
           marginTop: 22,
         }}>
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="chevron-left" size={24} color={COLORS.black} />
           </TouchableOpacity>
           <Text

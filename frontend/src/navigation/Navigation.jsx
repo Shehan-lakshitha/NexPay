@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
+import COLORS from '../constants/colors';
+
 import Login from '../screens/Login';
 import AccountCreated from '../screens/AccountCreated';
 import Register from '../screens/Register';
@@ -17,67 +20,71 @@ import Profile from '../screens/Profile';
 import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
 import TwoFactorAuthScreen from '../screens/TwoFactorAuthScreen';
+
 import QRScan from '../screens/QRScan';
 import PinLog from '../screens/PinLog';
 import PinScreen from '../screens/PinScreen';
-import COLORS from '../constants/colors';
+
+
+
+
+const toastConfig = {
+  success: props => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftColor: 'green',
+        backgroundColor: COLORS.primary,
+        height: 100,
+        opacity: 0.9,
+      }}
+      contentContainerStyle={{paddingHorizontal: 15}}
+      text1Style={{
+        fontSize: 18,
+        color: 'white',
+        fontWeight: 'bold',
+      }}
+      text2Style={{
+        fontSize: 13,
+        color: 'white',
+      }}
+    />
+  ),
+
+  error: props => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftColor: 'red',
+        backgroundColor: COLORS.primary,
+        height: 100,
+        opacity: 0.9,
+      }}
+      text1Style={{
+        fontSize: 18,
+        color: 'white',
+        fontWeight: 'bold',
+      }}
+      text2Style={{
+        fontSize: 15,
+        color: 'white',
+      }}
+    />
+  ),
+
+  tomatoToast: ({text1, props}) => (
+    <View style={{height: 60, width: '100%', backgroundColor: 'tomato'}}>
+      <Text>{text1}</Text>
+      <Text>{props.uuid}</Text>
+    </View>
+  ),
+};
+
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   const [showIntro, setShowIntro] = useState(true);
   const [isLogIn,setIsLogIn]=useState(null)
-
-  const toastConfig = {
-    success: props => (
-      <BaseToast
-        {...props}
-        style={{
-          borderLeftColor: 'green',
-          backgroundColor: COLORS.primary,
-          height: 100,
-          opacity: 0.9,
-        }}
-        contentContainerStyle={{paddingHorizontal: 15}}
-        text1Style={{
-          fontSize: 18,
-          color: 'white',
-          fontWeight: 'bold',
-        }}
-        text2Style={{
-          fontSize: 13,
-          color: 'white',
-        }}
-      />
-    ),
-  
-    error: props => (
-      <ErrorToast
-        {...props}
-        style={{
-          borderLeftColor: 'red',
-          backgroundColor: COLORS.primary,
-          height: 100,
-          opacity: 0.9,
-        }}
-        text1Style={{
-          fontSize: 18,
-          color: 'white',
-          fontWeight: 'bold',
-        }}
-        text2Style={{
-          fontSize: 15,
-          color: 'white',
-        }}
-      />
-    ),
-  
-    tomatoToast: ({text1, props}) => (
-      <View style={{height: 60, width: '100%', backgroundColor: 'tomato'}}>
-        <Text>{text1}</Text>
-        <Text>{props.uuid}</Text>
-      </View>
-    ),
-  };
 
   useEffect(()=>{
     fetchToken = async () => {
@@ -95,7 +102,9 @@ export default function Navigation() {
     fetchToken()
    },[]) 
 
+
   useEffect(() => {
+    checkLoggedIn();
     const timer = setTimeout(() => {
       setShowIntro(false);
     }, 980);
@@ -111,8 +120,10 @@ export default function Navigation() {
             component={IntroLogoAnimationScreen}
           />
         ) : null}
+
         {isLogIn? (<Stack.Screen name="PinLog" component={PinLog} />):
         (<Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />)}
+
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -125,7 +136,6 @@ export default function Navigation() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
         <Stack.Screen name="Profile" component={Profile} />
-
         <Stack.Screen
           name="OTPVerificationScreen"
           component={OTPVerificationScreen}
@@ -135,6 +145,7 @@ export default function Navigation() {
         <Stack.Screen name="QRScan" component={QRScan} />
         <Stack.Screen name="PinScreen" component={PinScreen} />
       </Stack.Navigator>
+
       <Toast config={toastConfig} />
     </NavigationContainer>
   );
