@@ -12,6 +12,7 @@ import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const PinScreen = () => {
   const [pin, setPin] = useState('');
@@ -29,6 +30,17 @@ const PinScreen = () => {
       if(newPin === '4242'){
         const email = await AsyncStorage.getItem('email');
         navigation.navigate('Home',{email:email});
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid Pin',
+          text2: 'Please enter a valid pin',
+        })
+        setTimeout(() => {
+          setPin('');
+          setIsPinComplete(false);
+        },1000)
+        
       }
     }
   }
