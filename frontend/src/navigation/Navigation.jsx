@@ -104,7 +104,7 @@ export default function Navigation() {
 
 
   useEffect(() => {
-    checkLoggedIn();
+    
     const timer = setTimeout(() => {
       setShowIntro(false);
     }, 980);

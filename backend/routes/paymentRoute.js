@@ -11,21 +11,27 @@ const stripe = new Stripe('sk_test_51Oh4IYEyzMUhUrfVnThV1wzNrbnLyu2VplOqtktgFeFU
 const createUser=async(req,res)=>{
      const {id}=req.body
  
-  
+    
      try {
-    const user=await User.findOne({_id:id})
-     if(!user) return res.status(401).send({message:"invalid user",success:false})
-    if(user){
-        const customer=await stripe.customers.create({
-            email:user.email,
-            name:user.firstName,
-            phone:user.phoneNumber,
-            
-        })
-        const wallet=new Wallet({userId:id,customerId:customer.id})
-        await wallet.save()
-        res.status(200).send({success:true,message:'create user successfully'})
-    }
+        const customer=await Wallet.findOne({userId:id})
+        if(!customer){
+            const user=await User.findOne({_id:id})
+            if(!user) return res.status(401).send({message:"invalid user",success:false})
+           if(user){
+               const customer=await stripe.customers.create({
+                   email:user.email,
+                   name:user.firstName,
+                   phone:user.phoneNumber,
+                   
+               })
+               const wallet=new Wallet({userId:id,customerId:customer.id})
+               await wallet.save()
+               res.status(200).send({success:true,message:'create user successfully'})
+           }
+        }else{
+            res.send({success:true,message:'already created.'})
+        }
+   
      
   } catch (error) {
     console.log(error)
@@ -52,8 +58,27 @@ const paymentMethod=async(req,res)=>{
         customer:details.customerId
     })
      console.log(payMethod.card.last4)
-    const card=new Card({userId:id,paymentMethodId:payMethod.id,cardNumber:payMethod.card.last4,expireData:`${payMethod.card.exp_month}/${payMethod.card.exp_year}`,holderName:name})
-    await card.save()
+
+     try {
+        const existingPayment = await Card.findOne({ userId: id});
+         if(existingPayment){
+            await Card.findOneAndUpdate(
+                { userId: id },
+                {paymentMethodId:payMethod.id,
+                cardNumber:payMethod.card.last4,
+                expireData:`${payMethod.card.exp_month}/${payMethod.card.exp_year}`,
+                holderName:name});
+         }else{
+            const card=new Card({userId:id,paymentMethodId:payMethod.id,cardNumber:payMethod.card.last4,expireData:`${payMethod.card.exp_month}/${payMethod.card.exp_year}`,holderName:name})
+            await card.save()
+         }
+        
+     } catch (error) {
+        console.log(error)
+        res.status(404).send({success:false,message:'Server error'})
+     }
+
+    
     res.status(200).send({success:true,message:'payment method added successfully'})
 
         } catch (error) {

@@ -8,7 +8,7 @@ const cardSchema = new mongoose.Schema({
     },
      paymentMethodId:{
         type: String,
-        required: true
+        
     },
     cardNumber:{
         type:String,

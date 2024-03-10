@@ -11,15 +11,15 @@ import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchImageLibrary,launchCamera} from 'react-native-image-picker';
 import axios from 'axios'
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QR from '../components/QR';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Profile({navigation}) {
+
+export default function Profile() {
   const route = useRoute();
   const {data}=route.params
-  
+  const navigation=useNavigation()
   const colorScheme = useColorScheme();
 
   

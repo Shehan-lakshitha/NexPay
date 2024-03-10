@@ -38,7 +38,7 @@ const PinLog = () => {
         
       } catch (error) {
         console.log(error)
-        console.log('incorrect pin')
+        console.log('incorrectt pin')
         Toast.show({
           type: 'error',
           text1: 'Invalid Pin',

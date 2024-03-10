@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -119,22 +119,8 @@ const AddCard = () => {
         }
       );
       console.log(response.data.id)
-      setToken(response.data.id)
-      Alert.alert(
-        "Confirmation",
-        "Are you sure you want to proceed?",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
-          },
-          { text: "OK", onPress: () => dataSubmit() }
-        ],
-        { cancelable: false }
-      );
-    
-     
+       setToken(response.data.id)
+        
       
      
 
@@ -144,21 +130,33 @@ const AddCard = () => {
     }
     
   };
-  const dataSubmit=async()=>{
-    try {
-      const resToken=await axios.post(`${URL}/api/paymentmethod`,{
-        id:id,
-        token:token,
-        name:holderName
-      })
-       if(resToken.data.success===true){
-        navigation.goBack()
-       }
-
-    } catch (error) {
-      console.log(error)
+ 
+   useEffect(()=>{
+    const dataSubmit=async()=>{
+      try {
+        if(token){
+          const resToken=await axios.post(`${URL}/api/paymentmethod`,{
+            id:id,
+            token:token,
+            name:holderName
+          })
+           if(resToken.data.success===true){
+            navigation.goBack()
+           }
+        }
+        
+  
+      } catch (error) {
+        console.log(error)
+      }
     }
-  }
+    dataSubmit()
+   },[token])
+    
+    
+
+
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -235,11 +233,12 @@ const AddCard = () => {
         </View>
 
         <View style={styles.cvvI}>
-          <Text style={styles.name}>CVV</Text>
+          <Text style={styles.name}>CVC</Text>
           <View style={styles.input}>
             <TextInput
               onChangeText={cvc => {
                 setCvc(cvc);
+               
               }}
               maxLength={3}
               onFocus={handleFlip}
