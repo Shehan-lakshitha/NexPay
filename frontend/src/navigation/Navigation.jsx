@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Toast, {BaseToast, ErrorToast} from 'react-native-toast-message';
 import COLORS from '../constants/colors';
 
@@ -14,13 +14,19 @@ import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
 import AddCard from '../screens/AddCard';
 import Wallet from '../screens/Wallet';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
 import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
 import GetStartedScreen from '../screens/GetStartedScreen';
 import TwoFactorAuthScreen from '../screens/TwoFactorAuthScreen';
+
+import QRScan from '../screens/QRScan';
+import PinLog from '../screens/PinLog';
 import PinScreen from '../screens/PinScreen';
+
+
+
 
 const toastConfig = {
   success: props => (
@@ -74,18 +80,31 @@ const toastConfig = {
   ),
 };
 
+
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   const [showIntro, setShowIntro] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLogIn,setIsLogIn]=useState(null)
 
-  const checkLoggedIn = async () => {
-    const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-    setIsLoggedIn(isLoggedIn);
-  };
+  useEffect(()=>{
+    fetchToken = async () => {
+      try {
+        
+        const token=await AsyncStorage.getItem('token');
+        
+        if(token){
+          setIsLogIn(true)
+        }
+      } catch (error) {
+        console.error('server error:', error);
+      }
+    };
+    fetchToken()
+   },[]) 
+
 
   useEffect(() => {
-    checkLoggedIn();
+    
     const timer = setTimeout(() => {
       setShowIntro(false);
     }, 980);
@@ -101,11 +120,10 @@ export default function Navigation() {
             component={IntroLogoAnimationScreen}
           />
         ) : null}
-        {isLoggedIn ? (
-          <Stack.Screen name="PinScreen" component={PinScreen} />
-        ) : (
-          <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
-        )}
+
+        {isLogIn? (<Stack.Screen name="PinLog" component={PinLog} />):
+        (<Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />)}
+
         <Stack.Screen name="LogIn" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AccountCreated" component={AccountCreated} />
@@ -124,6 +142,8 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
+        <Stack.Screen name="QRScan" component={QRScan} />
+        <Stack.Screen name="PinScreen" component={PinScreen} />
       </Stack.Navigator>
 
       <Toast config={toastConfig} />

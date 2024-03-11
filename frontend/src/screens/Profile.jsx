@@ -3,7 +3,7 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,useColorScheme,ScrollView,Image, Alert
+  TouchableOpacity,useColorScheme,ScrollView,Image, Alert,BackHandler 
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import { URL } from '../constants/URL';
@@ -11,14 +11,15 @@ import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {launchImageLibrary,launchCamera} from 'react-native-image-picker';
 import axios from 'axios'
-import { useRoute } from '@react-navigation/native';
-import QR from '../components/QR';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import QR from '../components/QR';
 
-export default function Profile({navigation}) {
+
+export default function Profile() {
   const route = useRoute();
   const {data}=route.params
-  
+  const navigation=useNavigation()
   const colorScheme = useColorScheme();
 
   
@@ -151,13 +152,18 @@ Alert.alert(
 );
 };
 
-const handlesignOut = () => {
-  navigation.navigate('GetStartedScreen');
-  AsyncStorage.setItem('isLoggedIn', '');
-  AsyncStorage.setItem('token', '');
-  AsyncStorage.setItem('email', '');
+handleLogout = async () => {
+  try {
+   
+    await AsyncStorage.removeItem('token');
+    
   
-}
+    BackHandler.exitApp();
+  } catch (error) {
+    console.error('Error logging out:', error);
+  }
+};
+
 
 return (
      <ScrollView >
@@ -167,7 +173,9 @@ return (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="chevron-left" size={24} color={COLORS.black} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlesignOut()}>
+
+      <TouchableOpacity onPress={handleLogout}>
+
           <Icon name="sign-out" size={24} color={COLORS.black}/>
       </TouchableOpacity>
       

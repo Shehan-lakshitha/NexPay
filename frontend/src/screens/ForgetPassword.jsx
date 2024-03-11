@@ -10,11 +10,12 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 export default function ForgetPassword() {
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const {email} = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -36,7 +37,9 @@ export default function ForgetPassword() {
       <View style={styles.btnContainer}>
         <Button
 
-          onpress={() => navigation.navigate('CreatePassword')}
+          onpress={() => navigation.navigate('ResetPassword',{
+            email
+          })}
           style={styles.continueBtn}
           title="Continue"
           filled

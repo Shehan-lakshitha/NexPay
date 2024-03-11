@@ -17,6 +17,8 @@ import {useRoute} from '@react-navigation/native';
 
 const GetStartedScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const {email} = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
@@ -46,8 +48,8 @@ const GetStartedScreen = () => {
       </View>
 
       <View>
-        <TouchableOpacity>
-          <Button style={styles.button} title={'Continue'} filled />
+        <TouchableOpacity >
+          <Button style={styles.button} title={'Continue'} filled onpress={()=>navigation.navigate('Home',{email})} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
