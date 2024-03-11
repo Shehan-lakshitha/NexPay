@@ -9,14 +9,20 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import cardFront from '../Assets/cardFront.png';
+
 import {useNavigation, useRoute} from '@react-navigation/native';
 import { URL } from '../constants/URL';
 import axios from 'axios';
+=
+import Toast from 'react-native-toast-message';
+
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [addCard, setAddCard] = useState(true);
   const navigation = useNavigation();
+
   const route = useRoute();
   const {userData} = route.params;
   // In the screen where you navigate to
@@ -60,6 +66,21 @@ const addCard=async ()=>{
   }
 }
 
+
+
+  const handleAddCredit = () => {
+    if(addCard){
+      navigation.navigate('AddCredit');
+    }else{
+      Toast.show({
+        type: 'error',
+        text1: 'Card Not Added',
+        text2: 'Please add a card to add credit',
+      })
+    }
+
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -67,7 +88,9 @@ const addCard=async ()=>{
       </TouchableOpacity>
       <Text style={styles.register}>Wallet</Text>
 
+
       <TouchableOpacity style={styles.headerbtn} onPress={addCard}>
+
         <Icon name="plus" size={16} color={COLORS.white} />
         <Text style={styles.addCardbtn}>Add Card</Text>
       </TouchableOpacity>
@@ -84,6 +107,11 @@ const addCard=async ()=>{
             {cardNumber || '**** **** **** ****'}
           </Text>
         </ImageBackground>
+
+        <TouchableOpacity style={styles.addCredit} onPress={() => handleAddCredit()}>
+          <Icon name="plus" size={12} color={COLORS.white} />
+          <Text style={styles.addCreditText}>Add Credit</Text>
+        </TouchableOpacity>
 
         <View>
           <Text style={styles.transfers}>Quick Transfers</Text>
@@ -212,4 +240,22 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  addCredit: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: COLORS.primary,
+    width: 90,
+    padding: 8,
+    borderRadius: 30,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: -20,
+    marginBottom: 20,
+  },
+  addCreditText: {
+    color: COLORS.white,
+    fontSize: 12,
+    fontWeight: '500',
+  }
 });

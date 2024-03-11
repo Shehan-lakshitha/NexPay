@@ -16,6 +16,7 @@ const PinScreen = () => {
  
   const navigation=useNavigation()
 
+
   useEffect(()=>{
     const pinAdd=async()=>{
       
@@ -38,6 +39,7 @@ const PinScreen = () => {
           }
              
         }
+
         
       } catch (error) {
         console.log(error)

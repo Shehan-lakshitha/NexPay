@@ -14,7 +14,9 @@ import Home from '../screens/Home';
 import CreatePassword from '../screens/CreatePassword';
 import AddCard from '../screens/AddCard';
 import Wallet from '../screens/Wallet';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import Profile from '../screens/Profile';
 import IntroLogoAnimationScreen from '../screens/IntroLogoAnimationScreen';
@@ -24,6 +26,7 @@ import TwoFactorAuthScreen from '../screens/TwoFactorAuthScreen';
 import QRScan from '../screens/QRScan';
 import PinLog from '../screens/PinLog';
 import PinScreen from '../screens/PinScreen';
+import AddCredit from '../screens/AddCredit';
 
 
 
@@ -34,7 +37,7 @@ const toastConfig = {
       {...props}
       style={{
         borderLeftColor: 'green',
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.purple,
         height: 100,
         opacity: 0.9,
       }}
@@ -56,7 +59,7 @@ const toastConfig = {
       {...props}
       style={{
         borderLeftColor: 'red',
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.purple,
         height: 100,
         opacity: 0.9,
       }}
@@ -142,8 +145,12 @@ export default function Navigation() {
         />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Wallet" component={Wallet} />
+
         <Stack.Screen name="QRScan" component={QRScan} />
         <Stack.Screen name="PinScreen" component={PinScreen} />
+
+        <Stack.Screen name="AddCredit" component={AddCredit} />
+
       </Stack.Navigator>
 
       <Toast config={toastConfig} />
