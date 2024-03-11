@@ -60,14 +60,10 @@ const AddCredit = () => {
             text2: 'Please select a card to continue',
         })
     }else{
-        Toast.show({
-            type: 'success',
-            text1: 'Credit Added',
-            text2: 'Credit amount added successfully to your wallet',
-        })
+        
         console.log('card selected: ' + cardSelect,'Amount: ' + amount)
         const email = userData.email;
-        navigation.navigate('Home', {email});
+        navigation.navigate('PinLog', {email});
     }
   }
 
