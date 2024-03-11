@@ -15,6 +15,7 @@ import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
+import { URL } from '../constants/URL';
 const OtpInput = ({length = 6, onOtpSubmit = () => {}}) => {
   const [otp, setOtp] = React.useState(new Array(length).fill(''));
   const inputRefs = React.useRef([]);
@@ -85,13 +86,13 @@ const OTPVerificationScreen = () => {
     // Implement verification logic
     try {
       const response = await axios.post(
-        'http://10.0.2.2:5000/api/otpverify',
+        `${URL}/api/otpverify`,
         {email: email,
         otp:otp},
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        navigation.navigate('Home',{email})
+        navigation.navigate('PinScreen',{email})
         
         
       }else{

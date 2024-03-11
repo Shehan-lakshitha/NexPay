@@ -10,22 +10,46 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import COLORS from '../constants/colors';
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
+import axios from 'axios';
+import { URL } from '../constants/URL';
 
 
 const ResetPassword = () => {
+  const route = useRoute();
+  const {email} = route.params;
   const [ispasswordShown, setIsPasswordShown] = useState(true);
   const [ispasswordShownConfirm, setIsPasswordShownConfirm] = useState(true);
+  const [password,setPassword]=useState('')
+  const [rePassword,setRePassword]=useState('')
   const navigation = useNavigation();
 
-
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        `${URL}/api/resetpassword`,
+        {email,
+         password,
+         rePassword
+        },
+      );
+      console.log(response.data.message)
+      if(response.data.success==true){
+        // navigation.navigate('Home',{
+        //   email
+        // })
+      }
+    } catch (error) {
+      console.error(error);
+      
+    }
+  };
 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Reset password</Text>
@@ -36,10 +60,11 @@ const ResetPassword = () => {
           <View style={styles.input}>
             <TextInput
               secureTextEntry={ispasswordShown}
-              onChangeText={() => {}}
+              onChangeText={(value) => {setPassword(value)}}
               placeholder=""
               style={{width: '90%'}}
             />
+            
             <TouchableOpacity
               onPress={() => setIsPasswordShown(!ispasswordShown)}
               style={styles.show}>
@@ -51,7 +76,7 @@ const ResetPassword = () => {
             </TouchableOpacity>
           </View>
           <Text style={styles.subText}>
-            at least 9 characters, containing a letter and a number
+            at least 8 characters, containing a letter and a number
           </Text>
         </View>
         <View style={styles.inputContainer}>
@@ -60,6 +85,7 @@ const ResetPassword = () => {
             <TextInput
               secureTextEntry={ispasswordShownConfirm}
               style={{width: '90%'}}
+              onChangeText={(value) => {setRePassword(value)}}
             />
             <TouchableOpacity
               onPress={() => setIsPasswordShownConfirm(!ispasswordShownConfirm)}
@@ -78,7 +104,7 @@ const ResetPassword = () => {
           style={styles.ConfirmBtn}
           title="Confirm"
           filled
-          onpress={() => {}}
+          onpress={handleSubmit}
         />
       </View>
     </SafeAreaView>

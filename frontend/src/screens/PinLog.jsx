@@ -4,34 +4,30 @@ import ReactNativePinView from 'react-native-pin-view';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../constants/colors';
 import logo from '../Assets/nexpay.png'
-import { useNavigation, useRoute } from '@react-navigation/native';
-
+import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { URL } from '../constants/URL';
-const PinScreen = () => {
-  const route = useRoute();
-  const {email} = route.params;
+const PinLog = () => {
   const pinView = useRef(null)
   const [enteredPin, setEnteredPin] = useState("")
- 
+  const [verify, setVerify] = useState(false)
+  const [email, setEmail] = useState("")
   const navigation=useNavigation()
-
-
   useEffect(()=>{
-    const pinAdd=async()=>{
+    const pinFetch=async()=>{
       
       try {
         if(enteredPin.length === 4){
           
           const response=await axios.post(
-            `${URL}/api/addpin`,
+            `${URL}/api/pinverify`,
             {
-              email:email,
               pin:parseInt(enteredPin)
             },
           );
           if(response.data.success ===true){
-            navigation.navigate('twoFactorAuthScreen',{email:email})
+            navigation.navigate('Home',{email:response.data.email})
             
           }else if(response.data.success ===false){
             console.log('incorrect pin')
@@ -39,15 +35,19 @@ const PinScreen = () => {
           }
              
         }
-
         
       } catch (error) {
         console.log(error)
-        console.log('incorrect pin')
+        console.log('incorrectt pin')
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid Pin',
+          text2: 'Please enter a valid pin',
+        })
         pinView.current.clearAll()
       }
     }
-    pinAdd()
+    pinFetch()
   },[enteredPin])
    
    
@@ -86,7 +86,6 @@ const PinScreen = () => {
               borderRadius:0,
               
               
-              
             }}
             buttonTextStyle={{
               color: COLORS.black,
@@ -108,7 +107,7 @@ const PinScreen = () => {
   )
 }
 
-export default PinScreen
+export default PinLog
 
 const styles = StyleSheet.create({
     container:{
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
       margin:50
     },
     headerText:{
-        marginTop:92,
+        marginTop:90,
         fontSize:23,
         fontWeight:'600',
         color:COLORS.black
@@ -130,6 +129,5 @@ const styles = StyleSheet.create({
         flex:.5,
         justifyContent:"center",
         alignItems:'center',
-        
     },
 })

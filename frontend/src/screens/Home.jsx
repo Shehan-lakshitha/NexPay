@@ -69,7 +69,7 @@ export default function Home() {
       <View style={styles.addCard}>
         <Image source={Img} style={styles.imageStyles}/>
         <View style={styles.plus}>
-          <TouchableOpacity onPress={()=> navigation.navigate('Wallet')}>
+          <TouchableOpacity onPress={()=> navigation.navigate('Wallet',{userData})}>
           <FontAwesomeIcon name='circle-plus' size={30} color={COLORS.white}/>
           </TouchableOpacity>
         </View>
