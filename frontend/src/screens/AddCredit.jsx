@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
@@ -7,13 +7,43 @@ import masterCard from '../Assets/MasterCard.png';
 import {RadioButton} from 'react-native-paper';
 import Button from '../components/Button';
 import Toast from 'react-native-toast-message';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import axios from 'axios';
+import {URL} from '../constants/URL';
 
 const AddCredit = () => {
-  const cardNum = '5242 4242 4242 4242';
+  const cardNum = '4242'
+  const [cardNumber, setCardNumber] = useState('****')
+  const [expiryDate, setExpiryDate] = useState('MM/YY');
   const [cardSelect, setCardSelect] = useState('');
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const {userData} = route.params;
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const response = await axios.post(`${URL}/api/carddetails`, {
+          id: userData._id,
+        });
+        if (response) {
+          setCardNumber(response?.data.cardNumber);
+
+          const expiryDateFromAPI = response?.data.expireData;
+          const [month, year] = expiryDateFromAPI.split('/');
+          const formattedExpiry = `${month}/${year.slice(-2)}`;
+          setExpiryDate(formattedExpiry);
+
+          
+        }
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
+    fetchDetails();
+  });
 
   const handleNext = () => {
     if(cardSelect === ''){
@@ -47,8 +77,8 @@ const AddCredit = () => {
               <Image source={masterCard} style={styles.masterCardLogo} />
             ) : null}
             <View style={styles.cardText}>
-              <Text style={styles.txtNum}>Card ending 4242</Text>
-              <Text style={styles.txtExp}>Expiry 09/24</Text>
+              <Text style={styles.txtNum}>Card ending {cardNumber}</Text>
+              <Text style={styles.txtExp}>Expiry {expiryDate}</Text>
             </View>
             <View style={styles.radioBtn}>
               <RadioButton
@@ -61,7 +91,7 @@ const AddCredit = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.addCard} onPress={()=> navigation.navigate('AddCard')}>
+      <TouchableOpacity style={styles.addCard} onPress={()=> navigation.navigate('AddCard',{userData})}>
         <Icon name="plus" size={12} color={COLORS.white} />
         <Text style={styles.addCardText}>Add Card</Text>
       </TouchableOpacity>
@@ -122,6 +152,7 @@ const styles = StyleSheet.create({
   radioBtn: {
     position: 'absolute',
     right: 0,
+    top: 6,
   },
   addCard: {
     display: 'flex',
