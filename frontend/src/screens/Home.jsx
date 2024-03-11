@@ -29,6 +29,8 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState('');
   const [userName, setUserName] = useState('');
   const [userData, setUserData] = useState(null);
+  const [textMain, setTextMain] = useState('Add your Card');
+  const [textSub, setTextSub] = useState('Link your credit/debit cart to make transactions.');
   const colorScheme = useColorScheme();
   const backgroundColor = colorScheme === 'dark' ? 'black' : 'white';
   const navigation = useNavigation();
@@ -45,7 +47,23 @@ export default function Home() {
         console.log(error)
       }
     }
-    fetchData()
+    fetchData();
+
+    const fetchDetails = async () => {
+      try {
+        const response = await axios.post(`${URL}/api/carddetails`, {
+          id: userData._id,
+        });
+        if (response) {
+          setTextMain('Add Credit');
+          setTextSub('Add credit to your wallet to make transactions.');
+        }
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
+    fetchDetails();
   }, [email]);
 
   return (
@@ -73,8 +91,8 @@ export default function Home() {
           <FontAwesomeIcon name='circle-plus' size={30} color={COLORS.white}/>
           </TouchableOpacity>
         </View>
-        <Text style={styles.cardtext}>Add Your Card</Text>
-        <Text style={styles.cardsubtext}>Link your credit/debit cart to make transactions.</Text>
+        <Text style={styles.cardtext}>{textMain}</Text>
+        <Text style={styles.cardsubtext}>{textSub}</Text>
       </View>
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={()=>{}}>
