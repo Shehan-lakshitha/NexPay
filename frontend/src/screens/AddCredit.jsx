@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import visa from '../Assets/Visa_Logo.png';
@@ -16,6 +16,8 @@ const AddCredit = () => {
   const [cardNumber, setCardNumber] = useState('****')
   const [expiryDate, setExpiryDate] = useState('MM/YY');
   const [cardSelect, setCardSelect] = useState('');
+  const [fold, setFold] = useState(false);
+  const [amount, setAmount] = useState('');
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -39,6 +41,11 @@ const AddCredit = () => {
         }
       } catch (error) {
         console.log(error);
+        Toast.show({
+          type: 'error',
+          text1: 'Error in fetching card details',
+          text2: 'Please try again',
+        })
         return null;
       }
     };
@@ -55,9 +62,12 @@ const AddCredit = () => {
     }else{
         Toast.show({
             type: 'success',
-            text1: 'Card Added',
-            text2: 'Credit amount added successfully',
+            text1: 'Credit Added',
+            text2: 'Credit amount added successfully to your wallet',
         })
+        console.log('card selected: ' + cardSelect,'Amount: ' + amount)
+        const email = userData.email;
+        navigation.navigate('Home', {email});
     }
   }
 
@@ -82,12 +92,24 @@ const AddCredit = () => {
             </View>
             <View style={styles.radioBtn}>
               <RadioButton
-                value="4242"
-                status={cardSelect === '4242' ? 'checked' : 'unchecked'}
-                onPress={() => setCardSelect('4242')}
+                value= {cardNumber}
+                status={cardSelect === cardNumber ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setCardSelect(cardNumber);
+                  setFold(true);
+                }}
               />
             </View>
           </View>
+
+              { fold && 
+              <View style={styles.amountContent}>
+              <Text style={styles.amountTxt}>Enter Amount</Text>
+              <TextInput value={amount} keyboardType='numeric' style={styles.input}
+              onChangeText={amount => setAmount(amount)}/>
+            </View> 
+            }
+          
         </TouchableOpacity>
       </View>
 
@@ -173,6 +195,26 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   btnnext: {
-    marginTop: 450,
+    position: 'absolute',
+    width: '100%',
+    bottom: 20,
+  },
+  amountContent: {
+    marginTop: 20,
+  },
+  amountTxt: {
+    color: COLORS.black,
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  input :{
+    width: '100%',
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+    borderRadius: 8,
+    marginTop: 10,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    textDecorationColor: COLORS.black,
   }
 });
