@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import visa from '../Assets/Visa_Logo.png';
@@ -7,13 +7,50 @@ import masterCard from '../Assets/MasterCard.png';
 import {RadioButton} from 'react-native-paper';
 import Button from '../components/Button';
 import Toast from 'react-native-toast-message';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import axios from 'axios';
+import {URL} from '../constants/URL';
 
 const AddCredit = () => {
-  const cardNum = '5242 4242 4242 4242';
+  const cardNum = '4242'
+  const [cardNumber, setCardNumber] = useState('****')
+  const [expiryDate, setExpiryDate] = useState('MM/YY');
   const [cardSelect, setCardSelect] = useState('');
+  const [fold, setFold] = useState(false);
+  const [amount, setAmount] = useState('');
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const {userData} = route.params;
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const response = await axios.post(`${URL}/api/carddetails`, {
+          id: userData._id,
+        });
+        if (response) {
+          setCardNumber(response?.data.cardNumber);
+
+          const expiryDateFromAPI = response?.data.expireData;
+          const [month, year] = expiryDateFromAPI.split('/');
+          const formattedExpiry = `${month}/${year.slice(-2)}`;
+          setExpiryDate(formattedExpiry);
+
+          
+        }
+      } catch (error) {
+        console.log(error);
+        Toast.show({
+          type: 'error',
+          text1: 'Error in fetching card details',
+          text2: 'Please try again',
+        })
+        return null;
+      }
+    };
+    fetchDetails();
+  });
 
   const handleNext = () => {
     if(cardSelect === ''){
@@ -23,11 +60,10 @@ const AddCredit = () => {
             text2: 'Please select a card to continue',
         })
     }else{
-        Toast.show({
-            type: 'success',
-            text1: 'Card Added',
-            text2: 'Credit amount added successfully',
-        })
+        
+        console.log('card selected: ' + cardSelect,'Amount: ' + amount)
+        const email = userData.email;
+        navigation.navigate('PinLog', {email});
     }
   }
 
@@ -47,21 +83,33 @@ const AddCredit = () => {
               <Image source={masterCard} style={styles.masterCardLogo} />
             ) : null}
             <View style={styles.cardText}>
-              <Text style={styles.txtNum}>Card ending 4242</Text>
-              <Text style={styles.txtExp}>Expiry 09/24</Text>
+              <Text style={styles.txtNum}>Card ending {cardNumber}</Text>
+              <Text style={styles.txtExp}>Expiry {expiryDate}</Text>
             </View>
             <View style={styles.radioBtn}>
               <RadioButton
-                value="4242"
-                status={cardSelect === '4242' ? 'checked' : 'unchecked'}
-                onPress={() => setCardSelect('4242')}
+                value= {cardNumber}
+                status={cardSelect === cardNumber ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setCardSelect(cardNumber);
+                  setFold(true);
+                }}
               />
             </View>
           </View>
+
+              { fold && 
+              <View style={styles.amountContent}>
+              <Text style={styles.amountTxt}>Enter Amount</Text>
+              <TextInput value={amount} keyboardType='numeric' style={styles.input}
+              onChangeText={amount => setAmount(amount)}/>
+            </View> 
+            }
+          
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.addCard} onPress={()=> navigation.navigate('AddCard')}>
+      <TouchableOpacity style={styles.addCard} onPress={()=> navigation.navigate('AddCard',{userData})}>
         <Icon name="plus" size={12} color={COLORS.white} />
         <Text style={styles.addCardText}>Add Card</Text>
       </TouchableOpacity>
@@ -122,6 +170,7 @@ const styles = StyleSheet.create({
   radioBtn: {
     position: 'absolute',
     right: 0,
+    top: 6,
   },
   addCard: {
     display: 'flex',
@@ -142,6 +191,26 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   btnnext: {
-    marginTop: 450,
+    position: 'absolute',
+    width: '100%',
+    bottom: 20,
+  },
+  amountContent: {
+    marginTop: 20,
+  },
+  amountTxt: {
+    color: COLORS.black,
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  input :{
+    width: '100%',
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+    borderRadius: 8,
+    marginTop: 10,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    textDecorationColor: COLORS.black,
   }
 });

@@ -11,75 +11,74 @@ import COLORS from '../constants/colors';
 import cardFront from '../Assets/cardFront.png';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
-import { URL } from '../constants/URL';
+import {URL} from '../constants/URL';
 import axios from 'axios';
-=
 import Toast from 'react-native-toast-message';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
-  const [addCard, setAddCard] = useState(true);
+  const [addCredit, setAddCredit] = useState(false);
   const navigation = useNavigation();
 
   const route = useRoute();
   const {userData} = route.params;
   // In the screen where you navigate to
- 
-   useEffect(()=>{
-    const fetchDetails=async ()=>{
+
+  useEffect(() => {
+    const fetchDetails = async () => {
       try {
-        const response=await axios.post(`${URL}/api/carddetails`,{
-          id:userData._id
-        })
-         if(response){
-             setCardNumber(response?.data.cardNumber)
-             setExpiryDate(response?.data.expireData)
-             setHolderName(response?.data.holderName)
-         }
-    
+        const response = await axios.post(`${URL}/api/carddetails`, {
+          id: userData._id,
+        });
+        if (response) {
+          const formattedNumer = response?.data.cardNumber;
+          setCardNumber('**** **** **** ' + formattedNumer);
+
+          const expiryDateFromAPI = response?.data.expireData;
+          const [month, year] = expiryDateFromAPI.split('/');
+          const formattedExpiry = `${month}/${year.slice(-2)}`;
+          setExpiryDate(formattedExpiry);
+          setHolderName(response?.data.holderName);
+          setAddCredit(true);
+        }
       } catch (error) {
-        console.log(error)
-        return null
+        console.log(error);
+        return null;
       }
+    };
+    fetchDetails();
+  });
+
+  // Use the retrieved data as needed
+
+  const addCard = async () => {
+    try {
+      const response = await axios.post(`${URL}/api/createuser`, {
+        id: userData._id,
+      });
+      if (response.data.success === true) {
+        navigation.navigate('AddCard', {
+          id: userData._id,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-    fetchDetails()
-   })
-
-  
-// Use the retrieved data as needed
-      
-const addCard=async ()=>{
-  try {
-    const response=await axios.post(`${URL}/api/createuser`,{
-      id:userData._id
-    })
-     if(response.data.success===true){
-      navigation.navigate('AddCard',{
-        id:userData._id
-      })
-     }
-
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
+  };
 
   const handleAddCredit = () => {
-    if(addCard){
-      navigation.navigate('AddCredit');
-    }else{
+    if (addCredit) {
+      navigation.navigate('AddCredit',{userData});
+    } else {
       Toast.show({
         type: 'error',
         text1: 'Card Not Added',
         text2: 'Please add a card to add credit',
-      })
+      });
     }
-
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -88,9 +87,7 @@ const addCard=async ()=>{
       </TouchableOpacity>
       <Text style={styles.register}>Wallet</Text>
 
-
       <TouchableOpacity style={styles.headerbtn} onPress={addCard}>
-
         <Icon name="plus" size={16} color={COLORS.white} />
         <Text style={styles.addCardbtn}>Add Card</Text>
       </TouchableOpacity>
@@ -108,7 +105,9 @@ const addCard=async ()=>{
           </Text>
         </ImageBackground>
 
-        <TouchableOpacity style={styles.addCredit} onPress={() => handleAddCredit()}>
+        <TouchableOpacity
+          style={styles.addCredit}
+          onPress={() => handleAddCredit()}>
           <Icon name="plus" size={12} color={COLORS.white} />
           <Text style={styles.addCreditText}>Add Credit</Text>
         </TouchableOpacity>
@@ -257,5 +256,5 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 12,
     fontWeight: '500',
-  }
+  },
 });
