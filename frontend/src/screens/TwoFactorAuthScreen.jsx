@@ -1,5 +1,5 @@
 // React Native screen for OTP verification
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,11 +14,25 @@ import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useRoute} from '@react-navigation/native';
+import { URL } from '../constants/URL';
 
 const GetStartedScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {email} = route.params;
+  const [id,setId]=useState("")
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${URL}/api/details/${email}`);
+        
+        setId(response.data._id);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  },[email])
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
@@ -49,7 +63,7 @@ const GetStartedScreen = () => {
 
       <View>
         <TouchableOpacity >
-          <Button style={styles.button} title={'Continue'} filled onpress={()=>navigation.navigate('Home',{email})} />
+          <Button style={styles.button} title={'Continue'} filled onpress={()=>navigation.navigate('Home',{email,id})} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

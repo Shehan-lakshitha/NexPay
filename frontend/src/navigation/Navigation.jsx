@@ -27,6 +27,8 @@ import QRScan from '../screens/QRScan';
 import PinLog from '../screens/PinLog';
 import PinScreen from '../screens/PinScreen';
 import AddCredit from '../screens/AddCredit';
+import PinVerify from '../screens/PinVerify';
+import Created from '../screens/Created';
 
 
 
@@ -148,6 +150,8 @@ export default function Navigation() {
 
         <Stack.Screen name="QRScan" component={QRScan} />
         <Stack.Screen name="PinScreen" component={PinScreen} />
+        <Stack.Screen name="PinVerify" component={PinVerify} />
+        <Stack.Screen name="Created" component={Created} />
 
         <Stack.Screen name="AddCredit" component={AddCredit} />
 

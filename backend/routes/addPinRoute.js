@@ -18,7 +18,7 @@ const pinVerify=async(req,res)=>{
         const user=await User.findOne({pin:pin})
         if(!user) res.status(404).send({success:false,message:'invalid'})
         if(user){
-            res.status(200).send({success:true,message:'pin verified successfully',email:user.email})
+            res.status(200).send({success:true,message:'pin verified successfully',email:user.email,id:user._id})
         }
     } catch (error) {
         console.log(error)

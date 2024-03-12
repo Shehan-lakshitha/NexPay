@@ -60,12 +60,12 @@ const AddCredit = () => {
             text2: 'Please select a card to continue',
         })
     }else{
-        
-        console.log('card selected: ' + cardSelect,'Amount: ' + amount)
-        const email = userData.email;
-        navigation.navigate('PinLog', {email});
+      
+            navigation.navigate('PinVerify', {data:userData,amount:amount});
+         
     }
   }
+ 
 
   return (
     <View style={styles.container}>

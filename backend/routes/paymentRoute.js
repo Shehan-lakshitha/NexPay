@@ -101,8 +101,9 @@ const addCredit=async(req,res)=>{
     try {
         const data=await Card.findOne({userId:id})
         const dataWallet=await Wallet.findOne({userId:id})
-        console.log(data.paymentMethodId)
+        
         const user=await User.findOne({_id:id})
+        
         if(data.paymentMethodId){
             const paymentIntent=await stripe.paymentIntents.create({
                 payment_method:data.paymentMethodId,
@@ -116,7 +117,7 @@ const addCredit=async(req,res)=>{
             if(paymentIntent.status==="succeeded"){
                  const totalBalance=dataWallet.balance+total
                  await Wallet.findOneAndUpdate({userId:id},{balance:totalBalance})
-                 res.status(200).send({success:true,message:'Credit add successfully'})
+                 
                  try {
                     const existingPayment = await Pay.findOne({ userId: id});
                      if(existingPayment){
@@ -137,7 +138,7 @@ const addCredit=async(req,res)=>{
                         const newPayment=new Pay({userId:id,payments:{ paymentIntentId:paymentIntent.id,type:'add credit',amount:paymentIntent.amount,created:paymentIntent.created}})
                         await newPayment.save()
                      }
-                    
+                     res.status(200).send({success:true,message:'Credit add successfully'})
                  } catch (error) {
                     console.log(error)
                     res.status(404).send({success:false,message:'Server error'})
@@ -165,7 +166,7 @@ const nexPayment=async(req,res)=>{
                 payment_method:dataMethod.paymentMethodId,
                 customer:dataWallet.customerId,
                 amount:total,
-                currency:'usd',
+                currency:'lkr',
                 confirm:true,
                 payment_method_types:["card"],
                 
@@ -200,6 +201,17 @@ const nexPayment=async(req,res)=>{
         console.log(error)
     }
 }
+const showBalance=async (req,res)=>{
+    const {id}=req.body
+    try {
+        const response=await Wallet.findOne({userId:id})
+        if(response){
+            res.send(response)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 router.post('/createuser',createUser)
@@ -207,4 +219,5 @@ router.post('/paymentmethod',paymentMethod)
 router.post('/carddetails',carddetails)
 router.post('/addcredit',addCredit)
 router.post('/nexpayment',nexPayment)
+router.post('/balance',showBalance)
 export default router
