@@ -1,0 +1,29 @@
+name: NexPay WorkFlow CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install frontend dependencies
+      run: cd frontend && npm ci
+    - name: Build frontend
+      run: cd frontend && npm run build
+    - name: Install backend dependencies
+      run: cd backend && npm ci
+    - name: Start backend
+      run: cd backend && npm start
