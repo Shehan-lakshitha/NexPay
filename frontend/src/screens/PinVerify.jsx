@@ -4,15 +4,16 @@ import ReactNativePinView from 'react-native-pin-view';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../constants/colors';
 import logo from '../Assets/nexpay.png'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { URL } from '../constants/URL';
-const PinLog = () => {
+const PinVerify = () => {
   const pinView = useRef(null)
+  const route = useRoute();
+  const {data,amount} = route.params;
   const [enteredPin, setEnteredPin] = useState("")
-  const [verify, setVerify] = useState(false)
-  const [email, setEmail] = useState("")
+ 
   const navigation=useNavigation()
   useEffect(()=>{
     const pinFetch=async()=>{
@@ -27,8 +28,10 @@ const PinLog = () => {
             },
           );
           if(response.data.success ===true){
+            navigation.navigate('Created',{data:data,amount:amount})
+                
             
-            navigation.navigate('Home',{email:response.data.email,id:response.data.id})
+            
             
           }else if(response.data.success ===false){
             console.log('incorrect pin')
@@ -108,7 +111,7 @@ const PinLog = () => {
   )
 }
 
-export default PinLog
+export default PinVerify
 
 const styles = StyleSheet.create({
     container:{

@@ -23,10 +23,11 @@ import {URL} from '../constants/URL';
 
 export default function Home() {
   const route = useRoute();
-  const {email} = route.params;
+  const {email,id} = route.params;
   const [currentDate, setCurrentDate] = useState('');
   const [userName, setUserName] = useState('');
   const [userData, setUserData] = useState(null);
+  const [balance, setBalance] = useState(null);
   const [textMain, setTextMain] = useState('Add your Card');
   const [textSub, setTextSub] = useState(
     'Link your credit/debit cart to make transactions.',
@@ -55,6 +56,7 @@ export default function Home() {
           id: userData._id,
         });
         if (response) {
+          
           setTextMain('Add Credit');
           setTextSub('Add credit to your wallet to make transactions.');
         }
@@ -64,7 +66,26 @@ export default function Home() {
       }
     };
     fetchDetails();
+    
   }, [email]);
+  useEffect(()=>{
+    const fetchBalance=async ()=>{
+      try {
+        const response = await axios.post(`${URL}/api/balance`, {
+          id: id,
+        });
+        if (response) {
+          setBalance(response.data.balance)
+          
+          
+        }
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    }
+    fetchBalance()
+  })
 
   return (
     <SafeAreaView style={[{flex: 1}, {backgroundColor}]}>
@@ -106,8 +127,8 @@ export default function Home() {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.cardtext}>{textMain}</Text>
-          <Text style={styles.cardsubtext}>{textSub}</Text>
+          <Text style={styles.cardtext}>{`Rs.${balance}.00` || textMain}</Text>
+          <Text style={styles.cardsubtext}>{balance!==null? "Available balance":textSub}</Text>
         </View>
         <View style={styles.tabContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('AddCredit',{userData})}>
@@ -155,7 +176,7 @@ export default function Home() {
             <View style={styles.serviceTabContainer}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Card', {userData});
+                  //navigation.navigate('Card', {userData});
                 }}>
                 <View style={styles.serviceTab}>
                   <FontAwesomeIcon

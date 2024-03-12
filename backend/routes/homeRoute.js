@@ -19,4 +19,5 @@ const homeController=async (req,res)=>{
 
 }
 router.get('/home/:email',homeController)
+router.get('/details/:email',homeController)
 export {router as homeRoutes}
