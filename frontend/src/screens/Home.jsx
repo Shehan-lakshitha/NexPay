@@ -53,7 +53,7 @@ export default function Home() {
     const fetchDetails = async () => {
       try {
         const response = await axios.post(`${URL}/api/carddetails`, {
-          id: userData._id,
+          id: id,
         });
         if (response) {
           
@@ -68,6 +68,7 @@ export default function Home() {
     fetchDetails();
     
   }, [email]);
+
   useEffect(()=>{
     const fetchBalance=async ()=>{
       try {
@@ -81,7 +82,7 @@ export default function Home() {
         }
       } catch (error) {
         console.log(error);
-        return null;
+        
       }
     }
     fetchBalance()

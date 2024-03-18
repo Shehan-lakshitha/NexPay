@@ -29,6 +29,8 @@ const createUser=async(req,res)=>{
                res.status(200).send({success:true,message:'create user successfully'})
            }
         }else{
+            console.log('created already')
+
             res.send({success:true,message:'already created.'})
         }
    

@@ -63,8 +63,13 @@ export default function Login({navigation}) {
       );
       if (response.data.success === true) {
         if(response.data.token){
-          await AsyncStorage.setItem('token', response.data.token);
-          navigation.navigate('Home', {email});
+         
+          await AsyncStorage.multiSet([
+            ['token', response.data.token],
+            ['email', response.data.email]
+          ]);
+         
+          navigation.navigate('Home', {email,id:response.data.id});
         }
 
       }else if(response.data.success === false){
@@ -139,7 +144,7 @@ export default function Login({navigation}) {
             onPress={()=> setChecked(!checked)}
           />
           <TouchableOpacity
-            onPress={() => navigation.navigate('PinScreen',{email})}>
+            onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassword}>Forget Password</Text>
           </TouchableOpacity>
         </View>

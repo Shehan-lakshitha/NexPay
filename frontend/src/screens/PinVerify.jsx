@@ -6,6 +6,7 @@ import COLORS from '../constants/colors';
 import logo from '../Assets/nexpay.png'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../constants/URL';
 const PinVerify = () => {
@@ -17,14 +18,15 @@ const PinVerify = () => {
   const navigation=useNavigation()
   useEffect(()=>{
     const pinFetch=async()=>{
-      
+      const email=await AsyncStorage.getItem('email');
       try {
         if(enteredPin.length === 4){
           
           const response=await axios.post(
             `${URL}/api/pinverify`,
             {
-              pin:parseInt(enteredPin)
+              pin:parseInt(enteredPin),
+              email,
             },
           );
           if(response.data.success ===true){

@@ -15,7 +15,7 @@ const loginController = async (req, res) => {
   if(validUser && validPassword){
     const token = jwt.sign({ userId: validUser._id}, process.env.SECRETKEY);
     
-    return res.cookie('access_token',token,{httpOnly:true}).status(200).send({token,success:true,message:"signup successfull."})
+    return res.cookie('access_token',token,{httpOnly:true}).status(200).send({token,id:validUser._id,email:validUser.email,success:true,message:"signup successfull."})
   } 
   
   } catch (error) {

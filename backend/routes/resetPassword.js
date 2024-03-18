@@ -12,7 +12,7 @@ const reset=async(req,res)=>{
           }else{
             const hashedPassword=bcrypt.hashSync(password,10)
             const user=await User.findOneAndUpdate({email},{password:hashedPassword})
-            return res.status(200).json({success:true,message:"password reset successfully."})  
+            return res.status(200).json({success:true,message:"password reset successfully.",id:user._id})  
                
             }
     } catch (error) {
