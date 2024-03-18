@@ -29,6 +29,14 @@ import PinScreen from '../screens/PinScreen';
 import AddCredit from '../screens/AddCredit';
 import PinVerify from '../screens/PinVerify';
 import Created from '../screens/Created';
+import MobileTopUp from '../screens/MobileTopUp';
+import TopUp from '../screens/TopUp';
+import Success from '../screens/Success';
+import Verify from '../screens/Verify';
+import Rewards from '../screens/Rewards';
+import Notification from '../screens/Notification';
+import Help from '../screens/Help';
+import History from '../screens/History';
 
 
 
@@ -154,6 +162,14 @@ export default function Navigation() {
         <Stack.Screen name="Created" component={Created} />
 
         <Stack.Screen name="AddCredit" component={AddCredit} />
+        <Stack.Screen name="MobileTopUp" component={MobileTopUp} />
+        <Stack.Screen name="TopUp" component={TopUp} />
+        <Stack.Screen name="Success" component={Success} />
+        <Stack.Screen name="Verify" component={Verify} />
+        <Stack.Screen name="Rewards" component={Rewards} />
+        <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen name="Help" component={Help} />
+        <Stack.Screen name="History" component={History} />
 
       </Stack.Navigator>
 

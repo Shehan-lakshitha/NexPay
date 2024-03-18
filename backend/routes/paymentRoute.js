@@ -168,7 +168,7 @@ const nexPayment=async(req,res)=>{
                 payment_method:dataMethod.paymentMethodId,
                 customer:dataWallet.customerId,
                 amount:total,
-                currency:'lkr',
+                currency:'usd',
                 confirm:true,
                 payment_method_types:["card"],
                 
@@ -214,6 +214,17 @@ const showBalance=async (req,res)=>{
         console.log(error)
     }
 }
+const paymentHistory=async(req,res)=>{
+    const {id}=req.body
+    try {
+        const response=await Pay.findOne({userId:id})
+        if(response){
+            res.send(response)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 router.post('/createuser',createUser)
@@ -222,4 +233,5 @@ router.post('/carddetails',carddetails)
 router.post('/addcredit',addCredit)
 router.post('/nexpayment',nexPayment)
 router.post('/balance',showBalance)
+router.post('/paymenthistory',paymentHistory)
 export default router
