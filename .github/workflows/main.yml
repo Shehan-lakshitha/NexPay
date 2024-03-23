@@ -22,12 +22,7 @@ jobs:
     - name: Install frontend dependencies
       run: cd frontend && npm install
     - name: Build frontend
-      run: cd frontend && npm run android
-    - name: Setup and start emulator
-      uses: react-native/setup-emulator@v1
-      with:
-        api-level: 30  # Adjust this to the API level you need
-        target: default
+      run: cd frontend && npm build
     - name: Install backend dependencies
       run: cd backend && npm install
     - name: Start backend
