@@ -20,10 +20,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install frontend dependencies
-      run: cd frontend && npm ci
+      run: cd frontend && npm inatall
     - name: Build frontend
-      run: cd frontend && npm run build
+      run: cd frontend && npm run android
     - name: Install backend dependencies
-      run: cd backend && npm ci
+      run: cd backend && npm install
     - name: Start backend
       run: cd backend && npm start
