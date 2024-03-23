@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
@@ -14,8 +14,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 
 export default function ForgetPassword() {
   const navigation = useNavigation();
-  const route = useRoute();
-  const {email} = route.params;
+  const [email,setEmail]=useState()
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -32,7 +31,10 @@ export default function ForgetPassword() {
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Email</Text>
-        <TextInput style={styles.input} />
+        <TextInput style={styles.input}  
+        onChangeText={text => {
+                setEmail(text);
+              }} />
       </View>
       <View style={styles.btnContainer}>
         <Button

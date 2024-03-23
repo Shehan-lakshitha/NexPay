@@ -8,22 +8,27 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { URL } from '../constants/URL';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const PinLog = () => {
   const pinView = useRef(null)
   const [enteredPin, setEnteredPin] = useState("")
-  const [verify, setVerify] = useState(false)
-  const [email, setEmail] = useState("")
+  // const [verify, setVerify] = useState(false)
+  // const [email, setEmail] = useState("")
   const navigation=useNavigation()
+  
   useEffect(()=>{
     const pinFetch=async()=>{
-      
+      const email=await AsyncStorage.getItem('email');
+      console.log(email)
       try {
+    
         if(enteredPin.length === 4){
           
           const response=await axios.post(
             `${URL}/api/pinverify`,
             {
-              pin:parseInt(enteredPin)
+              pin:parseInt(enteredPin),
+              email,
             },
           );
           if(response.data.success ===true){

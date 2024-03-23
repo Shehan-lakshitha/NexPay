@@ -155,7 +155,7 @@ Alert.alert(
 handleLogout = async () => {
   try {
    
-    await AsyncStorage.removeItem('token');
+    await AsyncStorage.clear();
     
   
     BackHandler.exitApp();

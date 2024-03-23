@@ -35,9 +35,10 @@ const ResetPassword = () => {
       );
       console.log(response.data.message)
       if(response.data.success==true){
-        // navigation.navigate('Home',{
-        //   email
-        // })
+        navigation.navigate('Home',{
+          email,
+          id,
+        })
       }
     } catch (error) {
       console.error(error);

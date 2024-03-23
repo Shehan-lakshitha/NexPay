@@ -28,6 +28,7 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [userData, setUserData] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [history, setHistory] = useState(null);
   const [textMain, setTextMain] = useState('Add your Card');
   const [textSub, setTextSub] = useState(
     'Link your credit/debit cart to make transactions.',
@@ -53,7 +54,7 @@ export default function Home() {
     const fetchDetails = async () => {
       try {
         const response = await axios.post(`${URL}/api/carddetails`, {
-          id: userData._id,
+          id: id,
         });
         if (response) {
           
@@ -68,6 +69,7 @@ export default function Home() {
     fetchDetails();
     
   }, [email]);
+
   useEffect(()=>{
     const fetchBalance=async ()=>{
       try {
@@ -81,11 +83,45 @@ export default function Home() {
         }
       } catch (error) {
         console.log(error);
-        return null;
+        
       }
     }
     fetchBalance()
   })
+
+    useEffect(()=>{
+      const fetchHistory=async ()=>{
+        try {
+          const response = await axios.post(`${URL}/api/paymenthistory`, {
+            id: id,
+          });
+          if (response) {
+            setHistory(response.data.payments)
+             
+          }
+        } catch (error) {
+          console.log(error);
+          
+        }
+      }
+      fetchHistory()
+
+    }) 
+
+    const renderItem = ({ item }) => {
+      const date = new Date(item.created * 1000);
+
+      // Format the date and time
+      const formattedDateTime = date.toLocaleString(); 
+      return(<View>
+        <View  style={styles.tile}>
+          <Text style={styles.renderText}>{item.type}</Text>
+          <Text style={styles.renderText}>{`Rs.${item.amount}.00`}</Text>
+          <Text style={styles.renderText}>{formattedDateTime}</Text>
+          </View>
+        
+      </View>)
+    };
 
   return (
     <SafeAreaView style={[{flex: 1}, {backgroundColor}]}>
@@ -96,7 +132,7 @@ export default function Home() {
             <Text style={styles.name}>{userName}</Text>
           </View>
           <View style={styles.headerBtns}>
-            <TouchableOpacity style={styles.headerbtn}>
+            <TouchableOpacity style={styles.headerbtn} onPress={() => {navigation.navigate('Help')}}>
               <FontAwesomeIcon
                 name="headset"
                 size={18}
@@ -104,7 +140,7 @@ export default function Home() {
                 style={{textAlign: 'center'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.headerbtn}>
+            <TouchableOpacity style={styles.headerbtn} onPress={() => {navigation.navigate('Notification')}}>
               <Icon
                 name="bell"
                 size={18}
@@ -157,7 +193,7 @@ export default function Home() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('History',{id})}}>
             <View style={styles.tab}>
               <View style={[styles.tabCircle, {backgroundColor}]}>
                 <Icon name="history" size={20} color={COLORS.purple} />
@@ -190,7 +226,7 @@ export default function Home() {
             </View>
 
             <View style={styles.serviceTabContainer}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('MobileTopUp',{userData})}}>
                 <View style={styles.serviceTab}>
                   <FontAwesomeIcon
                     name="mobile-screen"
@@ -203,7 +239,7 @@ export default function Home() {
             </View>
 
             <View style={styles.serviceTabContainer}>
-              <TouchableOpacity style={styles.serviceBtn}>
+              <TouchableOpacity style={styles.serviceBtn} onPress={() => {navigation.navigate('Rewards')}}>
                 <View style={styles.serviceTab}>
                   <MaterialIcon
                     name="wallet-giftcard"
@@ -235,7 +271,11 @@ export default function Home() {
             <Text style={styles.titleText}>Recent transactions</Text>
             <View style={styles.line}></View>
             <View style={styles.transactions}>
-              <FlatList />
+              <FlatList
+              data={history}
+              renderItem={renderItem}
+              keyExtractor={item => item.paymentIntentId}
+              />
             </View>
           </View>
         </View>
@@ -389,5 +429,15 @@ const styles = StyleSheet.create({
   },
   transactions: {
     height: 100,
+    padding:10
   },
+  tile:{
+   flexDirection:'row',
+   padding:10,
+   justifyContent: 'space-between',
+   
+  },
+  renderText:{
+    fontWeight:'600'
+  }
 });

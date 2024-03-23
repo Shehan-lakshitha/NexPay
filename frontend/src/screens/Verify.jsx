@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../constants/URL';
-const PinVerify = () => {
+const Verify = () => {
   const pinView = useRef(null)
   const route = useRoute();
   const {data,amount} = route.params;
@@ -30,7 +30,7 @@ const PinVerify = () => {
             },
           );
           if(response.data.success ===true){
-            navigation.navigate('Created',{data:data,amount:amount})
+            navigation.navigate('Success',{data:data,amount:amount})
                 
             
             
@@ -113,7 +113,7 @@ const PinVerify = () => {
   )
 }
 
-export default PinVerify
+export default Verify
 
 const styles = StyleSheet.create({
     container:{
