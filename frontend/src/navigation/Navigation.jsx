@@ -37,6 +37,7 @@ import Rewards from '../screens/Rewards';
 import Notification from '../screens/Notification';
 import Help from '../screens/Help';
 import History from '../screens/History';
+import BillPayments from '../screens/BillPayments';
 
 
 
@@ -126,7 +127,7 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='BillPayments'>
         {showIntro ? (
           <Stack.Screen
             name="IntroLogoAnimationScreen"
@@ -170,6 +171,7 @@ export default function Navigation() {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="History" component={History} />
+        <Stack.Screen name="BillPayments" component={BillPayments} />
 
       </Stack.Navigator>
 
