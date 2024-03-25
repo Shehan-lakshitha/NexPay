@@ -37,6 +37,10 @@ import Rewards from '../screens/Rewards';
 import Notification from '../screens/Notification';
 import Help from '../screens/Help';
 import History from '../screens/History';
+import Chart from '../screens/Chart';
+import Transfer from '../screens/Transfer';
+import QRPayment from '../screens/QRPayment';
+import QRSuccess from '../screens/QRSuccess';
 
 
 
@@ -170,6 +174,10 @@ export default function Navigation() {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="History" component={History} />
+        <Stack.Screen name="Chart" component={Chart} />
+        <Stack.Screen name="Transfer" component={Transfer} />
+        <Stack.Screen name="QRPayment" component={QRPayment} />
+        <Stack.Screen name="QRSuccess" component={QRSuccess} />
 
       </Stack.Navigator>
 

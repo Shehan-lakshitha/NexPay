@@ -3,7 +3,8 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,useColorScheme,ScrollView,Image, Alert,BackHandler 
+  TouchableOpacity,useColorScheme,Image, Alert,BackHandler,
+  
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import { URL } from '../constants/URL';
@@ -24,13 +25,13 @@ export default function Profile() {
 
   
   const backgroundColor = colorScheme === 'dark' ? 'black' : 'white';
-  const [unFold,setUnFold]=useState(true)
+  const [unFold,setUnFold]=useState(false)
   const [imagePath, setImagePath] = useState(null);
-  
  const showMore=()=>{
     setUnFold(!unFold)
  }
-
+  
+  
  
     const fetchImg=async ()=>{
       try {
@@ -166,7 +167,7 @@ handleLogout = async () => {
 
 
 return (
-     <ScrollView >
+     
     <SafeAreaView style={[styles.Container,{backgroundColor}]}>
       <View style={styles.subContainer}>
       <View style={styles.header}>
@@ -203,62 +204,64 @@ return (
           
 
       </View>
-      <View style={styles.tabContainer}>
-      <View style={[styles.tabRow,{backgroundColor}]}>
-        <View style={styles.tabtab}>
-          <View style={styles.tab}>
-          <TouchableOpacity  >
-            <Icon name="pencil-square-o" size={40} color={COLORS.purple} />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.tabText}>Edit profile</Text>
-          </View>
-        <View style={styles.tabtab}><View style={styles.tab}>
-          <TouchableOpacity ><Icon name="lock" size={40} color={COLORS.purple} /></TouchableOpacity>
-          </View>
-          <Text style={styles.tabText}>Security</Text>
-          </View>
-        <View style={styles.tabtab}>
-          <View style={styles.tab}>
-            <TouchableOpacity >
-              <Icon name="question-circle-o" size={40} color={COLORS.purple} />
+      <View style={styles.serviceContainer}>
+          
+          <View style={styles.serviceTabs}>
+            <View style={styles.serviceTabContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  //navigation.navigate('Card', {userData});
+                }}>
+                <View style={styles.serviceTab}>
+                <Icon name="pencil-square-o" size={40} color={COLORS.purple} />
+                </View>
               </TouchableOpacity>
-              </View>
-              <Text style={styles.tabText}>Help</Text>
-              </View>
-        
-      </View>
-      <View style={[styles.tabRow,{backgroundColor}]}>
-        <View style={styles.tabtab}>
-          <View style={styles.tab}>
-            <TouchableOpacity ><Icon name="gift" size={40} color={COLORS.purple} /></TouchableOpacity>
+              <Text style={styles.serviceText}>Edit profile</Text>
             </View>
-            <Text style={styles.tabText}>Offers & Rewards</Text>
+
+            <View style={styles.serviceTabContainer}>
+              <TouchableOpacity onPress={() => {}}>
+                <View style={styles.serviceTab}>
+                <Icon name="question-circle-o" size={40} color={COLORS.purple} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.serviceText}>Help</Text>
             </View>
-      <View style={styles.tabtab}>
-        <View style={styles.tab}>
-          <TouchableOpacity >
-            <Icon name="sign-out" size={40} color={COLORS.purple} />
-            </TouchableOpacity>
+            <View style={styles.serviceTabContainer}>
+              <TouchableOpacity onPress={() => {}}>
+                <View style={styles.serviceTab}>
+                <Icon name="lock" size={40} color={COLORS.purple} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.serviceText}>Security</Text>
             </View>
-            <Text style={styles.tabText}>Logout</Text>
+
+            <View style={styles.serviceTabContainer}>
+              <TouchableOpacity style={styles.serviceBtn} onPress={() => {navigation.navigate('Rewards')}}>
+                <View style={styles.serviceTab}>
+                <Icon name="gift" size={40} color={COLORS.purple} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.serviceText}>Offers & Rewards</Text>
             </View>
-            </View>
-      </View>
+
+          </View>
+        </View>
+  
       </View>
     </SafeAreaView>
-    </ScrollView> 
+    
     
   );
 }
 const styles = StyleSheet.create({
   Container: {
-     
     flex:1,
-    
+      
   },
   subContainer:{
-      margin:25
+      margin:25,
+      
   },
   header: {
       flexDirection: 'row',
@@ -266,9 +269,9 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
     },
   userContainer:{
-      flex:1,
+     
       marginTop:50,
-      position:"'relative'"
+      position:"relative"
       
   },
   usercon:{ 
@@ -298,6 +301,11 @@ const styles = StyleSheet.create({
     fontSize:15,
     fontWeight:'400',
     color:COLORS.white
+  },
+  serviceTabs: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   profile:{
       borderRadius:75,
@@ -437,5 +445,38 @@ const styles = StyleSheet.create({
       fontWeight:"500",
       textAlign:"center",
       width:100
-  }
+  },
+  serviceContainer: {
+    marginTop: 20,
+    flexDirection: 'column',
+  },
+  title: {},
+  titleText: {
+    fontSize: 23,
+    color: COLORS.black,
+    fontWeight: '600',
+  },
+  serviceTabContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 80,
+    gap: 3,
+  },
+  serviceTab: {
+    flexDirection: 'column',
+    width: 60,
+    height: 60,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: COLORS.purple,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  serviceBtn: {},
+  serviceText: {
+    textAlign: 'center',
+    fontWeight: '400',
+    color: COLORS.black,
+  },
 });

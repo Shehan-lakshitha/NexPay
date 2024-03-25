@@ -7,11 +7,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from "axios"
 import { URL } from '../constants/URL';
 
- const Success = () => {
+ const QRSuccess = () => {
   const route = useRoute();
-  const {data,amount} = route.params;
+  const {data,amount,id} = route.params;
   const navigation=useNavigation()
-  console.log(data)
+  
   useEffect(()=>{
     const makePayment=async()=>{
         try {
@@ -21,7 +21,21 @@ import { URL } from '../constants/URL';
           });
           if(response.data.success===true){
             
-            navigation.navigate('Home', {email:data.email,id:data._id});
+            const addcredit=async()=>{
+                try {
+                  const response = await axios.post(`${URL}/api/addcredit`, {
+                    id: id,
+                    total:parseInt(amount)
+                  });
+                  if(response.data.success===true){
+                    navigation.navigate('Home', {email:data.email,id:data._id});
+                  }
+                } catch (error) {
+                  console.log(error)
+                }
+              }
+              addcredit()
+            
           }
         } catch (error) {
           console.log(error)
@@ -29,6 +43,7 @@ import { URL } from '../constants/URL';
       }
       makePayment()
   })
+  
  
   return (
     <SafeAreaView style={styles.container}>
@@ -68,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Success;
+export default QRSuccess;

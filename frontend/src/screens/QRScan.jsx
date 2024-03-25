@@ -5,11 +5,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { CameraScreen } from 'react-native-camera-kit';
 import Button from '../components/Button';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-const QRScan = ({navigation}) => {
+const QRScan = () => {
   const [isScanning, setIsScanning] = useState(true);
   const [data,setData]=useState('')
-
+  const navigation=useNavigation()
+    const route = useRoute();
+    const {userData} = route.params;
  
 
  const qrDataHandle=(event)=>{
@@ -32,7 +35,7 @@ const QRScan = ({navigation}) => {
         <Button  style={styles.continueBtn}
         title="Continue"
         filled
-        onpress={()=>(navigation.navigate('Home'))}></Button>
+        onpress={()=>(navigation.navigate('QRPayment',{data:userData,id:data}))}></Button>
       )
     }
   return (

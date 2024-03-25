@@ -9,7 +9,9 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../constants/URL';
+
 const PinVerify = () => {
+
   const pinView = useRef(null)
   const route = useRoute();
   const {data,amount} = route.params;
@@ -31,10 +33,7 @@ const PinVerify = () => {
           );
           if(response.data.success ===true){
             navigation.navigate('Created',{data:data,amount:amount})
-                
-            
-            
-            
+ 
           }else if(response.data.success ===false){
             console.log('incorrect pin')
             pinView.current.clearAll()
