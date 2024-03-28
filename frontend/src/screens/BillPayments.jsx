@@ -10,8 +10,12 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Img from '../Assets/billpayment.png';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const BillPayments = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {userData} = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -28,7 +32,8 @@ const BillPayments = () => {
 
       <View style={styles.utilityContainer}>
         <View style={styles.containerTop}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ElectricityPayment', {userData})}>
             <View style={styles.box}>
               <Icon name="bolt" size={32} color={COLORS.primary} />
             </View>

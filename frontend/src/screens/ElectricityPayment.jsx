@@ -13,9 +13,14 @@ import COLORS from '../constants/colors';
 import Img from '../Assets/billpayment.png';
 import Button from '../components/Button';
 import Toast from 'react-native-toast-message';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 const BillPayments = () => {
+
+    const navigation  = useNavigation();
+    const route = useRoute();
+    const {userData} = route.params
 
     const [acNo,setacNo] = useState('');
     const [amount,setAmount] = useState('');
@@ -31,7 +36,7 @@ const BillPayments = () => {
                 text2: 'All fields are required'
             });
         } else {
-            console.log('submitted')
+            console.log('Submitted')
         }
     }
   return (
@@ -74,7 +79,7 @@ const BillPayments = () => {
         style={styles.loginBtn}
         title="Pay"
         filled
-        onPress={handleSubmit}
+        onpress={handleSubmit}
         
       />
     </SafeAreaView>

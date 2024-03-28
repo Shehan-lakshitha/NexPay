@@ -212,7 +212,7 @@ export default function Home() {
             <View style={styles.serviceTabContainer}>
               <TouchableOpacity
                 onPress={() => {
-                  //navigation.navigate('Card', {userData});
+                  navigation.navigate('BillPayments', {userData});
                 }}>
                 <View style={styles.serviceTab}>
                   <FontAwesomeIcon
