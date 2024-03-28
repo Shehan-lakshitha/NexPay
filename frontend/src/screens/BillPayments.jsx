@@ -48,7 +48,7 @@ const BillPayments = () => {
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.box}>
-              <Icon name="droplet" size={32} color={COLORS.primary} />
+              <Icon name="tint" size={32} color={COLORS.primary} />
             </View>
             <Text style={styles.textUt}>Water</Text>
           </TouchableOpacity>
@@ -57,13 +57,13 @@ const BillPayments = () => {
         <View style={styles.containerBottom}>
           <TouchableOpacity>
             <View style={styles.box}>
-              <Icon name="shield-halved" size={32} color={COLORS.primary} />
+              <Icon name="shield" size={32} color={COLORS.primary} />
             </View>
             <Text style={styles.textUt}>Insurance</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.box}>
-              <Icon name="scale-unbalanced" size={32} color={COLORS.primary} />
+              <Icon name="balance-scale" size={32} color={COLORS.primary} />
             </View>
             <Text style={styles.textUt}>Tax</Text>
           </TouchableOpacity>
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0.8,
   },
   utilityContainer: {
     marginTop: 50,

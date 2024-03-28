@@ -38,6 +38,7 @@ import Notification from '../screens/Notification';
 import Help from '../screens/Help';
 import History from '../screens/History';
 import BillPayments from '../screens/BillPayments';
+import ElectricityPayment from '../screens/ElectricityPayment';
 
 
 
@@ -127,7 +128,7 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='BillPayments'>
+      <Stack.Navigator screenOptions={{headerShown: false}} >
         {showIntro ? (
           <Stack.Screen
             name="IntroLogoAnimationScreen"
@@ -172,6 +173,7 @@ export default function Navigation() {
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="History" component={History} />
         <Stack.Screen name="BillPayments" component={BillPayments} />
+        <Stack.Screen name="ElectricityPayment" component={ElectricityPayment} />
 
       </Stack.Navigator>
 
