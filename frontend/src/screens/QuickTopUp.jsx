@@ -3,7 +3,7 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,useColorScheme,Image, Alert,BackHandler,
+  TouchableOpacity,useColorScheme,Image, Alert,BackHandler,TextInput
   
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -22,6 +22,8 @@ const QuickTopUp = () => {
   console.log(id)
   const [imagePath, setImagePath] = useState(null);
   const [userDetails, setuserDetails] = useState(null);
+  const [amount, setAmount] = useState('');
+  const [message, setMessage] = useState('');
   const fetchImg=async ()=>{
     try {
       const response = await axios.get(`${URL}/api/display/${id}`);
@@ -70,7 +72,24 @@ const QuickTopUp = () => {
           <Text style={styles.infosubText}>{userDetails?.phoneNumber}</Text>
         </View>
     </View>
-
+    <View style={styles.content}>
+        <Text style={styles.label}>Amount</Text>
+        <TextInput style={styles.input}  
+         
+        onChangeText={text => {
+                setAmount(text);
+              }} />
+         <View style={styles.userDetails}>
+             
+             <Text style={styles.label}>Message</Text>
+        <TextInput style={styles.  inputMessage}  
+         multiline={true}
+        onChangeText={text => {
+                setMessage(text);
+               
+              }} />
+         </View>
+        </View>
 
     </View>
   </SafeAreaView>
@@ -127,6 +146,34 @@ const styles = StyleSheet.create({
     fontSize:14,
     fontWeight:'600',
     color:COLORS.black
+  },
+  content:{
+    marginTop:25,
+    
+  },
+  label: {
+    color: COLORS.black,
+    fontSize: 16,
+    fontWeight: '400',
+    marginBottom: 4,
+    marginTop:5
+  },
+  input: {
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputMessage: {
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    height:100,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   usercon:{ 
       height: 230,
