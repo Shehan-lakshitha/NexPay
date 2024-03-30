@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
@@ -19,6 +19,8 @@ const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [other, setOther] = useState(null);
+  const [imagePath,  setImagePath] = useState('');
   const [addCredit, setAddCredit] = useState(false);
   const navigation = useNavigation();
 
@@ -49,7 +51,47 @@ const Wallet = () => {
       }
     };
     fetchDetails();
+   
+
+
   });
+  
+  useEffect(()=>{
+    const fetchData=async()=>{
+      try {
+        const response = await axios.post(`${URL}/api/adduserdetails`, {
+          id: userData._id,
+        });
+        if (response) {
+       
+         setOther(response.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData()
+
+
+   },[])
+ 
+  useEffect(()=>{
+    const fetchImg=async ()=>{
+      try {
+        const response = await axios.get(`${URL}/api/display/${other.users[0].userId}`);
+        
+    
+        setImagePath(response.data.imagePath.replace(/\\/g, '/'))
+        
+      } catch (error) {
+        console.log(error)
+      }
+     }
+  
+   
+  
+      fetchImg()
+  })
 
   // Use the retrieved data as needed
 
@@ -79,7 +121,7 @@ const Wallet = () => {
       });
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -111,16 +153,28 @@ const Wallet = () => {
           <Icon name="plus" size={12} color={COLORS.white} />
           <Text style={styles.addCreditText}>Add Credit</Text>
         </TouchableOpacity>
+         
+        
 
         <View>
           <Text style={styles.transfers}>Quick Transfers</Text>
           <View style={styles.line}></View>
+          <View style={{flexDirection:'row',gap:10}}>
+          {other===null? "":<View style={styles.boxStyle}>
+            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp')}}>
+            <Image source={{ uri: `${URL}/${imagePath}` }} style={styles.otherImg}/>
+            </TouchableOpacity>
+            <Text>{other.users[0].name}</Text>
+          </View>}
           <View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box}>
+            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickUser',{id: userData._id,})}}>
               <Icon name="plus" size={18} color={COLORS.primary} />
             </TouchableOpacity>
             <Text>Users</Text>
           </View>
+
+          </View>
+
         </View>
 
         <View>
@@ -256,5 +310,9 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 12,
     fontWeight: '500',
+  },
+  otherImg:{
+    height:50,
+    width:50
   },
 });

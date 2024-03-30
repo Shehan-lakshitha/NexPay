@@ -14,11 +14,19 @@ const addUser=async(req,res)=>{
     const {email,id}=req.body
 try {
     const user=await User.findOne({email})
-    if(user){
-        const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg}]})
-        await newfriend.save()
-       res.send({success:true,message:'add user success'})
+    console.log(id)
+
+    try {
+        if(user){
+            const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg,name:user.firstName}]})
+            await newfriend.save()
+           res.send({success:true,message:'add user success'})
+        }
+    } catch (error) {
+        
+        res.send({success:false,message:'invalid user'}) 
     }
+
 } catch (error) {
     console.log(error)
     res.send({success:false,message:'invalid user'})
@@ -98,6 +106,16 @@ const quickTransfer=async(req,res)=>{
         console.log(error)
     }
 }
+const userDetails=async(req,res)=>{
+    const {id}=req.body
+    try {
+        const user=await Others.findOne({userId:id})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
 router.post('/adduser',addUser)
+router.post('/adduserdetails',userDetails)
 router.post('/quicktransfer',quickTransfer)
 export {router as addUser}
