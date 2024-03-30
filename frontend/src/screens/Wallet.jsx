@@ -14,6 +14,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {URL} from '../constants/URL';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import fetchData from '../constants/fetchData';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -27,6 +28,7 @@ const Wallet = () => {
   const route = useRoute();
   const {userData} = route.params;
   // In the screen where you navigate to
+     console.log(userData)
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -51,49 +53,30 @@ const Wallet = () => {
       }
     };
     fetchDetails();
-   
+
+  },[]);
 
 
-  });
-  
-  useEffect(()=>{
-    const fetchData=async()=>{
-      try {
-        const response = await axios.post(`${URL}/api/adduserdetails`, {
-          id: userData._id,
-        });
-        if (response) {
-       
-         setOther(response.data)
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData()
-
-
-   },[])
- 
-  useEffect(()=>{
-    const fetchImg=async ()=>{
-      try {
-        const response = await axios.get(`${URL}/api/display/${other.users[0].userId}`);
+  // useEffect(()=>{
+  //   const fetchImg=async ()=>{
+  //     try {
+  //       const response = await axios.get(`${URL}/api/display/${other?.users[0]?.userId}`);
         
     
-        setImagePath(response.data.imagePath.replace(/\\/g, '/'))
+  //       setImagePath(response.data.imagePath.replace(/\\/g, '/'))
         
-      } catch (error) {
-        console.log(error)
-      }
-     }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //    } 
   
    
   
-      fetchImg()
-  })
+  //     fetchImg()
+  // },[other])
 
-  // Use the retrieved data as needed
+  //Use the retrieved data as needed
+
 
   const addCard = async () => {
     try {
@@ -156,26 +139,7 @@ const Wallet = () => {
          
         
 
-        <View>
-          <Text style={styles.transfers}>Quick Transfers</Text>
-          <View style={styles.line}></View>
-          <View style={{flexDirection:'row',gap:10}}>
-          {other===null? "":<View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp',{id:other.users[0].userId,data:userData})}}>
-            <Image source={{ uri: `${URL}/${imagePath}` }} style={styles.otherImg}/>
-            </TouchableOpacity>
-            <Text>{other.users[0].name}</Text>
-          </View>}
-          <View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickUser',{id: userData._id,})}}>
-              <Icon name="plus" size={18} color={COLORS.primary} />
-            </TouchableOpacity>
-            <Text>Users</Text>
-          </View>
-
-          </View>
-
-        </View>
+ 
 
         <View>
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
