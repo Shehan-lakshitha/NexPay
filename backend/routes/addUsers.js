@@ -124,8 +124,18 @@ const uDetails=async(req,res)=>{
         console.log(error)
     }
 }
+const Transferdetails=async(req,res)=>{
+    const {phoneNumber}=req.body
+    try {
+        const user=await User.findOne({phoneNumber})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
 router.post('/adduser',addUser)
 router.post('/adduserdetails',userDetails)
 router.post('/udetails',uDetails)
+router.post('/transferdetails',uDetails)
 router.post('/quicktransfer',quickTransfer)
 export {router as addUser}

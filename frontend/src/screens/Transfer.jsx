@@ -7,14 +7,32 @@ import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { URL } from '../constants/URL';
 
 const Transfer = () => {
     const navigation=useNavigation()
     const route = useRoute();
     const {userData} = route.params;
     const [phoneNumber, setPhoneNumber] = useState(null);
+    const [userDetails, setuserDetails] = useState(null);
     const [amount,setAmount] = useState(null);
-    
+      
+    useEffect(()=>{
+      const fetchUser=async ()=>{
+        try {
+          const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
+          
+        if(response){
+          setuserDetails(response.data)
+        }
+         
+          
+        } catch (error) {
+          console.log(error)
+        }
+       }
+       fetchUser()
+    },[phoneNumber])
  
 
       
@@ -52,7 +70,7 @@ const Transfer = () => {
         style={styles.nextBtn}
         title="Continue"
         filled
-        onpress={()=>{navigation.navigate('Verify',{data:userData,amount:amount})}}
+        onpress={()=>{navigation.navigate('QRVerify',{data:userData,amount:amount,id:userDetails._id})}}
       />
     </SafeAreaView>
   )
