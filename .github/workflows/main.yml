@@ -26,4 +26,4 @@ jobs:
     - name: Install backend dependencies
       run: cd backend && npm install
     - name: Start backend
-      run: cd backend && npm start
+      run: cd backend
