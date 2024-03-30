@@ -13,13 +13,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import axios from 'axios'
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Button from '../components/Button';
 
 
 const QuickTopUp = () => {
   const route = useRoute();
-  const {id}=route.params
+  const {id,data}=route.params
   const navigation=useNavigation()
-  console.log(id)
+  
   const [imagePath, setImagePath] = useState(null);
   const [userDetails, setuserDetails] = useState(null);
   const [amount, setAmount] = useState('');
@@ -90,7 +91,12 @@ const QuickTopUp = () => {
               }} />
          </View>
         </View>
-
+        <Button
+        style={styles.nextBtn}
+        title="Pay"
+        filled
+        onpress={()=>{navigation.navigate('QRVerify',{data:data,amount:amount,id:id})}}
+      />
     </View>
   </SafeAreaView>
   
@@ -174,6 +180,11 @@ const styles = StyleSheet.create({
     height:100,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  nextBtn:{
+    marginTop: 240,
+    marginHorizontal: 15,
+    marginBottom: 20,
   },
   usercon:{ 
       height: 230,
