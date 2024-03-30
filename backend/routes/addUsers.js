@@ -115,7 +115,17 @@ const userDetails=async(req,res)=>{
         console.log(error)
     }
 }
+const uDetails=async(req,res)=>{
+    const {id}=req.body
+    try {
+        const user=await User.findOne({_id:id})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
 router.post('/adduser',addUser)
 router.post('/adduserdetails',userDetails)
+router.post('/udetails',uDetails)
 router.post('/quicktransfer',quickTransfer)
 export {router as addUser}

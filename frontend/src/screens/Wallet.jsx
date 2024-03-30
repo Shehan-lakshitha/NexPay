@@ -161,7 +161,7 @@ const Wallet = () => {
           <View style={styles.line}></View>
           <View style={{flexDirection:'row',gap:10}}>
           {other===null? "":<View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp')}}>
+            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp',{id:other.users[0].userId})}}>
             <Image source={{ uri: `${URL}/${imagePath}` }} style={styles.otherImg}/>
             </TouchableOpacity>
             <Text>{other.users[0].name}</Text>
