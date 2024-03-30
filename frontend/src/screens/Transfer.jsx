@@ -8,7 +8,7 @@ import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
-
+import axios from 'axios';
 const Transfer = () => {
     const navigation=useNavigation()
     const route = useRoute();
