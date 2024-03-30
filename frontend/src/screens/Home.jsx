@@ -106,8 +106,8 @@ export default function Home() {
       }
       fetchHistory()
 
-    }) 
-
+    },[balance]) 
+      
     const renderItem = ({ item }) => {
       const date = new Date(item.created * 1000);
 
@@ -115,7 +115,7 @@ export default function Home() {
       const formattedDateTime = date.toLocaleString(); 
       return(<View>
         <View  style={styles.tile}>
-          <Text style={styles.renderText}>{item.type}</Text>
+        {item.type==='payment'?<Text style={styles.renderTextRed}>{item.type}</Text>:<Text style={styles.renderTextGreen}>{item.type}</Text>}
           <Text style={styles.renderText}>{`Rs.${item.amount}.00`}</Text>
           <Text style={styles.renderText}>{formattedDateTime}</Text>
           </View>
@@ -180,7 +180,7 @@ export default function Home() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('Transfer',{userData})}}>
             <View style={styles.tab}>
               <View style={[styles.tabCircle, {backgroundColor}]}>
                 <FontAwesomeIcon
@@ -272,7 +272,7 @@ export default function Home() {
             <View style={styles.line}></View>
             <View style={styles.transactions}>
               <FlatList
-              data={history}
+              data={history?.slice(-3)}
               renderItem={renderItem}
               keyExtractor={item => item.paymentIntentId}
               />
@@ -439,5 +439,14 @@ const styles = StyleSheet.create({
   },
   renderText:{
     fontWeight:'600'
-  }
+  },
+  renderTextGreen:{
+    fontWeight:'600',
+    color:COLORS.green
+   },
+   renderTextRed:{
+    fontWeight:'600',
+    color:COLORS.warning
+
+   },
 });

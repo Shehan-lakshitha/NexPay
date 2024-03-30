@@ -14,7 +14,7 @@ export default function NavBar({navigation,data}) {
     
     <View style={styles.navBar}>
     <View style={[styles.navQR,{backgroundColor}]}>
-      <TouchableOpacity onPress={()=>{navigation.navigate('QRScan')}}>
+      <TouchableOpacity onPress={()=>{navigation.navigate('QRScan',{userData:data})}}>
       <MaterialIcon name='qrcode' size={40} color='#8A86EA'/>
       </TouchableOpacity>
       </View>
@@ -26,7 +26,7 @@ export default function NavBar({navigation,data}) {
       </TouchableOpacity>
     </View>
     <View style={styles.nav}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Chart',{id:data._id})}}>
       <Icon name="chart-bar" size={30} color={COLORS.white} /> 
       </TouchableOpacity>
     </View>
