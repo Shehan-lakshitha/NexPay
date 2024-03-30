@@ -56,18 +56,19 @@ const QuickTopUp = () => {
     <SafeAreaView style={[styles.Container]}>
     <View style={styles.subContainer}>
     <View style={styles.header}>
-    <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Icon name="chevron-left" size={24} color={COLORS.black} />
-    </TouchableOpacity>
-
-
-    
-  </View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} color={COLORS.black} />
+        </TouchableOpacity>
+        <Text style={styles.headertitle}>Quick Transfer</Text>
+      </View>
   <View style={styles.userContainer}>
         <View style={[styles.profile]}>
             <View style={styles.imgContainer}><Image source={{ uri: `${URL}/${imagePath}` }} style={styles.img}></Image></View>
         </View>
-        
+        <View style={styles.info}>
+          <Text style={styles.infoText}>{`${userDetails?.firstName} ${userDetails?.lastName}`}</Text>
+          <Text style={styles.infosubText}>{userDetails?.phoneNumber}</Text>
+        </View>
     </View>
 
 
@@ -88,15 +89,44 @@ const styles = StyleSheet.create({
       
   },
   header: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'space-between',
-    },
+    flexDirection: 'row',
+    marginHorizontal:25,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  headertitle: {
+    color: COLORS.black,
+    
+    width:150,
+    fontSize: 18,
+    fontWeight: '600',
+    marginHorizontal: '35%',
+  },
   userContainer:{
      
-      marginTop:50,
-      position:"relative"
+      marginTop:20,
+      position:"relative",
+      flexDirection:'row',
+      gap:20,
+      justifyContent:'center'
       
+  },
+  info:{
+    justifyContent:'center',
+    alignContent:'center',
+    gap:5,
+    
+
+  },
+  infoText:{
+    fontSize:18,
+    fontWeight:'600',
+    color:COLORS.black
+  },
+  infosubText:{
+    fontSize:14,
+    fontWeight:'600',
+    color:COLORS.black
   },
   usercon:{ 
       height: 230,
@@ -135,9 +165,7 @@ const styles = StyleSheet.create({
       borderRadius:75,
       height:130,
       width:130,
-      position:"absolute",
-      left:"31%",
-      top:-50
+    
       
       
   },
