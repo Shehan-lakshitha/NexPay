@@ -43,7 +43,7 @@ import { URL } from '../constants/URL';
       }
       makePayment()
   })
-  
+  console.log(data._id)
  
   return (
     <SafeAreaView style={styles.container}>

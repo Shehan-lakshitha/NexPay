@@ -7,33 +7,42 @@ import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { URL } from '../constants/URL';
 import axios from 'axios';
-const Transfer = () => {
+import { URL } from '../constants/URL';
+import Toast from 'react-native-toast-message';
+const QuickUser = () => {
     const navigation=useNavigation()
     const route = useRoute();
-    const {userData} = route.params;
-    const [phoneNumber, setPhoneNumber] = useState(null);
-    const [userDetails, setuserDetails] = useState(null);
-    const [amount,setAmount] = useState(null);
-      
-    useEffect(()=>{
-      const fetchUser=async ()=>{
+    const {id} = route.params;
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+
+    const addUser=async()=>{
         try {
-          const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
-          
-        if(response){
-          setuserDetails(response.data)
-        }
-         
-          
-        } catch (error) {
-          console.log(error)
-        }
-       }
-       fetchUser()
-    },[phoneNumber])
- 
+            const response = await axios.post(`${URL}/api/adduser`, {
+              id:id,
+              email,
+            });
+            if (response.data.success === true) {
+                navigation.goBack()
+            }else{
+                Toast.show({
+                    type: 'error',
+                    text1: 'User is already added',
+                    text2: 'Please enter valid User',
+                  }); 
+            }
+          } catch (error) {
+            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'User is already added',
+                text2: 'Please enter valid User',
+              });
+          }
+    }
+    
+  
 
       
     
@@ -43,40 +52,40 @@ const Transfer = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
-        <Text style={styles.headertitle}>Transfer Credit</Text>
+        <Text style={styles.headertitle}>Add User</Text>
       </View>
         <View >
               <View style={styles.imgContainer}><Image source={logo } style={styles.imgImg}></Image></View>
         </View>
         <View style={styles.content}>
-        <Text style={styles.label}>Phone Number</Text>
+        <Text style={styles.label}>User Name</Text>
         <TextInput style={styles.input}  
-         keyboardType='numeric'
+         
         onChangeText={text => {
-                setPhoneNumber(text);
+                setName(text);
               }} />
          <View style={styles.userDetails}>
              
-             <Text style={styles.label}>Amount</Text>
+             <Text style={styles.label}>Email</Text>
         <TextInput style={styles.input}  
-         keyboardType='numeric'
+         
         onChangeText={text => {
-                setAmount(text);
+                setEmail(text);
                
               }} />
          </View>
         </View>
         <Button
         style={styles.nextBtn}
-        title="Continue"
+        title="Add"
         filled
-        onpress={()=>{navigation.navigate('QRVerify',{data:userData,amount:amount,id:userDetails._id})}}
+        onpress={addUser}
       />
     </SafeAreaView>
   )
 }
 
-export default Transfer
+export default QuickUser
 
 const styles = StyleSheet.create({
     container: {

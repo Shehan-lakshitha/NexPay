@@ -14,7 +14,7 @@ const CreatePassword = () => {
   const route = useRoute();
   const navigation=useNavigation()
   const {firstName, lastName, email, NIC, phoneNumber} = route.params;
-   
+
   const [ispasswordShown, setIsPasswordShown] = useState(false);
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
   const [password, setPassword] = useState('');
@@ -22,34 +22,38 @@ const CreatePassword = () => {
   const [errorText, setErrorText] = useState('');
   const [error,setError]=useState('')
   const [passwordValidity,setPassswordValidity]=useState(true)
+  console.log(password)
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        `${URL}/api/register`,
-        {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          phoneNumber: phoneNumber,
-          NIC: NIC,
-          password: password,
-          confirmPassword: confirmPassword,
-        },
-      );
+     
+        const response = await axios.post(
+          `${URL}/api/register`,
+          {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: parseInt(phoneNumber),
+            NIC: NIC,
+            password: password,
+            confirmPassword: confirmPassword,
+          },
+        );
+        
+        if(response.data.success===true){
+          navigation.navigate('AccountCreated',{
+            email,
+            firstName
+          })
+        }else{
+          setErrorText(response.data.message);
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: `${errorText}`,
+          })
+        }
       
-      if(response.data.success===true){
-        navigation.navigate('AccountCreated',{
-          email,
-          firstName
-        })
-      }else{
-        setErrorText(response.data.message);
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: `${errorText}`,
-        })
-      }
+
       
       
       

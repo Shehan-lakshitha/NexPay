@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
@@ -14,17 +14,21 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {URL} from '../constants/URL';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import fetchData from '../constants/fetchData';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [other, setOther] = useState(null);
+  const [imagePath,  setImagePath] = useState('');
   const [addCredit, setAddCredit] = useState(false);
   const navigation = useNavigation();
 
   const route = useRoute();
   const {userData} = route.params;
   // In the screen where you navigate to
+     console.log(userData)
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -49,9 +53,30 @@ const Wallet = () => {
       }
     };
     fetchDetails();
-  });
 
-  // Use the retrieved data as needed
+  },[]);
+
+
+  // useEffect(()=>{
+  //   const fetchImg=async ()=>{
+  //     try {
+  //       const response = await axios.get(`${URL}/api/display/${other?.users[0]?.userId}`);
+        
+    
+  //       setImagePath(response.data.imagePath.replace(/\\/g, '/'))
+        
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //    } 
+  
+   
+  
+  //     fetchImg()
+  // },[other])
+
+  //Use the retrieved data as needed
+
 
   const addCard = async () => {
     try {
@@ -79,7 +104,7 @@ const Wallet = () => {
       });
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -111,17 +136,10 @@ const Wallet = () => {
           <Icon name="plus" size={12} color={COLORS.white} />
           <Text style={styles.addCreditText}>Add Credit</Text>
         </TouchableOpacity>
+         
+        
 
-        <View>
-          <Text style={styles.transfers}>Quick Transfers</Text>
-          <View style={styles.line}></View>
-          <View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box}>
-              <Icon name="plus" size={18} color={COLORS.primary} />
-            </TouchableOpacity>
-            <Text>Users</Text>
-          </View>
-        </View>
+ 
 
         <View>
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
@@ -256,5 +274,9 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 12,
     fontWeight: '500',
+  },
+  otherImg:{
+    height:50,
+    width:50
   },
 });
