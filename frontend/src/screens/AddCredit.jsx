@@ -61,7 +61,7 @@ const AddCredit = () => {
         })
     }else{
       
-            navigation.navigate('PinVerify', {data:userData,amount:amount});
+            navigation.navigate('Created', {data:userData,amount:amount});
          
     }
   }

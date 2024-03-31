@@ -32,6 +32,7 @@ export default function Home() {
   const [userData, setUserData] = useState(null);
   const [balance, setBalance] = useState(null);
   const [history, setHistory] = useState(null);
+  const [card, setCard] = useState(false);
   const [textMain, setTextMain] = useState('Add your Card');
   const [textSub, setTextSub] = useState(
     'Link your credit/debit cart to make transactions.',
@@ -54,47 +55,50 @@ export default function Home() {
     };
     fetchData();
 
-    // const fetchDetails = async () => {
-    //   try {
-    //     const response = await axios.post(`${URL}/api/carddetails`, {
-    //       id: id,
-    //     });
-    //     if (response) {
-          
-    //       setTextMain('Add Credit');
-    //       setTextSub('Add credit to your wallet to make transactions.');
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //     return null;
-    //   }
-    // };
-    // fetchDetails();
-        
-      const fetchBalance=async ()=>{
-        try {
-          const response = await axios.post(`${URL}/api/balance`, {
-            id: id,
-          });
-          if (response) {
-            setBalance(response.data.balance)
-            
-            
-          }
-          if(response.data.success===false){
-            setBalance(0)
-          }
-        } catch (error) {
-          console.log(error);
-          
+    const fetchDetails = async () => {
+      try {
+        const response = await axios.post(`${URL}/api/carddetails`, {
+          id: id,
+        });
+        if (response) {
+          console.log(response.data)
+          setCard(true)
+          setTextMain('Add Credit');
+          setTextSub('Add credit to your wallet to make transactions.');
         }
+      } catch (error) {
+        console.log(error);
+        return null;
       }
-      fetchBalance()
-  
-      
+    };
+    fetchDetails();
+  },[]);
 
-  }, []);
+    
+      useEffect(()=>{
+        if(card===true){
+          const fetchBalance=async ()=>{
+            try {
+              const response = await axios.post(`${URL}/api/balance`, {
+                id: id,
+              });
+              if (response) {
+                setBalance(response.data.balance)
+                
+                
+              }
+              // if(response.data.success===false){
+              //   setBalance(0)
+              // }
+            } catch (error) {
+              console.log(error);
+              
+            }
+          }
+          fetchBalance()
+        }
 
+      })
     
     //setHistory(fetchHistory({id:id,balance:balance}))
     // useEffect(()=>{
