@@ -108,11 +108,13 @@ const quickTransfer=async(req,res)=>{
 }
 const userDetails=async(req,res)=>{
     const {id}=req.body
+    
+
     try {
         const user=await Others.findOne({userId:id})
         res.send(user)
     } catch (error) {
-        console.log(error)
+        console.log('not yet...')
     }
 }
 const uDetails=async(req,res)=>{
