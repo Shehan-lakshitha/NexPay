@@ -67,3 +67,9 @@ frontend -> src -> constants -> URL.js
 Set `http://192.168.8.159:5000` to run in a physical device and set `http://10.0.2.2:5000` to run in a emulator device.</br>
 
 Add `.env` file in `backend` folder withe MongoDb URL and the secret key
+
+## Technologies
+<b>Frontend</b> - React Native</br>
+<b>Backend</b> - nodeJs</br>
+<b>Database</b> - monogoDB</br>
+Stripe to intergrate payment gateway.</br>
