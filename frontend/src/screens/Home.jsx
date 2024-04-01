@@ -124,7 +124,7 @@ export default function Home() {
         }
         fetchHistory()
   
-      },[]) 
+      },[balance]) 
     const renderItem = ({ item }) => {
         const date = new Date(item.created * 1000);
   

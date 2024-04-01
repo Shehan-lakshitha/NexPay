@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Toast from 'react-native-toast-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -23,6 +24,19 @@ const CreatePassword = () => {
   const [error,setError]=useState('')
   const [passwordValidity,setPassswordValidity]=useState(true)
   console.log(password)
+   
+  useEffect(()=>{
+    const addEmailToStorage = async () => {
+      try {
+        await AsyncStorage.setItem('email',email);
+        console.log('Email added to AsyncStorage');
+      } catch (error) {
+        console.error('Error adding email to AsyncStorage:', error);
+      }
+    };
+    addEmailToStorage()
+  },[email])
+
   const handleSubmit = async () => {
     try {
      
