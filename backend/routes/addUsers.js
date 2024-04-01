@@ -160,6 +160,6 @@ const Transferdetails=async(req,res)=>{
 router.post('/adduser',addUser)
 router.post('/adduserdetails',userDetails)
 router.post('/udetails',uDetails)
-router.post('/transferdetails',uDetails)
+router.post('/transferdetails',Transferdetails)
 router.post('/quicktransfer',quickTransfer)
 export {router as addUser}

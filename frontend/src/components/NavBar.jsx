@@ -34,7 +34,7 @@ export default function NavBar({navigation,data}) {
     </View>
     <View style={styles.navright}>
     <View style={styles.nav}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('Wallet',{userData:data})}>
       <MaterialIcon name="wallet-outline" size={30} color={COLORS.white} /> 
       </TouchableOpacity>
     </View>
