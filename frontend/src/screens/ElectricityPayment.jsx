@@ -36,6 +36,7 @@ const BillPayments = () => {
                 text2: 'All fields are required'
             });
         } else {
+          navigation.navigate('Verify',{data:userData,amount:amount})
             console.log('Submitted')
         }
     }

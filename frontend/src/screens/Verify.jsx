@@ -20,6 +20,7 @@ const Verify = () => {
   useEffect(()=>{
     const pinFetch=async()=>{
       const email=await AsyncStorage.getItem('email');
+      console.log(email)
       try {
         if(enteredPin.length === 4){
           

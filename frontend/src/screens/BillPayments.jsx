@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headertitle: {
     color: COLORS.black,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '600',
     marginHorizontal: '30%',
   },

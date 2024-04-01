@@ -29,6 +29,7 @@ import { URL } from '../constants/URL';
                   });
                   if(response.data.success===true){
                     navigation.navigate('Home', {email:data.email,id:data._id});
+                    console.log('fuck')
                   }
                 } catch (error) {
                   console.log(error)

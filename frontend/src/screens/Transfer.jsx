@@ -17,13 +17,14 @@ const Transfer = () => {
     const [userDetails, setuserDetails] = useState(null);
     const [amount,setAmount] = useState(null);
       
-    useEffect(()=>{
-      const fetchUser=async ()=>{
+ 
+      const handleFetchUser=async ()=>{
         try {
           const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
           
         if(response){
-          setuserDetails(response.data)
+          console.log(response.data)
+          navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data._id})
         }
          
           
@@ -31,8 +32,7 @@ const Transfer = () => {
           console.log(error)
         }
        }
-       fetchUser()
-    },[phoneNumber])
+ 
  
 
       
@@ -70,7 +70,7 @@ const Transfer = () => {
         style={styles.nextBtn}
         title="Continue"
         filled
-        onpress={()=>{navigation.navigate('QRVerify',{data:userData,amount:amount,id:userDetails._id})}}
+        onpress={handleFetchUser}
       />
     </SafeAreaView>
   )
