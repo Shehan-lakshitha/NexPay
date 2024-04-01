@@ -37,8 +37,18 @@ import Rewards from '../screens/Rewards';
 import Notification from '../screens/Notification';
 import Help from '../screens/Help';
 import History from '../screens/History';
+
 import BillPayments from '../screens/BillPayments';
 import ElectricityPayment from '../screens/ElectricityPayment';
+
+import Chart from '../screens/Chart';
+import Transfer from '../screens/Transfer';
+import QRPayment from '../screens/QRPayment';
+import QRSuccess from '../screens/QRSuccess';
+import QuickUser from '../screens/QuickUser';
+import QuickTopUp from '../screens/QuickTopUp';
+import QRVerify from '../screens/QRVerify';
+
 
 
 
@@ -172,8 +182,18 @@ export default function Navigation() {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="History" component={History} />
+
         <Stack.Screen name="BillPayments" component={BillPayments} />
         <Stack.Screen name="ElectricityPayment" component={ElectricityPayment} />
+
+        <Stack.Screen name="Chart" component={Chart} />
+        <Stack.Screen name="Transfer" component={Transfer} />
+        <Stack.Screen name="QRPayment" component={QRPayment} />
+        <Stack.Screen name="QRSuccess" component={QRSuccess} />
+        <Stack.Screen name="QuickUser" component={QuickUser} />
+        <Stack.Screen name="QuickTopUp" component={QuickTopUp} />
+        <Stack.Screen name="QRVerify" component={QRVerify} />
+
 
       </Stack.Navigator>
 

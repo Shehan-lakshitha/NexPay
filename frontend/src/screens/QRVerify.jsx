@@ -9,19 +9,17 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../constants/URL';
-
-const PinVerify = () => {
-
+const QRVerify = () => {
   const pinView = useRef(null)
   const route = useRoute();
-  const {data,amount} = route.params;
+  const {data,amount,id} = route.params;
   const [enteredPin, setEnteredPin] = useState("")
- 
+
+
   const navigation=useNavigation()
   useEffect(()=>{
     const pinFetch=async()=>{
       const email=await AsyncStorage.getItem('email');
-      console.log(email)
       try {
         if(enteredPin.length === 4){
           
@@ -33,8 +31,11 @@ const PinVerify = () => {
             },
           );
           if(response.data.success ===true){
-            navigation.navigate('Created',{data:data,amount:amount})
- 
+            navigation.navigate('QRSuccess',{data:data,amount:amount,id:id})
+                
+            
+            
+            
           }else if(response.data.success ===false){
             console.log('incorrect pin')
             pinView.current.clearAll()
@@ -113,7 +114,7 @@ const PinVerify = () => {
   )
 }
 
-export default PinVerify
+export default QRVerify
 
 const styles = StyleSheet.create({
     container:{

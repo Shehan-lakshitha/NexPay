@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {TextInput, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Toast from 'react-native-toast-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -14,7 +15,7 @@ const CreatePassword = () => {
   const route = useRoute();
   const navigation=useNavigation()
   const {firstName, lastName, email, NIC, phoneNumber} = route.params;
-   
+
   const [ispasswordShown, setIsPasswordShown] = useState(false);
   const [ispasswordShownC, setIsPasswordShownC] = useState(false);
   const [password, setPassword] = useState('');
@@ -22,34 +23,51 @@ const CreatePassword = () => {
   const [errorText, setErrorText] = useState('');
   const [error,setError]=useState('')
   const [passwordValidity,setPassswordValidity]=useState(true)
+  console.log(password)
+   
+  useEffect(()=>{
+    const addEmailToStorage = async () => {
+      try {
+        await AsyncStorage.setItem('email',email);
+        console.log('Email added to AsyncStorage');
+      } catch (error) {
+        console.error('Error adding email to AsyncStorage:', error);
+      }
+    };
+    addEmailToStorage()
+  },[email])
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        `${URL}/api/register`,
-        {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          phoneNumber: phoneNumber,
-          NIC: NIC,
-          password: password,
-          confirmPassword: confirmPassword,
-        },
-      );
+     
+        const response = await axios.post(
+          `${URL}/api/register`,
+          {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phoneNumber: parseInt(phoneNumber),
+            NIC: NIC,
+            password: password,
+            confirmPassword: confirmPassword,
+          },
+        );
+        
+        if(response.data.success===true){
+          navigation.navigate('AccountCreated',{
+            email,
+            firstName
+          })
+        }else{
+          setErrorText(response.data.message);
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: `${errorText}`,
+          })
+        }
       
-      if(response.data.success===true){
-        navigation.navigate('AccountCreated',{
-          email,
-          firstName
-        })
-      }else{
-        setErrorText(response.data.message);
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: `${errorText}`,
-        })
-      }
+
       
       
       

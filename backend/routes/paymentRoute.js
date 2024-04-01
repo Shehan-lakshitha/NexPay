@@ -10,8 +10,8 @@ const stripe = new Stripe('sk_test_51Oh4IYEyzMUhUrfVnThV1wzNrbnLyu2VplOqtktgFeFU
 
 const createUser=async(req,res)=>{
      const {id}=req.body
- 
     
+    console.log(id)
      try {
         const customer=await Wallet.findOne({userId:id})
         if(!customer){
@@ -91,11 +91,16 @@ const paymentMethod=async(req,res)=>{
 }
 
 const carddetails=async(req,res)=>{
-    const {id}=req.body
-    const response=await Card.findOne({userId:id})
-    if(response){
-        res.send(response)
+    try {
+        const {id}=req.body
+        const response=await Card.findOne({userId:id})
+        if(response){
+            res.send(response)
+        }
+    } catch (error) {
+        console.log('no card details yet..')
     }
+
 }
 
 const addCredit=async(req,res)=>{
@@ -208,10 +213,11 @@ const showBalance=async (req,res)=>{
     try {
         const response=await Wallet.findOne({userId:id})
         if(response){
-            res.send(response)
+            res.send({success:true,balance:response.balance})
         }
     } catch (error) {
-        console.log(error)
+        
+        res.send({success:false,message:'zero balance',balance:0})
     }
 }
 const paymentHistory=async(req,res)=>{
@@ -222,7 +228,7 @@ const paymentHistory=async(req,res)=>{
             res.send(response)
         }
     } catch (error) {
-        console.log(error)
+        console.log('still dont have payment..')
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   SafeAreaView,
@@ -6,10 +6,12 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -21,6 +23,8 @@ const Register = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [emailValidity,setEmailValidity]=useState(true)
   const [error,setError]=useState('')
+
+
   const handleCheckEmail = (text) => {
     const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
@@ -33,7 +37,17 @@ const Register = ({navigation}) => {
         setError('Invalid Email') 
     }
 };
- 
+handleLogout = async () => {
+  try {
+   
+    await AsyncStorage.clear();
+    
+  
+    BackHandler.exitApp();
+  } catch (error) {
+    console.error('Error logging out:', error);
+  }
+};
   return (
     <SafeAreaView>
       <View
@@ -281,6 +295,7 @@ const Register = ({navigation}) => {
             }}>
             by register, you accept our Terms and conditions
           </Text>
+          <TouchableOpacity style={{width:50,backgroundColor:'red',height:50}} onPress={handleLogout}></TouchableOpacity>
           <Button
             onpress={() => {
               navigation.navigate('CreatePassword', {

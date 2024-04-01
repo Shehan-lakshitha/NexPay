@@ -14,11 +14,37 @@ const addUser=async(req,res)=>{
     const {email,id}=req.body
 try {
     const user=await User.findOne({email})
-    if(user){
-        const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg}]})
-        await newfriend.save()
-       res.send({success:true,message:'add user success'})
+    console.log(id)
+
+    try {
+        if(user){
+            const existingPayment = await Others.findOne({ userId: id});
+            if(existingPayment){
+               await Others.findOneAndUpdate(
+                   { userId: id },
+                   {
+                       $push: {
+                           users: {
+                               userId:user._id,
+                               email:email,
+                               img:user.userImg,
+                               name:user.firstName
+                           }
+                       }
+                   }
+               );
+                }else{
+                    const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg,name:user.firstName}]})
+                    await newfriend.save()
+                }
+            
+           res.send({success:true,message:'add user success'})
+        }
+    } catch (error) {
+        
+        res.send({success:false,message:'invalid user'}) 
     }
+
 } catch (error) {
     console.log(error)
     res.send({success:false,message:'invalid user'})
@@ -98,6 +124,42 @@ const quickTransfer=async(req,res)=>{
         console.log(error)
     }
 }
+const userDetails=async(req,res)=>{
+    const {id}=req.body
+    
+
+    try {
+        const user=await Others.findOne({userId:id})
+        if(user){
+            res.send({data:user,success:true})
+        }
+        
+    } catch (error) {
+        console.log('not yet...')
+        res.send({success:false})
+    }
+}
+const uDetails=async(req,res)=>{
+    const {id}=req.body
+    try {
+        const user=await User.findOne({_id:id})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
+const Transferdetails=async(req,res)=>{
+    const {phoneNumber}=req.body
+    try {
+        const user=await User.findOne({phoneNumber})
+        res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
 router.post('/adduser',addUser)
+router.post('/adduserdetails',userDetails)
+router.post('/udetails',uDetails)
+router.post('/transferdetails',uDetails)
 router.post('/quicktransfer',quickTransfer)
 export {router as addUser}

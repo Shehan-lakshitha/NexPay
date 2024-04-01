@@ -14,7 +14,8 @@ const Verify = () => {
   const route = useRoute();
   const {data,amount} = route.params;
   const [enteredPin, setEnteredPin] = useState("")
- 
+  console.log(data)
+
   const navigation=useNavigation()
   useEffect(()=>{
     const pinFetch=async()=>{
