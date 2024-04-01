@@ -85,7 +85,7 @@ const Wallet = () => {
     
         fetchImg()
     
-  },[other,userData._id]);
+  },[]);
 
 
 

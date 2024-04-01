@@ -55,50 +55,90 @@ export default function Home() {
     };
     fetchData();
 
-    const fetchDetails = async () => {
-      try {
-        const response = await axios.post(`${URL}/api/carddetails`, {
-          id: id,
-        });
-        if (response) {
-          console.log(response.data)
-          setCard(true)
-          setTextMain('Add Credit');
-          setTextSub('Add credit to your wallet to make transactions.');
-        }
-      } catch (error) {
-        console.log(error);
-        return null;
-      }
-    };
-    fetchDetails();
+
+    // const fetchDetails = async () => {
+    //   try {
+    //     const response = await axios.post(`${URL}/api/carddetails`, {
+    //       id: id,
+    //     });
+    //     if (response) {
+    //       console.log(response.data)
+    //       setCard(true)
+    //       setTextMain('Add Credit');
+    //       setTextSub('Add credit to your wallet to make transactions.');
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //     return null;
+    //   }
+    // };
+    // fetchDetails();
   },[]);
 
     
       useEffect(()=>{
-        if(card===true){
-          const fetchBalance=async ()=>{
-            try {
-              const response = await axios.post(`${URL}/api/balance`, {
-                id: id,
-              });
-              if (response) {
-                setBalance(response.data.balance)
-                
-                
-              }
-              // if(response.data.success===false){
-              //   setBalance(0)
-              // }
-            } catch (error) {
-              console.log(error);
+       
+        const fetchBalance=async ()=>{
+          try {
+            const response = await axios.post(`${URL}/api/balance`, {
+              id: id,
+            });
+            //console.log(balance)
+    
+            if (response.data.success===true) {
+              setBalance(response.data.balance)
+              
+              
+              
+            }else if(response.data.success===false){
+              setBalance(response.data.balance)
               
             }
+            // if(response.data.success===false){
+            //   setBalance(0)
+            // }
+          } catch (error) {
+            console.log(error);
+            
           }
-          fetchBalance()
         }
+        fetchBalance()
+    
+        
 
       })
+      useEffect(()=>{
+        const fetchHistory=async ()=>{
+          try {
+            const response = await axios.post(`${URL}/api/paymenthistory`, {
+              id: id,
+            });
+            if (response) {
+              setHistory(response.data.payments)
+               
+            }
+          } catch (error) {
+            console.log(error);
+            
+          }
+        }
+        fetchHistory()
+  
+      },[]) 
+    const renderItem = ({ item }) => {
+        const date = new Date(item.created * 1000);
+  
+        // Format the date and time
+        const formattedDateTime = date.toLocaleString(); 
+        return(<View>
+          <View  style={styles.tile}>
+          {item.type==='payment'?<Text style={styles.renderTextRed}>{item.type}</Text>:<Text style={styles.renderTextGreen}>{item.type}</Text>}
+            <Text style={styles.renderText}>{`Rs.${item.amount}.00`}</Text>
+            <Text style={styles.renderText}>{formattedDateTime}</Text>
+            </View>
+          
+        </View>)
+      };
     
     //setHistory(fetchHistory({id:id,balance:balance}))
     // useEffect(()=>{
@@ -123,7 +163,7 @@ export default function Home() {
     //   fetchBalance()
     // })
       
-
+   
 
   return (
     <SafeAreaView style={[{flex: 1}, {backgroundColor}]}>
@@ -165,7 +205,7 @@ export default function Home() {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.cardtext}>{`Rs.${balance}.00` || textMain}</Text>
+          <Text style={styles.cardtext}>{`Rs.${balance}.00`}</Text>
           <Text style={styles.cardsubtext}>{balance!==null? "Available balance":textSub}</Text>
         </View>
         <View style={styles.tabContainer}>
@@ -273,12 +313,11 @@ export default function Home() {
             <Text style={styles.titleText}>Recent transactions</Text>
             <View style={styles.line}></View>
             <View style={styles.transactions}>
-              {fetchFlatList({history})}
-              {/* <FlatList
-              data={history?.slice(-3)}
-              renderItem={renderItem}
-              keyExtractor={item => item.paymentIntentId}
-              /> */}
+            <FlatList
+    data={history?.slice(-3)}
+    renderItem={renderItem}
+    keyExtractor={item => item.paymentIntentId}
+    />
             </View>
           </View>
         </View>

@@ -213,11 +213,11 @@ const showBalance=async (req,res)=>{
     try {
         const response=await Wallet.findOne({userId:id})
         if(response){
-            res.send(response)
+            res.send({success:true,balance:response.balance})
         }
     } catch (error) {
-        console.log('still dont have balance to show')
-        res.send({success:false,message:'zero balance'})
+        
+        res.send({success:false,message:'zero balance',balance:0})
     }
 }
 const paymentHistory=async(req,res)=>{
