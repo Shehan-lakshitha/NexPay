@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,7 +10,7 @@ import { URL } from '../constants/URL';
  const Created = ({navigation}) => {
   const route = useRoute();
   const {data,amount} = route.params;
-  
+
   const addcredit=async()=>{
     try {
       const response = await axios.post(`${URL}/api/addcredit`, {
@@ -25,7 +25,7 @@ import { URL } from '../constants/URL';
       console.log(error)
     }
   }
-  addcredit()
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>

@@ -18,8 +18,26 @@ try {
 
     try {
         if(user){
-            const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg,name:user.firstName}]})
-            await newfriend.save()
+            const existingPayment = await Others.findOne({ userId: id});
+            if(existingPayment){
+               await Others.findOneAndUpdate(
+                   { userId: id },
+                   {
+                       $push: {
+                           users: {
+                               userId:user._id,
+                               email:email,
+                               img:user.userImg,
+                               name:user.firstName
+                           }
+                       }
+                   }
+               );
+                }else{
+                    const newfriend=new Others({userId:id,users:[{userId:user._id,email:email,img:user.userImg,name:user.firstName}]})
+                    await newfriend.save()
+                }
+            
            res.send({success:true,message:'add user success'})
         }
     } catch (error) {
@@ -112,9 +130,13 @@ const userDetails=async(req,res)=>{
 
     try {
         const user=await Others.findOne({userId:id})
-        res.send(user)
+        if(user){
+            res.send({data:user,success:true})
+        }
+        
     } catch (error) {
         console.log('not yet...')
+        res.send({success:false})
     }
 }
 const uDetails=async(req,res)=>{

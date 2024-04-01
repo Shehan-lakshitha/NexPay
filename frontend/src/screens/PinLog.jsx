@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
+import { BackHandler, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native'
 import React, { useRef,useEffect,useState } from 'react';
 import ReactNativePinView from 'react-native-pin-view';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -56,7 +56,17 @@ const PinLog = () => {
     pinFetch()
   },[enteredPin])
    
-   
+  handleLogout = async () => {
+    try {
+     
+      await AsyncStorage.clear();
+      
+    
+      BackHandler.exitApp();
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
    
   return (
     <SafeAreaView style={styles.container}>
@@ -108,6 +118,9 @@ const PinLog = () => {
             
             
           />
+          <TouchableOpacity style={{width:50,backgroundColor:'red',height:50}} onPress={handleLogout}>
+
+          </TouchableOpacity>
           </View>
     </SafeAreaView>
   )

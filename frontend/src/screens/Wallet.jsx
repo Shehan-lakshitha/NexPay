@@ -53,30 +53,39 @@ const Wallet = () => {
       }
     };
     fetchDetails();
+        
+    const fetchData=async()=>{
+      try {
+        const response = await axios.post(`${URL}/api/adduserdetails`, {
+          id: userData._id,
+        });
+        if (response.data.success===true) {
+       
+         setOther(response.data.data)
+         try {
+          
+            const res = await axios.get(`${URL}/api/display/${response.data.data.users[0].userId}`);
+            setImagePath(res.data.imagePath.replace(/\\/g, '/'));
+          
+        } catch (error) {
+          console.log(error);
+        }
+        }
+         
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData()
+   
 
+    
   },[]);
 
+ 
 
-  // useEffect(()=>{
-  //   const fetchImg=async ()=>{
-  //     try {
-  //       const response = await axios.get(`${URL}/api/display/${other?.users[0]?.userId}`);
-        
-    
-  //       setImagePath(response.data.imagePath.replace(/\\/g, '/'))
-        
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //    } 
-  
-   
-  
-  //     fetchImg()
-  // },[other])
 
   //Use the retrieved data as needed
-
 
   const addCard = async () => {
     try {
@@ -137,7 +146,26 @@ const Wallet = () => {
           <Text style={styles.addCreditText}>Add Credit</Text>
         </TouchableOpacity>
          
-        
+        <View>
+          <Text style={styles.transfers}>Quick Transfers</Text>
+          <View style={styles.line}></View>
+          <View style={{flexDirection:'row',gap:10}}>
+          {other===null? "":<View style={styles.boxStyle}>
+            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp',{id:other?.users[0]?.userId,data:userData})}}>
+            <Image source={{ uri: `${URL}/${imagePath}` }} style={styles.otherImg}/>
+            </TouchableOpacity>
+            <Text>{other?.users[0]?.name}</Text>
+          </View>}
+          <View style={styles.boxStyle}>
+            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickUser',{id: userData._id,})}}>
+              <Icon name="plus" size={18} color={COLORS.primary} />
+            </TouchableOpacity>
+            <Text>Users</Text>
+          </View>
+
+          </View>
+        </View>
+
 
  
 
