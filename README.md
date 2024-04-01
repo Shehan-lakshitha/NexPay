@@ -59,7 +59,7 @@ Run the emulator
 cd frontend
 npm run android
 ```
-<b>**</b>Please make sure set the relavant URL in the 
+<b>**</b>Please make sure to set the relavant URL in the 
 ``
 frontend -> src -> constants -> URL.js 
 ``
