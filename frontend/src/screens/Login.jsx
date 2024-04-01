@@ -64,7 +64,7 @@ export default function Login({navigation}) {
       if (response.data.success === true) {
         if(response.data.token){
          
-          await AsyncStorage.setItem('token', response.data.token );
+          await AsyncStorage.multiSet([['token', response.data.token],['email',email]] );
           
           
           navigation.navigate('Home', {email,id:response.data.id});
