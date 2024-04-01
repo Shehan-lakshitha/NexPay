@@ -112,9 +112,13 @@ const userDetails=async(req,res)=>{
 
     try {
         const user=await Others.findOne({userId:id})
-        res.send(user)
+        if(user){
+            res.send({data:user,success:true})
+        }
+        
     } catch (error) {
         console.log('not yet...')
+        res.send({success:false})
     }
 }
 const uDetails=async(req,res)=>{

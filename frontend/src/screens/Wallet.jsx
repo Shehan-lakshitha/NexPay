@@ -53,41 +53,36 @@ const Wallet = () => {
       }
     };
     fetchDetails();
+        
     const fetchData=async()=>{
       try {
         const response = await axios.post(`${URL}/api/adduserdetails`, {
-          id: id,
+          id: userData._id,
         });
-        if (response) {
+        if (response.data.success===true) {
        
-         setOther(response.data)
+         setOther(response.data.data)
+         try {
+          
+            const res = await axios.get(`${URL}/api/display/${response.data.data.users[0].userId}`);
+            setImagePath(res.data.imagePath.replace(/\\/g, '/'));
+          
+        } catch (error) {
+          console.log(error);
         }
+        }
+         
       } catch (error) {
         console.log(error);
       }
     }
     fetchData()
    
-      const fetchImg=async ()=>{
-        try {
-          if (other && other.users && other.users.length > 0) {
-            const response = await axios.get(`${URL}/api/display/${other.users[0].userId}`);
-            setImagePath(response.data.imagePath.replace(/\\/g, '/'));
-          } else {
-            console.log('No user found in "other" state.');
-          }
-        } catch (error) {
-          console.log(error);
-        }
-       } 
-    
-     
-    
-        fetchImg()
+
     
   },[]);
 
-
+ 
 
 
   //Use the retrieved data as needed
