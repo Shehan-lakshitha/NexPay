@@ -8,6 +8,7 @@ import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
+import Toast from 'react-native-toast-message';
 import axios from 'axios';
 const Transfer = () => {
     const navigation=useNavigation()
@@ -19,18 +20,27 @@ const Transfer = () => {
       
  
       const handleFetchUser=async ()=>{
-        try {
-          const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
-          
-        if(response){
-          console.log(response.data)
-          navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data._id})
+        if(!phoneNumber && !amount){
+          Toast.show({
+            type: 'error',
+            text1: 'Enter details',
+            text2: 'Please enter the phone number and amount',
+          });
+        }else{
+          try {
+            const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
+            
+          if(response){
+            console.log(response.data)
+            navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data._id})
+          }
+           
+            
+          } catch (error) {
+            console.log(error)
+          }
         }
-         
-          
-        } catch (error) {
-          console.log(error)
-        }
+        
        }
  
  
@@ -147,5 +157,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between'
         
+      },
+      nextBtn: {
+        marginTop: 230,
       },
 })
