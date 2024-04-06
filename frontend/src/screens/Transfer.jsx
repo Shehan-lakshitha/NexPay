@@ -8,6 +8,7 @@ import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { URL } from '../constants/URL';
+import Toast from 'react-native-toast-message';
 import axios from 'axios';
 const Transfer = () => {
     const navigation=useNavigation()
@@ -22,14 +23,25 @@ const Transfer = () => {
         try {
           const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
           
-        if(response){
+        if(response.data.success===true){
           console.log(response.data)
-          navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data._id})
+          navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data.id})
+        }else if(response.data.success===false){
+          Toast.show({
+            type: 'error',
+            text1: 'Invalid Phone number',
+            text2: 'Please enter a valid phone number',
+          })
         }
          
           
         } catch (error) {
           console.log(error)
+          Toast.show({
+            type: 'error',
+            text1: 'Invalid Phone number',
+            text2: 'Please enter a valid phone number',
+          })
         }
        }
  
