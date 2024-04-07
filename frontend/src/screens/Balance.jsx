@@ -37,10 +37,17 @@ const Balance = () => {
           <Text style={styles.cardtext}>{`Rs.${balance}.00`}</Text>
           <Text style={styles.cardsubtext}>{"Available balance"}</Text>
         </View>
+        <View style={styles.creditContainer}>
+            <TouchableOpacity style={styles.credit}>
+                <Text style={styles.creditText}>Add Credit</Text>
+            </TouchableOpacity>
+        </View>
       
-      <View style={styles.content}>
-        <Text style={styles.contentText}>Currently! No rewards or discounts available..</Text>
-      </View>
+              <View style={styles.recentTransactionsContainer}>
+          <Text style={styles.recentTransactions}>Recent Transactions</Text>
+          <View style={styles.line}></View>
+          
+        </View>
      
     </SafeAreaView>
   )
@@ -120,6 +127,43 @@ const styles = StyleSheet.create({
         marginTop: 30,
         borderRadius: 12,
         padding: 30,
+      },
+      creditContainer:{
+        justifyContent:'center',
+        alignItems:'center',
+      },
+      credit:{
+        justifyContent:'center',
+        alignItems:'center',
+        padding:10,
+        borderRadius:12,
+        width:100,
+        backgroundColor:COLORS.purple,
+        marginTop:25
+      },
+      creditText:{
+        color:COLORS.white,
+        fontWeight:'600'
+      },
+      recentTransactions: {
+        fontSize: 16,
+        color: COLORS.black,
+        fontWeight: '500',
+        marginTop: 40,
+      },
+      line: {
+        height: 3,
+        width: '100%',
+        backgroundColor: COLORS.purple,
+        marginTop: 5,
+      },
+      transText: {
+        alignSelf: 'center',
+        marginTop: 20,
+      },
+      recentTransactionsContainer:{
+        height:400,
+        
       },
       
 })
