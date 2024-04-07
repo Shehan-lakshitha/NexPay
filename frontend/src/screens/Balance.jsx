@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import COLORS from '../constants/colors'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,6 +25,22 @@ const Balance = () => {
         }
       };
     
+
+      const renderItem = ({ item }) => {
+        const date = new Date(item.created * 1000);
+  
+        // Format the date and time
+        const formattedDateTime = date.toLocaleString(); 
+        return(<View>
+          <View  style={styles.tile}>
+          {item.type==='payment'?<Text style={styles.renderTextRed}>{item.type}</Text>:<Text style={styles.renderTextGreen}>{item.type}</Text>}
+            <Text style={styles.renderText}>{`Rs.${item.amount}.00`}</Text>
+            <Text style={styles.renderText}>{formattedDateTime}</Text>
+            </View>
+          
+        </View>)
+      };
+
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -57,7 +73,11 @@ const Balance = () => {
               <View style={styles.recentTransactionsContainer}>
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
           <View style={styles.line}></View>
-          
+          <FlatList
+    data={history?.slice(-3)}
+    renderItem={renderItem}
+    keyExtractor={item => item.paymentIntentId}
+    />
         </View>
      
     </SafeAreaView>
@@ -166,5 +186,23 @@ const styles = StyleSheet.create({
         height:400,
         
       },
+      tile:{
+        flexDirection:'row',
+        padding:10,
+        justifyContent: 'space-between',
+        
+       },
+       renderText:{
+        fontWeight:'600'
+      },
+      renderTextGreen:{
+        fontWeight:'600',
+        color:COLORS.green
+       },
+       renderTextRed:{
+        fontWeight:'600',
+        color:COLORS.warning
+    
+       },
       
 })
