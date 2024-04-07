@@ -99,17 +99,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: COLORS.white,
       },
-      text:{
-        position:'absolute',
-        color:COLORS.low_grey,
-        fontSize:20,
-        left:100,
-        top:30,
-        lineHeight:30,
-        fontWeight:'600'
-        
 
-      },
       content:{
         marginTop:70
       },
