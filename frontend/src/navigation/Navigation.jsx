@@ -49,9 +49,7 @@ import QuickUser from '../screens/QuickUser';
 import QuickTopUp from '../screens/QuickTopUp';
 import QRVerify from '../screens/QRVerify';
 import Balance from '../screens/Balance';
-
-
-
+import Terms from '../screens/Term'
 
 
 const toastConfig = {
@@ -195,7 +193,7 @@ export default function Navigation() {
         <Stack.Screen name="QuickTopUp" component={QuickTopUp} />
         <Stack.Screen name="QRVerify" component={QRVerify} />
         <Stack.Screen name="Balance" component={Balance} />
-
+        <Stack.Screen name="Terms" component={Terms} />
 
       </Stack.Navigator>
 

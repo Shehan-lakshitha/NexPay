@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,Image,
+  View,
+  Image,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
@@ -22,14 +24,14 @@ const Wallet = () => {
   const [holderName, setHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [other, setOther] = useState(null);
-  const [imagePath,  setImagePath] = useState('');
+  const [imagePath, setImagePath] = useState('');
   const [addCredit, setAddCredit] = useState(false);
   const navigation = useNavigation();
 
   const route = useRoute();
   const {userData} = route.params;
   // In the screen where you navigate to
-     console.log(userData)
+  console.log(userData);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -54,37 +56,29 @@ const Wallet = () => {
       }
     };
     fetchDetails();
-        
-    const fetchData=async()=>{
+
+    const fetchData = async () => {
       try {
         const response = await axios.post(`${URL}/api/adduserdetails`, {
           id: userData._id,
         });
-        if (response.data.success===true) {
-       
-         setOther(response.data.data)
-         try {
-          
-            const res = await axios.get(`${URL}/api/display/${response.data.data.users[0].userId}`);
+        if (response.data.success === true) {
+          setOther(response.data.data);
+          try {
+            const res = await axios.get(
+              `${URL}/api/display/${response.data.data.users[0].userId}`,
+            );
             setImagePath(res.data.imagePath.replace(/\\/g, '/'));
-          
-        } catch (error) {
-          console.log(error);
+          } catch (error) {
+            console.log(error);
+          }
         }
-        }
-         
       } catch (error) {
         console.log(error);
       }
-    }
-    fetchData()
-   
-
-    
-  },[]);
-
- 
-
+    };
+    fetchData();
+  }, []);
 
   //Use the retrieved data as needed
 
@@ -105,7 +99,7 @@ const Wallet = () => {
 
   const handleAddCredit = () => {
     if (addCredit) {
-      navigation.navigate('AddCredit',{userData});
+      navigation.navigate('AddCredit', {userData});
     } else {
       Toast.show({
         type: 'error',
@@ -114,71 +108,86 @@ const Wallet = () => {
       });
     }
   };
-  
+
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="chevron-left" size={24} color={COLORS.black} />
-      </TouchableOpacity>
-      <Text style={styles.register}>Wallet</Text>
-
-      <TouchableOpacity style={styles.headerbtn} onPress={addCard}>
-        <Icon name="plus" size={16} color={COLORS.white} />
-        <Text style={styles.addCardbtn}>Add Card</Text>
-      </TouchableOpacity>
-
-      <View style={styles.content}>
-        <ImageBackground source={cardFront} style={styles.cardFrontImg}>
-          <View style={styles.cardNameDate}>
-            <Text style={styles.holderName}>
-              {holderName || "Card Holder's Name"}
-            </Text>
-            <Text style={styles.expiry}>{expiryDate || 'MM/YY'}</Text>
-          </View>
-          <Text style={styles.cardNumber}>
-            {cardNumber || '**** **** **** ****'}
-          </Text>
-        </ImageBackground>
-
-        <TouchableOpacity
-          style={styles.addCredit}
-          onPress={() => handleAddCredit()}>
-          <Icon name="plus" size={12} color={COLORS.white} />
-          <Text style={styles.addCreditText}>Add Credit</Text>
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
-         
-        <View>
-          <Text style={styles.transfers}>Quick Transfers</Text>
-          <View style={styles.line}></View>
-          <View style={{flexDirection:'row',gap:10}}>
-          {other===null? "":<View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickTopUp',{id:other?.users[0]?.userId,data:userData})}}>
-            <Image source={{ uri: `${URL}/${imagePath}` }} style={styles.otherImg}/>
-            </TouchableOpacity>
-            <Text>{other?.users[0]?.name}</Text>
-          </View>}
-          <View style={styles.boxStyle}>
-            <TouchableOpacity style={styles.box} onPress={()=>{navigation.navigate('QuickUser',{id: userData._id,})}}>
-              <Icon name="plus" size={18} color={COLORS.primary} />
-            </TouchableOpacity>
-            <Text>Users</Text>
+        <Text style={styles.register}>Wallet</Text>
+
+        <TouchableOpacity style={styles.headerbtn} onPress={addCard}>
+          <Icon name="plus" size={16} color={COLORS.white} />
+          <Text style={styles.addCardbtn}>Add Card</Text>
+        </TouchableOpacity>
+
+        <View style={styles.content}>
+          <ImageBackground source={cardFront} style={styles.cardFrontImg}>
+            <View style={styles.cardNameDate}>
+              <Text style={styles.holderName}>
+                {holderName || "Card Holder's Name"}
+              </Text>
+              <Text style={styles.expiry}>{expiryDate || 'MM/YY'}</Text>
+            </View>
+            <Text style={styles.cardNumber}>
+              {cardNumber || '**** **** **** ****'}
+            </Text>
+          </ImageBackground>
+
+          <TouchableOpacity
+            style={styles.addCredit}
+            onPress={() => handleAddCredit()}>
+            <Icon name="plus" size={12} color={COLORS.white} />
+            <Text style={styles.addCreditText}>Add Credit</Text>
+          </TouchableOpacity>
+
+          <View>
+            <Text style={styles.transfers}>Quick Transfers</Text>
+            <View style={styles.line}></View>
+            <View style={{flexDirection: 'row', gap: 10}}>
+              {other === null ? (
+                ''
+              ) : (
+                <View style={styles.boxStyle}>
+                  <TouchableOpacity
+                    style={styles.box}
+                    onPress={() => {
+                      navigation.navigate('QuickTopUp', {
+                        id: other?.users[0]?.userId,
+                        data: userData,
+                      });
+                    }}>
+                    <Image
+                      source={{uri: `${URL}/${imagePath}`}}
+                      style={styles.otherImg}
+                    />
+                  </TouchableOpacity>
+                  <Text>{other?.users[0]?.name}</Text>
+                </View>
+              )}
+              <View style={styles.boxStyle}>
+                <TouchableOpacity
+                  style={styles.box}
+                  onPress={() => {
+                    navigation.navigate('QuickUser', {id: userData._id});
+                  }}>
+                  <Icon name="plus" size={18} color={COLORS.primary} />
+                </TouchableOpacity>
+                <Text>Users</Text>
+              </View>
+            </View>
           </View>
 
-          </View>
-        </View>
-
-
- 
-
-        {/* <View>
+          {/* <View>
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
           <View style={styles.line}></View>
           <Text style={styles.transText}>No Recent Transactions</Text>
         </View> */}
+        </View>
       </View>
-      
-    </View>
-    
+      <NavBar />
+    </>
   );
 };
 
@@ -306,8 +315,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-  otherImg:{
-    height:50,
-    width:50
+  otherImg: {
+    height: 50,
+    width: 50,
   },
 });

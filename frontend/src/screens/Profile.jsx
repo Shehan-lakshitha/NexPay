@@ -228,7 +228,7 @@ return (
               <Text style={styles.serviceText}>Help</Text>
             </View>
             <View style={styles.serviceTabContainer}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Terms')}}>
                 <View style={styles.serviceTab}>
                 <Icon name="lock" size={40} color={COLORS.purple} />
                 </View>

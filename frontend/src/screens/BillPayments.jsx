@@ -10,83 +10,90 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../constants/colors';
 import Img from '../Assets/billpayment.png';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import NavBar from '../components/NavBar';
 
 const BillPayments = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {userData} = route.params;
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="chevron-left" size={24} color={COLORS.black} />
-        </TouchableOpacity>
-        <Text style={styles.headertitle}>Bill Payments</Text>
-      </View>
-
-      <View style={styles.cardContainer}>
-        <Image source={Img} style={styles.imageStyles} />
-        <Text style={styles.text}>{`Pay your utility bills\nwith NexPay`}</Text>
-      </View>
-
-      <View style={styles.utilityContainer}>
-        <View style={styles.containerTop}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ElectricityPayment', {userData})}>
-            <View style={styles.box}>
-              <Icon name="bolt" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Electricity</Text>
+    <>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="chevron-left" size={24} color={COLORS.black} />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="wifi" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Internet</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="tv" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Television</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="tint" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Water</Text>
-          </TouchableOpacity>
+          <Text style={styles.headertitle}>Bill Payments</Text>
         </View>
 
-        <View style={styles.containerBottom}>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="shield" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Insurance</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="balance-scale" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Tax</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="bus" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Transport</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.box}>
-              <Icon name="stethoscope" size={32} color={COLORS.primary} />
-            </View>
-            <Text style={styles.textUt}>Medical</Text>
-          </TouchableOpacity>
+        <View style={styles.cardContainer}>
+          <Image source={Img} style={styles.imageStyles} />
+          <Text
+            style={styles.text}>{`Pay your utility bills\nwith NexPay`}</Text>
         </View>
-      </View>
-    </SafeAreaView>
+
+        <View style={styles.utilityContainer}>
+          <View style={styles.containerTop}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ElectricityPayment', {userData})
+              }>
+              <View style={styles.box}>
+                <Icon name="bolt" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Electricity</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="wifi" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Internet</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="tv" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Television</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="tint" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Water</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.containerBottom}>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="shield" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Insurance</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="balance-scale" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Tax</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="bus" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Transport</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.box}>
+                <Icon name="stethoscope" size={32} color={COLORS.primary} />
+              </View>
+              <Text style={styles.textUt}>Medical</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
+      <NavBar />
+    </>
   );
 };
 
