@@ -157,4 +157,7 @@ const styles = StyleSheet.create({
         justifyContent:'space-between'
         
       },
+      nextBtn : {
+        marginTop: 230,
+      },
 })

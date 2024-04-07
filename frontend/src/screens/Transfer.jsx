@@ -42,7 +42,9 @@ const Transfer = () => {
             text1: 'Invalid Phone number',
             text2: 'Please enter a valid phone number',
           })
+
         }
+        
        }
  
  
@@ -159,5 +161,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between'
         
+      },
+      nextBtn: {
+        marginTop: 230,
       },
 })
