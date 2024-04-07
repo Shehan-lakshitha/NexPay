@@ -9,10 +9,21 @@ import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Img from '../Assets/img1.png';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6';
+import Toast from 'react-native-toast-message';
 const Balance = () => {
     const navigation=useNavigation()
     const [balance, setBalance] = useState(null);
-    
+    const handleAddCredit = () => {
+        if (addCredit) {
+          navigation.navigate('AddCredit',{userData});
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Card Not Added',
+            text2: 'Please add a card to add credit',
+          });
+        }
+      };
     
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +49,7 @@ const Balance = () => {
           <Text style={styles.cardsubtext}>{"Available balance"}</Text>
         </View>
         <View style={styles.creditContainer}>
-            <TouchableOpacity style={styles.credit}>
+            <TouchableOpacity style={styles.credit} onPress={handleAddCredit}>
                 <Text style={styles.creditText}>Add Credit</Text>
             </TouchableOpacity>
         </View>
