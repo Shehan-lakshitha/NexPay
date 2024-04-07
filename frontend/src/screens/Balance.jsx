@@ -11,21 +11,16 @@ import Img from '../Assets/img1.png';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6';
 import Toast from 'react-native-toast-message';
 import { URL } from '../constants/URL';
+import axios from 'axios'
 const Balance = () => {
     const navigation=useNavigation()
     const route = useRoute()
     const [balance, setBalance] = useState(null);
+    const [history, setHistory] = useState(null);
     const {userData}=route.params
+    
     const handleAddCredit = () => {
-        if (addCredit) {
           navigation.navigate('AddCredit',{userData});
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Card Not Added',
-            text2: 'Please add a card to add credit',
-          });
-        }
       };
     
       useEffect(()=>{
@@ -33,7 +28,7 @@ const Balance = () => {
         const fetchBalance=async ()=>{
           try {
             const response = await axios.post(`${URL}/api/balance`, {
-              id: id,
+              id: userData._id,
             });
             //console.log(balance)
     
@@ -59,6 +54,25 @@ const Balance = () => {
         
 
       })
+
+      useEffect(()=>{
+        const fetchHistory=async ()=>{
+          try {
+            const response = await axios.post(`${URL}/api/paymenthistory`, {
+              id: userData._id,
+            });
+            if (response) {
+              setHistory(response.data.payments)
+               
+            }
+          } catch (error) {
+            console.log(error);
+            
+          }
+        }
+        fetchHistory()
+  
+      },[balance]) 
 
       const renderItem = ({ item }) => {
         const date = new Date(item.created * 1000);
@@ -108,7 +122,7 @@ const Balance = () => {
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
           <View style={styles.line}></View>
           <FlatList
-    data={history?.slice(-3)}
+    data={history?.slice(-8)}
     renderItem={renderItem}
     keyExtractor={item => item.paymentIntentId}
     />
