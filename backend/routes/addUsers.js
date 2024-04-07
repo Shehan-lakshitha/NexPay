@@ -150,11 +150,19 @@ const uDetails=async(req,res)=>{
 }
 const Transferdetails=async(req,res)=>{
     const {phoneNumber}=req.body
+    console.log(phoneNumber)
     try {
         const user=await User.findOne({phoneNumber})
-        res.send(user)
+        if(user){
+            console.log(true)
+            res.send({success:true,id:user._id})
+        }else{
+            res.send({success:false})
+        }
+        
     } catch (error) {
         console.log(error)
+        res.send({success:false})
     }
 }
 router.post('/adduser',addUser)

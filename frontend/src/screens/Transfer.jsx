@@ -20,25 +20,29 @@ const Transfer = () => {
       
  
       const handleFetchUser=async ()=>{
-        if(!phoneNumber && !amount){
+        try {
+          const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
+          
+        if(response.data.success===true){
+          console.log(response.data)
+          navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data.id})
+        }else if(response.data.success===false){
           Toast.show({
             type: 'error',
-            text1: 'Enter details',
-            text2: 'Please enter the phone number and amount',
-          });
-        }else{
-          try {
-            const response = await axios.post(`${URL}/api/transferdetails`,{phoneNumber:parseInt(phoneNumber)});
-            
-          if(response){
-            console.log(response.data)
-            navigation.navigate('QRVerify',{data:userData,amount:amount,id:response.data._id})
-          }
-           
-            
-          } catch (error) {
-            console.log(error)
-          }
+            text1: 'Invalid Phone number',
+            text2: 'Please enter a valid phone number',
+          })
+        }
+         
+          
+        } catch (error) {
+          console.log(error)
+          Toast.show({
+            type: 'error',
+            text1: 'Invalid Phone number',
+            text2: 'Please enter a valid phone number',
+          })
+
         }
         
        }

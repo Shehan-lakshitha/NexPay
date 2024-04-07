@@ -169,11 +169,11 @@ const Wallet = () => {
 
  
 
-        <View>
+        {/* <View>
           <Text style={styles.recentTransactions}>Recent Transactions</Text>
           <View style={styles.line}></View>
           <Text style={styles.transText}>No Recent Transactions</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );
