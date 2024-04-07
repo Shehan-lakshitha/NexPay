@@ -1,5 +1,5 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import COLORS from '../constants/colors'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -13,7 +13,9 @@ import Toast from 'react-native-toast-message';
 import { URL } from '../constants/URL';
 const Balance = () => {
     const navigation=useNavigation()
+    const route = useRoute()
     const [balance, setBalance] = useState(null);
+    const {userData}=route.params
     const handleAddCredit = () => {
         if (addCredit) {
           navigation.navigate('AddCredit',{userData});
