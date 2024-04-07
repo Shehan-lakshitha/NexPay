@@ -10,6 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Img from '../Assets/img1.png';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6';
 import Toast from 'react-native-toast-message';
+import { URL } from '../constants/URL';
 const Balance = () => {
     const navigation=useNavigation()
     const [balance, setBalance] = useState(null);
@@ -25,6 +26,37 @@ const Balance = () => {
         }
       };
     
+      useEffect(()=>{
+       
+        const fetchBalance=async ()=>{
+          try {
+            const response = await axios.post(`${URL}/api/balance`, {
+              id: id,
+            });
+            //console.log(balance)
+    
+            if (response.data.success===true) {
+              setBalance(response.data.balance)
+              
+              
+              
+            }else if(response.data.success===false){
+              setBalance(response.data.balance)
+              
+            }
+            if(response.data.success===false){
+              setBalance(0)
+            }
+          } catch (error) {
+            console.log(error);
+            
+          }
+        }
+        fetchBalance()
+    
+        
+
+      })
 
       const renderItem = ({ item }) => {
         const date = new Date(item.created * 1000);
