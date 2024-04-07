@@ -37,17 +37,17 @@ const Register = ({navigation}) => {
         setError('Invalid Email') 
     }
 };
-handleLogout = async () => {
-  try {
+// handleLogout = async () => {
+//   try {
    
-    await AsyncStorage.clear();
+//     await AsyncStorage.clear();
     
   
-    BackHandler.exitApp();
-  } catch (error) {
-    console.error('Error logging out:', error);
-  }
-};
+//     BackHandler.exitApp();
+//   } catch (error) {
+//     console.error('Error logging out:', error);
+//   }
+// };
   return (
     <SafeAreaView>
       <View
@@ -295,7 +295,7 @@ handleLogout = async () => {
             }}>
             by register, you accept our Terms and conditions
           </Text>
-          <TouchableOpacity style={{width:50,backgroundColor:'red',height:50}} onPress={handleLogout}></TouchableOpacity>
+          {/* <TouchableOpacity style={{width:50,backgroundColor:'red',height:50}} onPress={handleLogout}></TouchableOpacity> */}
           <Button
             onpress={() => {
               navigation.navigate('CreatePassword', {

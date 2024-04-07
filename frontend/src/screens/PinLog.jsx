@@ -57,17 +57,17 @@ const PinLog = () => {
     pinFetch()
   },[enteredPin])
    
-  handleLogout = async () => {
-    try {
+  // handleLogout = async () => {
+  //   try {
      
-      await AsyncStorage.clear();
+  //     await AsyncStorage.clear();
       
     
-      BackHandler.exitApp();
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  //     BackHandler.exitApp();
+  //   } catch (error) {
+  //     console.error('Error logging out:', error);
+  //   }
+  // };
    
   return (
     <SafeAreaView style={styles.container}>

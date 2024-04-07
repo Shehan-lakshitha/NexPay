@@ -220,7 +220,7 @@ return (
             </View>
 
             <View style={styles.serviceTabContainer}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Help')}}>
                 <View style={styles.serviceTab}>
                 <Icon name="question-circle-o" size={40} color={COLORS.purple} />
                 </View>

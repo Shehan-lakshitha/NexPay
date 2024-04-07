@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   headertitle: {
     color: COLORS.black,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
     marginHorizontal: '15%',
   },

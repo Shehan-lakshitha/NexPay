@@ -48,6 +48,7 @@ import QRSuccess from '../screens/QRSuccess';
 import QuickUser from '../screens/QuickUser';
 import QuickTopUp from '../screens/QuickTopUp';
 import QRVerify from '../screens/QRVerify';
+import Balance from '../screens/Balance';
 
 
 
@@ -193,6 +194,7 @@ export default function Navigation() {
         <Stack.Screen name="QuickUser" component={QuickUser} />
         <Stack.Screen name="QuickTopUp" component={QuickTopUp} />
         <Stack.Screen name="QRVerify" component={QRVerify} />
+        <Stack.Screen name="Balance" component={Balance} />
 
 
       </Stack.Navigator>
