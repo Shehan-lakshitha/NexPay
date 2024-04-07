@@ -15,6 +15,7 @@ import {URL} from '../constants/URL';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import fetchData from '../constants/fetchData';
+import NavBar from '../components/NavBar';
 
 const Wallet = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -175,7 +176,9 @@ const Wallet = () => {
           <Text style={styles.transText}>No Recent Transactions</Text>
         </View> */}
       </View>
+      
     </View>
+    
   );
 };
 
