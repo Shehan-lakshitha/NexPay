@@ -59,10 +59,16 @@ const AddCredit = () => {
             text1: 'Card Not Selected',
             text2: 'Please select a card to continue',
         })
+    }
+    
+    if(amount){
+            navigation.navigate('PinVerify', {data:userData,amount:amount}); 
     }else{
-      
-            navigation.navigate('PinVerify', {data:userData,amount:amount});
-         
+      Toast.show({
+        type: 'error',
+        text1: 'Amount not entered',
+        text2: 'Please enter the amount to topup',
+      })
     }
   }
  

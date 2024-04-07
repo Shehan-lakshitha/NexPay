@@ -6,12 +6,34 @@ import Img from '../Assets/topup.png';
 import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import Button from '../components/Button';
+import Toast from 'react-native-toast-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
 const MobileTopUp = () => {
     const navigation=useNavigation()
     const [number,setNumber]=useState("")
     const route = useRoute();
     const {userData} = route.params;
+
+    const handleSubmit = () => {
+      if( number){
+        if(number.length == 10){
+          navigation.navigate('TopUp',{number,data:userData})
+        }else{
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Please enter a valid phone number',
+          })
+        }
+        
+      } else{
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Enter your Phone number to Top up',
+        })
+      }
+    }
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -47,7 +69,7 @@ const MobileTopUp = () => {
         style={styles.nextBtn}
         title="Next"
         filled
-        onpress={()=>{navigation.navigate('TopUp',{number,data:userData})}}
+        onpress={handleSubmit}
       />
      
     </SafeAreaView>

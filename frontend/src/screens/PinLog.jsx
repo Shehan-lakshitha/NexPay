@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { URL } from '../constants/URL';
+import Button from '../components/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const PinLog = () => {
   const pinView = useRef(null)
@@ -118,9 +119,14 @@ const PinLog = () => {
             
             
           />
-          <TouchableOpacity style={{width:50,backgroundColor:'red',height:50}} onPress={handleLogout}>
+          {/* <Button
+          style={styles.loginBtn}
+          title='Log Out'
+          filled
+          onpress = {handleLogout}
+          /> */}
+          
 
-          </TouchableOpacity>
           </View>
     </SafeAreaView>
   )
@@ -148,5 +154,9 @@ const styles = StyleSheet.create({
         flex:.5,
         justifyContent:"center",
         alignItems:'center',
+    },
+    loginBtn : {
+      padding: 10,
+      marginTop: 10,
     },
 })
