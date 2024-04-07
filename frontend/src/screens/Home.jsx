@@ -294,7 +294,7 @@ export default function Home() {
             </View>
 
             <View style={styles.serviceTabContainer}>
-              <TouchableOpacity style={styles.serviceBtn}>
+              <TouchableOpacity style={styles.serviceBtn} onPress={() => {navigation.navigate('Balance')}}>
                 <View style={styles.serviceTab}>
                   <FontAwesomeIcon
                     name="sack-dollar"
