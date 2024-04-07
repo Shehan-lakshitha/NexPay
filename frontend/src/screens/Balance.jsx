@@ -2,14 +2,16 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import React, { useState } from 'react'
 import COLORS from '../constants/colors'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Img from '../Assets/topup.png';
+
 import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Img from '../Assets/img1.png';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6';
 const Balance = () => {
     const navigation=useNavigation()
-    
+    const [balance, setBalance] = useState(null);
     
     
   return (
@@ -18,12 +20,23 @@ const Balance = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-left" size={24} color={COLORS.black} />
         </TouchableOpacity>
-        <Text style={styles.headertitle}>Rewards</Text>
+        <Text style={styles.headertitle}>Balance</Text>
       </View>
-      <View style={styles.cardContainer}>
-      <Image source={Img} style={styles.imageStyles} />
-      <Text style={styles.text}>{`Get awesome rewards\nand discounts from\nNexPay`}</Text>
-      </View>
+      <View style={styles.addCard}>
+          <Image source={Img} style={styles.imageStyles} />
+          {/* <View style={styles.plus}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Wallet', {userData})}>
+              <FontAwesomeIcon
+                name="circle-plus"
+                size={30}
+                color={COLORS.white}
+              />
+            </TouchableOpacity>
+          </View> */}
+          <Text style={styles.cardtext}>{`Rs.${balance}.00`}</Text>
+          <Text style={styles.cardsubtext}>{"Available balance"}</Text>
+        </View>
       
       <View style={styles.content}>
         <Text style={styles.contentText}>Currently! No rewards or discounts available..</Text>
@@ -65,9 +78,19 @@ const styles = StyleSheet.create({
       },
       imageStyles: {
         position: 'absolute',
-        left: 0,
+        right: 0,
         bottom: 0,
         zIndex: -1,
+      },
+      cardtext: {
+        fontSize: 30,
+        color: COLORS.white,
+        fontWeight: '600',
+      },
+      cardsubtext: {
+        fontSize: 14,
+        fontWeight: '400',
+        color: COLORS.white,
       },
       text:{
         position:'absolute',
@@ -88,6 +111,15 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         textAlign:'center',
         fontSize:20
+      },
+      addCard: {
+        position: 'relative',
+        width: '100%',
+        height: 150,
+        backgroundColor: COLORS.purple,
+        marginTop: 30,
+        borderRadius: 12,
+        padding: 30,
       },
       
 })
