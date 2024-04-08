@@ -205,7 +205,7 @@ export default function Home() {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.cardtext}>{`Rs.${balance}.00`}</Text>
+          <Text style={styles.cardtext}>{`Rs ${balance == null? '00': balance}.00`}</Text>
           <Text style={styles.cardsubtext}>{balance!==null? "Available balance":textSub}</Text>
         </View>
         <View style={styles.tabContainer}>

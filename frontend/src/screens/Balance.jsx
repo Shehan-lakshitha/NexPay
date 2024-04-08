@@ -111,7 +111,7 @@ const Balance = () => {
               />
             </TouchableOpacity>
           </View> */}
-          <Text style={styles.cardtext}>{`Rs.${balance}.00`}</Text>
+          <Text style={styles.cardtext}>{`Rs ${balance == null? '00': balance}.00`}</Text>
           <Text style={styles.cardsubtext}>{'Available balance'}</Text>
         </View>
         <View style={styles.creditContainer}>

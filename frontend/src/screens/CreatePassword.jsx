@@ -16,14 +16,13 @@ const CreatePassword = () => {
   const navigation=useNavigation()
   const {firstName, lastName, email, NIC, phoneNumber} = route.params;
 
-  const [ispasswordShown, setIsPasswordShown] = useState(false);
-  const [ispasswordShownC, setIsPasswordShownC] = useState(false);
+  const [ispasswordShown, setIsPasswordShown] = useState(true);
+  const [ispasswordShownC, setIsPasswordShownC] = useState(true);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorText, setErrorText] = useState('');
   const [error,setError]=useState('')
   const [passwordValidity,setPassswordValidity]=useState(true)
-  console.log(password)
    
   useEffect(()=>{
     const addEmailToStorage = async () => {
