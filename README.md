@@ -68,6 +68,12 @@ Set `http://192.168.8.159:5000` to run in a physical device and set `http://10.0
 
 Add `.env` file in `backend` folder withe MongoDb URL and the secret key
 
+<b>Scan the following QR code to download apk file and install in your device</b></br>
+<p align='center'>
+   <image src='https://github.com/Shehan-lakshitha/NexPay/assets/90453471/e6f923cc-491a-4d42-b826-46a019cb5d8a' width='200'/>
+</p>
+
+
 ## Technologies
 <b>Frontend</b> - React Native</br>
 <b>Backend</b> - nodeJs</br>
