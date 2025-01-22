@@ -59,12 +59,12 @@ Run the emulator
 cd frontend
 npm run android
 ```
-<b>**</b>Please make sure to set the relavant URL in the 
-``
-frontend -> src -> constants -> URL.js 
-``
-</br>
-Set `http://192.168.8.159:5000` to run in a physical device and set `http://10.0.2.2:5000` to run in a emulator device.</br>
+> **Tip**  
+> Please make sure to set the relevant URL in the following file:  
+> `frontend -> src -> constants -> URL.js`  
+>
+> - Set `http://192.168.8.159:5000` to run on a physical device.  
+> - Set `http://10.0.2.2:5000` to run on an emulator device.
 
 Add `.env` file in `backend` folder withe MongoDb URL and the secret key
 
